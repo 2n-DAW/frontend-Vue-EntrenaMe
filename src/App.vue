@@ -1,11 +1,12 @@
 <template>
-  <div class="min-h-screen bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100">
+ 
+  <body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen">
     <Header />
-    <div class="flex">
+    <div class="container mx-auto flex-grow py-10">
       <router-view class="flex-1 p-6"></router-view>
     </div>
-    <TestServer />
-  </div>
+    <Footer />
+  </body>
 
 </template>
 
@@ -18,13 +19,15 @@
 import { defineComponent } from 'vue';
 import Header from './components/Header.vue';
 import TestServer from './components/TestServer.vue';
+import Footer from './components/Footer.vue';
 
 
 export default defineComponent({
   name: 'App',
   components: {
     Header,
-    TestServer
+    TestServer,
+    Footer,
   },
 });
 </script>
