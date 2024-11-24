@@ -21,28 +21,19 @@ export const sport: Module<SportState, any> = {
     state,
 
     actions: {
-        initializeSports({ commit }) {
-            // Lógica para inicializar los deportes, por ejemplo, una llamada a una API
-            const sports = ['Fútbol', 'Baloncesto', 'Tenis'];
-            console.log("sports", sports);
-            commit('setSports', sports);
+        async initializeSports({ commit }) {
+            try {
+                const response = await SportService.getAll();
+                
+                commit('setSports', response.data);
+                console.log("response", response.data);
+            } catch (error) {
+                console.error('Error loading sports:', error);
+            }
         },
-
-
-
-
-
-        // async initializeSports({ commit }) {
-        //     try {
-        //         const response = await SportService.getAll();
-        //         commit('SET_SPORTS', response.data);
-        //     } catch (error) {
-        //         console.error('Error loading sports:', error);
-        //     }
-        // },
-        // selectSport({ commit }, sportId: number) {
-        //     commit('SET_SELECTED_SPORT', sportId);
-        // },
+        selectSport({ commit }, sportId: number) {
+            commit('SET_SELECTED_SPORT', sportId);
+        },
     },
 
     mutations: {
@@ -56,7 +47,6 @@ export const sport: Module<SportState, any> = {
     },
     getters: {
         allSports(state): Sport[] {
-            console.log("eeeeeeeeeeeeeeeeeeeeeeeee", state.sports);
             return state.sports;
         },
         selectedSport(state): Sport | null {

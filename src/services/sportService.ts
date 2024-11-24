@@ -22,7 +22,10 @@ import ApiService from "../core/api.service";
 
 export const SportService = {
     getAll() {
-        return ApiService.get("sports");
+        console.log("getAll");
+        const resp =ApiService.get("sports");
+        console.log("resp", resp);
+        return resp;
     },
     getById(id:string) {
         return ApiService.get(`sports/${id}`);

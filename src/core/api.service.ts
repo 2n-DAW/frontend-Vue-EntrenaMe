@@ -20,8 +20,9 @@ const ApiService = {
     // },
 
     get(url:string) {
-        console.log(url);
-        return axiosClient.get(url).catch((error) => {
+        console.log('entra');
+        console.log(`${API_URL}${url}`);
+        return axiosClient.get(`${API_URL}${url}`).catch((error) => {
             throw new Error(`[RWV] ApiService ${error}`);
         });
         
