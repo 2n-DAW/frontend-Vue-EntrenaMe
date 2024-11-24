@@ -2,32 +2,20 @@
     <section class="sport_list">
         <h2 class="text-deep-orange-6">Sports</h2>
         <div class="load_sports">
-            <!-- <SportCard :data="sports" /> -->
+            <SportCard v-for="sport in sports" :key="sport.id_sport" :data="sport" />
         </div>
     </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, computed } from 'vue';
+<script lang="ts" setup>
+import { computed, onMounted, reactive } from 'vue';
 import { useStore } from 'vuex';
-// import SportCard from '../cards/SportCard.vue';
+import SportCard from '../cards/SportCard.vue';
 
-export default defineComponent({
-    name: 'SportList',
-    components: {
-        // SportCard,
-    },
-    setup() {
-        const store = useStore();
-        console.log("yeeeeeeeeeee");
-        store.dispatch('sport/initializeSports');
+const store = useStore();
+store.dispatch('sport/initializeSports');
+const sports = reactive(computed(() => store.getters['sport/allSports']));
 
-        const sports = computed(() => store.getters['sport/allSports']);
-        console.log("sporfdsfsdfasts", sports.value);
+console.log("sports", sports.value);
 
-        return {
-            sports,
-        };
-    },
-});
 </script>
