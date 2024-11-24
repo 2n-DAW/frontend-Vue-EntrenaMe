@@ -10,6 +10,11 @@
                         </router-link>
                     </li>
                     <li>
+                        <router-link to="/activities" class="hover:text-blue-400">
+                            Actividades
+                        </router-link>
+                    </li>
+                    <li>
                         <router-link to="/courts" class="hover:text-blue-400">
                             Reservas
                         </router-link>

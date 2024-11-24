@@ -1,21 +1,26 @@
 <template>
-    <section class="sport_list">
-        <h2 class="text-deep-orange-6">Sports</h2>
-        <div class="load_sports">
-            <SportCard v-for="sport in sports" :key="sport.id_sport" :data="sport" />
+    <section class="sport_list p-4">
+        <h2 class="text-2xl font-bold text-deep-orange-600 mb-4">Sports</h2>
+
+        <div 
+            class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            <SportCard 
+                v-for="sport in sports" 
+                :key="sport.id_sport" 
+                :data="sport" 
+            />
         </div>
     </section>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive } from 'vue';
+import { computed, reactive } from 'vue';
 import { useStore } from 'vuex';
 import SportCard from '../cards/SportCard.vue';
 
 const store = useStore();
-store.dispatch('sport/initializeSports');
+store.dispatch('sport/initializeSports'); 
 const sports = reactive(computed(() => store.getters['sport/allSports']));
 
 console.log("sports", sports.value);
-
 </script>

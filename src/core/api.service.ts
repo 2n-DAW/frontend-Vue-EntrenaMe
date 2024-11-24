@@ -34,7 +34,7 @@ const ApiService = {
 
     update(resource:any, slug:any, params?: any) {
         return axiosClient.put(`${resource}/${slug}`, params);
-    },
+    },  
 
     put(resource:any, params?: any) {
         return axiosClient.put(`${resource}`, params);
