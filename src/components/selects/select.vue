@@ -1,14 +1,10 @@
 <template>
     <div class="flex flex-col">
-        
-        <h3 for="tipo-instalacion" class=" text-gray-400">{{ label }}</h3>
-        
+        <h3 for="tipo-instalacion" class="text-gray-400">{{ label }}</h3>
         <select 
-            class="bg-gray-700 text-gray-100  p-1 rounded"
-            v-model="selected_option"
-            @change="emitSelected">
-            
-            <option value="" disabled selected>Selecciona</option>
+            class="bg-gray-700 text-gray-100 p-1 rounded"
+            v-model="selected_option">
+            <option value="" disabled>Selecciona</option>
             <option 
                 v-for="(item, index) in data" 
                 :key="index" 
@@ -20,7 +16,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'; // Importamos ref para manejo reactivo de estados
+import { computed } from 'vue';
 
 export default {
     props: {
@@ -31,19 +27,22 @@ export default {
         data: {
             type: Array,
             required: true
+        },
+        selected: {
+            type: String,
+            required: true
         }
     },
-    setup(props, { emit }) {
-        // Estado reactivo para la opción seleccionada
-        const selected_option = ref('');
 
-        const emitSelected = () => {
-            emit('update:selected', selected_option.value);
-        };
+    setup(props, { emit }) {
+        
+        const selected_option = computed({
+            get: () => props.selected, // Obtiene el valor actual de la prop
+            set: (value) => emit('update:selected', value) // Emite el nuevo valor
+        });
 
         return {
-            selected_option,
-            emitSelected
+            selected_option
         };
     }
 };

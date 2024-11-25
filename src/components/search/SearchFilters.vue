@@ -7,13 +7,12 @@
             class="bg-gray-700 text-gray-100 p-1 rounded"
             v-model="text"
             placeholder="Escribe para buscar..."
-            @input="emitSelected"
         />
     </div>
 </template>
 
 <script>
-import { ref, watch } from 'vue';
+import { computed } from 'vue';
 
 export default {
     props: {
@@ -27,19 +26,13 @@ export default {
         }
     },
     setup(props, { emit }) {
-        const text = ref(props.input_text_search);
-
-        watch(text, (newValue) => {
-            emit('update:input_text_search', newValue); //input_text_search es el valor que se pasa al padre
+        const text = computed({
+            get: () => props.input_text_search,
+            set: (value) => emit('update:input_text_search', value)
         });
 
-        const emitSelected = () => {
-            emit('update:input_text_search', text.value);
-        };
-
         return {
-            text,
-            emitSelected
+            text
         };
     }
 };
