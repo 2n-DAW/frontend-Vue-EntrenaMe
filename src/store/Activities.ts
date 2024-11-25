@@ -1,15 +1,15 @@
 import { Module } from 'vuex';
-// import { SportService } from '../services/sportService';
 import { Activity } from '../shared/interfaces/Activity.interface';
 import { ActivityService } from '../services/activity.service';
 import { sortHours } from '../shared/utils/shortHours.util';
 import { sortWeekDays } from '../shared/utils/shortWeekDays.util';
+import { OptionSelect } from '../shared/interfaces/OptionSelect.interface';
 
 export interface ActivityState {
     activities: Array<Activity>;
     filters: {
-        days: Array<string>;
-        hours: Array<string>;
+        days: Array<OptionSelect>;
+        hours: Array<OptionSelect>;
     }
 }
 
@@ -45,10 +45,18 @@ export const activity: Module<ActivityState, any> = {
                     }
                 }
                 
+                const days_sorted = sortWeekDays(days);
+                const hours_sorted = sortHours(hours);
                 
+                const days_label = days_sorted.map((day) => {
+                    return { value: day, label: day };
+                });
+                const hours_label = hours_sorted.map((hour) => {
+                    return { value: hour, label: hour };
+                });
                 
-                commit('setDays', sortWeekDays(days));
-                commit('setHours', sortHours(hours));
+                commit('setDays', days_label);
+                commit('setHours', hours_label);
                 commit('setActivities', activities);
                 
             } catch (error) {
@@ -62,11 +70,11 @@ export const activity: Module<ActivityState, any> = {
             console.log("setActivities", activities);
             state.activities = activities;
         },
-        setDays(state, days: string[]) {
+        setDays(state, days: OptionSelect[]) {
             console.log("setDays", days);
             state.filters.days = days;
         },
-        setHours(state, hours: string[]) {
+        setHours(state, hours: OptionSelect[]) {
             console.log("setHours", hours);
             state.filters.hours = hours;
         },
@@ -75,10 +83,10 @@ export const activity: Module<ActivityState, any> = {
         allActivities(state): Activity[] {
             return state.activities;
         },
-        getDays(state): string[] {
+        getDays(state): OptionSelect[]   {
             return state.filters.days;
         },
-        getHours(state): string[] {
+        getHours(state): OptionSelect[] {
             return state.filters.hours;
         },
     },

@@ -1,42 +1,37 @@
 <template>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '1', label: 'Gimnasio' },
-                { value: '2', label: 'Piscina' },
-                { value: '3', label: 'Pista de atletismo' }
-            ]" 
+            label="Horario" 
+            :data="hours" 
             v-model:selected="selected1"
         />
         <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '4', label: 'Gimnasio' },
-                { value: '5', label: 'Piscina' },
-                { value: '6', label: 'Pista de atletismo' }
-            ]" 
+            label="Día" 
+            :data="days" 
             v-model:selected="selected2"
         />
-        
+        <SearchFilters
+            label="Buscar" 
+            v-model:input_text_search="text_search"
+        />
     </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Selector from '../selects/select.vue';
-
+import SearchFilters from '../search/SearchFilters.vue';
 
 const store = useStore();
 store.dispatch('activity/initializeActivities');
 
-
-
+const hours = computed(() => store.getters['activity/getHours']);
+const days = computed(() => store.getters['activity/getDays']);
 
 const selected1 = ref('');
 const selected2 = ref('');
-
+const text_search = ref('');
 
 watch(selected1, (new_value) => {
     console.log("selected1", new_value);
@@ -46,7 +41,7 @@ watch(selected2, (new_value) => {
     console.log("selected2", new_value);
 });
 
-
-
-
+watch(text_search, (new_value) => {
+    console.log("text_search", new_value);
+});
 </script>

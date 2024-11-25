@@ -5,7 +5,7 @@
         
         <select 
             class="bg-gray-700 text-gray-100  p-1 rounded"
-            v-model="selectedInstalacion"
+            v-model="selected_option"
             @change="emitSelected">
             
             <option value="" disabled selected>Selecciona</option>
@@ -35,14 +35,14 @@ export default {
     },
     setup(props, { emit }) {
         // Estado reactivo para la opción seleccionada
-        const selectedInstalacion = ref('');
+        const selected_option = ref('');
 
         const emitSelected = () => {
-            emit('update:selected', selectedInstalacion.value);
+            emit('update:selected', selected_option.value);
         };
 
         return {
-            selectedInstalacion,
+            selected_option,
             emitSelected
         };
     }
