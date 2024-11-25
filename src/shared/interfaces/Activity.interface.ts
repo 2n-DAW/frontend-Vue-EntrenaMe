@@ -9,3 +9,7 @@ export interface Activity {
     slug_activity: string;
     id_user_instructor: number;
 }
+
+export interface Activities {
+    activities: Activity[];
+}

@@ -4,3 +4,7 @@ export interface Sport {
     img_sport: string;
     slug_sport: string;
 }
+
+export interface Sports {
+    sports: Array<Sport>;
+}

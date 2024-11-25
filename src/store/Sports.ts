@@ -21,8 +21,8 @@ export const sport: Module<SportState, any> = {
                 const response = await SportService.getAll();
                 
                 if (response){
-                    commit('setSports', response);
-                    console.log("response", response);
+                    commit('setSports', response.sports);
+                    console.log("response", response.sports);
                 }
                 
 

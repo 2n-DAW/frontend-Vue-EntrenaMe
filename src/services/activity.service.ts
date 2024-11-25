@@ -1,11 +1,11 @@
 import ApiService from "../core/api.service";
-import { Activity } from "../shared/interfaces/Activity.interface";
+import { Activities } from "../shared/interfaces/Activity.interface";
 
 
 export const ActivityService = {
-    getAll(): Promise<Array<Activity>|undefined> {
+    getAll(): Promise<Activities|undefined> {
         console.log("getAll");
-        const resp =ApiService.get<Array<Activity>>("activities");
+        const resp =ApiService.get<Activities>("activities");
         console.log("resp", resp);
         return resp;
     },
