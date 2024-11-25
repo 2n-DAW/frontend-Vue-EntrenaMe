@@ -18,48 +18,25 @@
             ]" 
             v-model:selected="selected2"
         />
-        <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '7', label: 'Gimnasio' },
-                { value: '8', label: 'Piscina' },
-                { value: '9', label: 'Pista de atletismo' }
-            ]" 
-            v-model:selected="selected3"
-        />
-        <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '10', label: 'Gimnasio' },
-                { value: '11', label: 'Piscina' },
-                { value: '12', label: 'Pista de atletismo' }
-            ]" 
-            v-model:selected="selected4"
-        />
-        <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '13', label: 'Gimnasio' },
-                { value: '14', label: 'Piscina' },
-                { value: '15', label: 'Pista de atletismo' }
-            ]" 
-            v-model:selected="selected5"
-        />
-        <Selector 
-            label="Tipo de instalación" 
-            :data="[
-                { value: '16', label: 'Gimnasio' },
-                { value: '17', label: 'Piscina' },
-                { value: '18', label: 'Pista de atletismo' }
-            ]" 
-            v-model:selected="selected6"
-        />
+        
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
 import Selector from '../selects/select.vue';
+
+
+const store = useStore();
+store.dispatch('');
+
+
+
+
+
+
+
 
 const selected1 = ref('');
 const selected2 = ref('');
@@ -91,5 +68,9 @@ watch(selected5, (newValue) => {
 watch(selected6, (newValue) => {
     console.log("selected6", newValue);
 });
+
+
+
+
 
 </script>

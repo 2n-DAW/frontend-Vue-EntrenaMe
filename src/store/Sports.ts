@@ -1,16 +1,11 @@
 import { Module } from 'vuex';
-import { SportService } from '../services/sportService';
+import { SportService } from '../services/sport.service';
+import { Sport } from '../shared/interfaces/Sport.interface';
 
 export interface SportState {
     sports: Array<Sport>;
     selectedSport: Sport | null;
 }
-
-export interface Sport {
-    id: number;
-    name: string;
-}
-
 const state: SportState = {
     sports: [],
     selectedSport: null,
@@ -25,14 +20,15 @@ export const sport: Module<SportState, any> = {
             try {
                 const response = await SportService.getAll();
                 
-                commit('setSports', response.data);
-                console.log("response", response.data);
+                if (response){
+                    commit('setSports', response);
+                    console.log("response", response);
+                }
+                
+
             } catch (error) {
                 console.error('Error loading sports:', error);
             }
-        },
-        selectSport({ commit }, sportId: number) {
-            commit('SET_SELECTED_SPORT', sportId);
         },
     },
 
@@ -41,16 +37,10 @@ export const sport: Module<SportState, any> = {
             console.log("setSports", sports);
             state.sports = sports;
         },
-        SET_SELECTED_SPORT(state, sportId: number) {
-            state.selectedSport = state.sports.find(sport => sport.id === sportId) || null;
-        },
     },
     getters: {
         allSports(state): Sport[] {
             return state.sports;
-        },
-        selectedSport(state): Sport | null {
-            return state.selectedSport;
         },
     },
 };

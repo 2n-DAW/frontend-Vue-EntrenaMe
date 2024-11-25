@@ -1,52 +1,76 @@
 import JwtService from "./jwt.service";
-import axios from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { API_URL } from "./config";
 
-export const axiosClient = axios.create({
-    baseURL: API_URL
+// Crear una instancia de Axios con configuración base
+export const axiosClient: AxiosInstance = axios.create({
+    baseURL: API_URL,
 });
 
 const ApiService = {
+    // Configurar el encabezado de autorización
     setHeader() {
-        axiosClient.defaults.headers[
-            "Authorization"
-        ] = `Token ${JwtService.getToken()}`;
+        const token = JwtService.getToken();
+        if (token) {
+            axiosClient.defaults.headers["Authorization"] = `Token ${token}`;
+        }
     },
 
-    // query(resource, params) {
-    //     return axiosClient.get(resource, params).catch((error) => {
-    //         throw new Error(`[RWV] ApiService ${error}`);
-    //     });
-    // },
-
-    get(url:string) {
-        console.log('entra');
-        console.log(`${API_URL}${url}`);
-        return axiosClient.get(`${API_URL}${url}`).catch((error) => {
-            throw new Error(`[RWV] ApiService ${error}`);
-        });
-        
+    // GET request genérica con soporte de tipos
+    async get<T>(url: string, config?: AxiosRequestConfig): Promise<T | undefined> {
+        try {
+            const response = await axiosClient.get<T>(url, config);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
     },
 
-    post(resource:any, params?: any) {
-        return axiosClient.post(`${resource}`, params);
+    // POST request
+    async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
+        try {
+            const response = await axiosClient.post<T>(url, data, config);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
     },
 
-    update(resource:any, slug:any, params?: any) {
-        return axiosClient.put(`${resource}/${slug}`, params);
-    },  
-
-    put(resource:any, params?: any) {
-        return axiosClient.put(`${resource}`, params);
+    // PUT request (completa)
+    async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
+        try {
+            const response = await axiosClient.put<T>(url, data, config);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
     },
 
-    delete(resource:any) {
-        return axiosClient.delete(resource).catch((error) => {
-            throw new Error(`[RWV] ApiService ${error}`);
-        });
-    }
+    // UPDATE (mismo concepto que PUT pero con slug)
+    async update<T>(url: string, slug: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
+        try {
+            const response = await axiosClient.put<T>(`${url}/${slug}`, data, config);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
+    },
+
+    // DELETE request
+    async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T | undefined> {
+        try {
+            const response = await axiosClient.delete<T>(url, config);
+            return response.data;
+        } catch (error) {
+            this.handleError(error);
+        }
+    },
+
+    // Manejo de errores centralizado
+    handleError(error: any): never {
+        console.error(`[ApiService] Error:`, error);
+        throw new Error(error?.response?.data?.message || error.message || "An error occurred");
+    },
 };
 
 export default ApiService;
-
-
