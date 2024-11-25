@@ -2,6 +2,8 @@ import { Module } from 'vuex';
 // import { SportService } from '../services/sportService';
 import { Activity } from '../shared/interfaces/Activity.interface';
 import { ActivityService } from '../services/activity.service';
+import { sortHours } from '../shared/utils/shortHours.util';
+import { sortWeekDays } from '../shared/utils/shortWeekDays.util';
 
 export interface ActivityState {
     activities: Array<Activity>;
@@ -35,12 +37,18 @@ export const activity: Module<ActivityState, any> = {
                 const hours = new Array<string>();
                 
                 for (let i = 0; i < activities.length; i++) {
-                    days.push(activities[i].week_day);
-                    hours.push(activities[i].slot_hour);
+                    if (!days.includes(activities[i].week_day)&& activities[i].week_day) {
+                        days.push(activities[i].week_day);
+                    }
+                    if (!hours.includes(activities[i].slot_hour) && activities[i].slot_hour) {
+                        hours.push(activities[i].slot_hour);
+                    }
                 }
                 
-                commit('setDays', days);
-                commit('setHours', hours);
+                
+                
+                commit('setDays', sortWeekDays(days));
+                commit('setHours', sortHours(hours));
                 commit('setActivities', activities);
                 
             } catch (error) {
