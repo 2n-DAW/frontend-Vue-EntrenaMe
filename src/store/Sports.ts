@@ -22,7 +22,6 @@ export const sport: Module<SportState, any> = {
                 
                 if (response){
                     commit('setSports', response.sports);
-                    console.log("response", response.sports);
                 }
                 
 
@@ -34,7 +33,6 @@ export const sport: Module<SportState, any> = {
 
     mutations: {
         setSports(state, sports: Sport[]) {
-            console.log("setSports", sports);
             state.sports = sports;
         },
     },

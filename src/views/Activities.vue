@@ -1,5 +1,5 @@
 <template>
-    <FiltersActivities @filters="filters_Selected"/>
+    <FiltersActivities @filters="filters_Selected" />
 </template>
 
 
@@ -27,6 +27,23 @@ const filters_Selected = async (filters: any) => {
     }
 };
 
+// const filters_URL = () => {
+//     const filters = router.currentRoute.value.query.filtros;
+//     if(filters){
+
+        
+//         const resp_filters = JSON.parse(atob(filters as string));
+//         console.log("ddddddddddddddddddddddddddddd",resp_filters);
+//         return resp_filters;
+//     }
+//     else{
+//         return "";
+//     }
+// };
+
+// onMounted(() => {
+//     filters_URL();
+// });
 
 
 </script>

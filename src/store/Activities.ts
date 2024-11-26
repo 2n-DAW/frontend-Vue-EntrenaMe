@@ -67,15 +67,12 @@ export const activity: Module<ActivityState, any> = {
 
     mutations: {
         setActivities(state, activities: Activity[]) {
-            console.log("setActivities", activities);
             state.activities = activities;
         },
         setDays(state, days: OptionSelect[]) {
-            console.log("setDays", days);
             state.filters.days = days;
         },
         setHours(state, hours: OptionSelect[]) {
-            console.log("setHours", hours);
             state.filters.hours = hours;
         },
     },

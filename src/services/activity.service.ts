@@ -4,10 +4,7 @@ import { Activities } from "../shared/interfaces/Activity.interface";
 
 export const ActivityService = {
     getAll(): Promise<Activities|undefined> {
-        console.log("getAll");
-        const resp =ApiService.get<Activities>("activities");
-        console.log("resp", resp);
-        return resp;
+        return ApiService.get<Activities>("activities");
     },
     getById(id:string) {
         return ApiService.get(`sports/${id}`);

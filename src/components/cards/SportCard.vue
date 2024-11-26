@@ -21,5 +21,5 @@ const props = defineProps({
 
 const { img_sport, n_sport} = props.data;
 
-console.log("props", props.data);
+
 </script>

@@ -1,4 +1,4 @@
- <template>
+<template>
     <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
         <Select
             label="Horario" 
@@ -28,12 +28,16 @@
 
 <script lang="ts" setup>
 
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from 'vuex';
 import Select from '../selects/Select.vue';
 import SearchFilters from '../search/SearchFilters.vue';
+import { useRouter } from 'vue-router';
 
 const store = useStore();
+const router = useRouter();
+
+
 store.dispatch('activity/initializeActivities');
 
 const hours = computed(() => store.getters['activity/getHours']);
@@ -64,6 +68,30 @@ const emitFilters = () => {
 
 watch([select_days_selected, text_search, select_hours_selected], () => {
     emitFilters();
+});
+
+
+const filters_URL = ():void => {
+    const filters = router.currentRoute.value.query.filtros;
+    if(filters){
+
+        
+        const resp_filters = JSON.parse(atob(filters as string));
+        console.log("ddddddddddddddddddddddddddddd",resp_filters);
+        if(resp_filters.hour!==""){
+            select_hours_selected.value = resp_filters.hour;
+        }
+        if(resp_filters.day!==""){
+            select_days_selected.value = resp_filters.day;
+        }
+        if(resp_filters.text!==""){
+            text_search.value = resp_filters.text;
+        }
+    }
+};
+
+onMounted(() => {
+    filters_URL();
 });
 
 

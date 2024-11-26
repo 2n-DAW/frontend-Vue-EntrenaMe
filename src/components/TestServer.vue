@@ -17,7 +17,7 @@ export default defineComponent({
     setup() {
         const response = ref<string | null>(null);
         const error = ref<string | null>(null);
-        console.log('dfdsfsdfds');
+    
 
         const testConnection = async () => {
             try {
