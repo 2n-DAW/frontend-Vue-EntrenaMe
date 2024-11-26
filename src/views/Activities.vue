@@ -1,5 +1,5 @@
 <template>
-    <FiltersActivities @filters="filtros" />
+    <FiltersActivities @filters="filters_Selected"/>
 </template>
 
 
@@ -7,28 +7,26 @@
 
 
 <script setup lang="ts">
-import { watch } from 'vue';
-import SportList from '../components/lists/SportList.vue';
 import FiltersActivities from '../components/filters/FiltersActivities.vue';
+import { useRouter } from 'vue-router';
 
-// Props
-defineProps({
-    filtros: {
-        type: Object,
-        required: true
-    }
-});
 
-// Emit (si es necesario)
+const router = useRouter();
+
 defineEmits(['filters']);
 
-// Función para manejar filtros
-const filtros = async (filters: any) => {
-    console.log("filtros", filters);
+const filters_Selected = async (filters: any) => {
+    console.table(filters);
+    let filters_btoa = "";
+    if(filters.hour!=="" || filters.day!=="" || filters.text!==""){
+        filters_btoa = btoa(JSON.stringify(filters));
+        router.push({ name: 'activities', query: { filtros: filters_btoa } });
+    }
+    else{
+        router.push({ name: 'activities' });
+    }
 };
 
-// Observador (watch)
-watch(filtros, (new_value) => {
-    console.log("filtros", new_value);
-});
+
+
 </script>

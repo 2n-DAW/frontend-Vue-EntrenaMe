@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
         <Select
             label="Horario" 
@@ -22,6 +22,7 @@
                 Borrar filtros
             </button>
         </div>
+        
     </div>
 </template>
 
@@ -43,7 +44,6 @@ const select_days_selected = ref('');
 const text_search = ref('');
 
 const deleteFilters = () => {
-    console.log("deleteFilters", select_hours_selected.value, select_days_selected.value, text_search.value);
     select_hours_selected.value = '';
     select_days_selected.value = '';
     text_search.value = '';
@@ -55,14 +55,14 @@ const emit = defineEmits(['filters']);
 
 const emitFilters = () => {
     const filters = {
-        select_hours_selected: select_hours_selected.value,
-        select_days_selected: select_days_selected.value,
-        text_search: text_search.value,
+        hour: select_hours_selected.value,
+        day: select_days_selected.value,
+        text: text_search.value,
     };
     emit('filters', filters);
 };
 
-watch([select_days_selected,text_search, select_hours_selected], () => {
+watch([select_days_selected, text_search, select_hours_selected], () => {
     emitFilters();
 });
 

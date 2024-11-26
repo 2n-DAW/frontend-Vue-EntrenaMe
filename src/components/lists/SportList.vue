@@ -22,5 +22,4 @@ const store = useStore();
 store.dispatch('sport/initializeSports'); 
 const sports = reactive(computed(() => store.getters['sport/allSports']));
 
-console.log("sports", sports.value);
 </script>
