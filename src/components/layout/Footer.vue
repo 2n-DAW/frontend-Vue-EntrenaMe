@@ -1,6 +1,6 @@
 
 <template>
-    <footer class="bg-gray-800 py-4 text-center shadow-inner">
-    <p>&copy; 2024 Polideportivo. Todos los derechos reservados.</p>
+    <footer class="bg-footer py-4 text-center shadow-inner text-text1">
+    <p>&copy; 2024 EntrenaMe. Todos los derechos reservados.</p>
   </footer>
 </template>

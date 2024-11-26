@@ -1,8 +1,8 @@
 <template>
  
-  <body class="bg-gray-900 text-gray-100 flex flex-col min-h-screen">
+  <body class="bg-background1 text-text1 flex flex-col min-h-screen">
     <Header />
-    <div class="container mx-auto flex-grow py-10">
+    <div class="w-full mx-auto flex-grow py-10">
       <router-view class="flex-1 p-6"></router-view>
     </div>
     <Footer />

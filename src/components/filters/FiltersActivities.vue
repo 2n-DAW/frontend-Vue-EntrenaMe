@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
         <Selector 
             label="Horario" 
             :data="hours" 
@@ -18,7 +18,7 @@
         <div class="flex flex-col justify-end">
             <button 
                 id="button-delete-filters" 
-                class="bg-[#00d0ff] hover:bg-[#0080ff] text-black p-1 rounded transition duration-200"  @click="deleteFilters">
+                class="bg-buton1 hover:bg-button1_hover text-button1_text p-1 rounded transition duration-200"  @click="deleteFilters">
                 Borrar filtros
             </button>
         </div>
@@ -63,3 +63,11 @@ const deleteFilters = () => {
 
 
 </script>
+
+<style scoped>
+.filters{
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 35px;
+}
+</style>

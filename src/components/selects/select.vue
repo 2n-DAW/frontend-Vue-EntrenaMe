@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col">
-        <h3 for="tipo-instalacion" class="text-gray-400">{{ label }}</h3>
+        <h3 for="tipo-instalacion" class="text-text2">{{ label }}</h3>
         <select 
-            class="bg-gray-700 text-gray-100 p-1 rounded"
+            class="bg-imput1 text-imput1_text p-1 rounded"
             v-model="selected_option">
             <option value="" disabled>Selecciona</option>
             <option 
