@@ -1,14 +1,14 @@
 <template>
     <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
-        <Selector 
+        <Select
             label="Horario" 
             :data="hours" 
-            v-model:selected="selected1"
+            v-model:selected="select_hours_selected"
         />
-        <Selector 
+        <Select
             label="Día" 
             :data="days" 
-            v-model:selected="selected2"
+            v-model:selected="select_days_selected"
         />
         <SearchFilters
             label="Buscar" 
@@ -29,7 +29,7 @@
 
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import Selector from '../selects/select.vue';
+import Select from '../selects/Select.vue';
 import SearchFilters from '../search/SearchFilters.vue';
 
 const store = useStore();
@@ -38,28 +38,33 @@ store.dispatch('activity/initializeActivities');
 const hours = computed(() => store.getters['activity/getHours']);
 const days = computed(() => store.getters['activity/getDays']);
 
-const selected1 = ref('');
-const selected2 = ref('');
+const select_hours_selected = ref('');
+const select_days_selected = ref('');
 const text_search = ref('');
 
-watch(selected1, (new_value) => {
-    console.log("selected1", new_value);
-});
-
-watch(selected2, (new_value) => {
-    console.log("selected2", new_value);
-});
-
-watch(text_search, (new_value) => {
-    console.log("text_search", new_value);
-});
-
 const deleteFilters = () => {
-    console.log("deleteFilters", selected1.value, selected2.value, text_search.value);
-    selected1.value = '';
-    selected2.value = '';
+    console.log("deleteFilters", select_hours_selected.value, select_days_selected.value, text_search.value);
+    select_hours_selected.value = '';
+    select_days_selected.value = '';
     text_search.value = '';
 };
+
+
+
+const emit = defineEmits(['filters']);
+
+const emitFilters = () => {
+    const filters = {
+        select_hours_selected: select_hours_selected.value,
+        select_days_selected: select_days_selected.value,
+        text_search: text_search.value,
+    };
+    emit('filters', filters);
+};
+
+watch([select_days_selected,text_search, select_hours_selected], () => {
+    emitFilters();
+});
 
 
 </script>

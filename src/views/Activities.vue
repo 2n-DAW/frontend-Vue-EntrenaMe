@@ -1,32 +1,34 @@
 <template>
-    <FiltersActivities />
+    <FiltersActivities @filters="filtros" />
 </template>
 
 
 
 
 
-
-
-
-
-
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { watch } from 'vue';
 import SportList from '../components/lists/SportList.vue';
 import FiltersActivities from '../components/filters/FiltersActivities.vue';
 
-export default defineComponent({
-    name: 'Activities',
-    components: {
-        SportList,
-        FiltersActivities,
-    },
+// Props
+defineProps({
+    filtros: {
+        type: Object,
+        required: true
+    }
 });
 
+// Emit (si es necesario)
+defineEmits(['filters']);
 
+// Función para manejar filtros
+const filtros = async (filters: any) => {
+    console.log("filtros", filters);
+};
 
-
-
-
+// Observador (watch)
+watch(filtros, (new_value) => {
+    console.log("filtros", new_value);
+});
 </script>
