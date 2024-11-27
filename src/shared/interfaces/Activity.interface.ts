@@ -1,3 +1,6 @@
+import { Sport } from "./Sport.interface";
+import { User } from "./User.interface";
+
 export interface Activity {
     id_activity: number;
     n_activity: string;
@@ -8,6 +11,9 @@ export interface Activity {
     week_day: string;
     slug_activity: string;
     id_user_instructor: number;
+    id_sport: number;
+    sport?: Sport;
+    instructor?: User;
 }
 
 export interface Activities {

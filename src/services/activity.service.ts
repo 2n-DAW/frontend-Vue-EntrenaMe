@@ -9,6 +9,10 @@ export const ActivityService = {
     getById(id:string) {
         return ApiService.get(`sports/${id}`);
     },
+    
+    getAllFiltered(filters: any): Promise<Activities|undefined> {
+        return ApiService.get<Activities>("activities/filtered", { params: filters });
+    },
 };
 
 

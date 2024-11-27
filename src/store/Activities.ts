@@ -7,6 +7,7 @@ import { OptionSelect } from '../shared/interfaces/OptionSelect.interface';
 
 export interface ActivityState {
     activities: Array<Activity>;
+    activitiesFiltered: Array<Activity>;
     filters: {
         days: Array<OptionSelect>;
         hours: Array<OptionSelect>;
@@ -15,6 +16,7 @@ export interface ActivityState {
 
 const state: ActivityState = {
     activities: [],
+    activitiesFiltered: [],
     filters: {
         days: [],
         hours: [],
@@ -63,6 +65,10 @@ export const activity: Module<ActivityState, any> = {
                 console.error('Error loading sports:', error);
             }
         },
+        
+        async fillActivitiesFiltered({ commit }, filters) {
+            const activities = await ActivityService.getAllFiltered(filters);
+        }
     },
 
     mutations: {

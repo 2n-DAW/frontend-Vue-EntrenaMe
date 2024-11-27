@@ -4,14 +4,14 @@
     />
     
     
-    <Pagination 
+    <!-- <Pagination 
         :total_items="total_items" 
         :current_page="current_page" 
         :items_page="3" 
         @update:currentPage="currentPage = $event" 
     />
     
-    
+    -->
     
     
     
