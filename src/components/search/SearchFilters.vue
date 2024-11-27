@@ -4,7 +4,7 @@
         <input 
             type="text" 
             id="search-input" 
-            class="bg-imput1 text-imput1_text p-1 rounded" 
+            class="bg-input1 text-input1_text p-1 rounded" 
             v-model="text"
             placeholder="Escribe para buscar..." 
         />

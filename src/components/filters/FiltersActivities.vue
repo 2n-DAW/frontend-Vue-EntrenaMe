@@ -18,7 +18,7 @@
         <div class="flex flex-col justify-end">
             <button 
                 id="button-delete-filters" 
-                class="bg-buton1 hover:bg-button1_hover text-button1_text p-1 rounded transition duration-200"  @click="deleteFilters">
+                class="bg-button1 hover:bg-button1_hover text-button1_text p-1 rounded transition duration-200"  @click="deleteFilters">
                 Borrar filtros
             </button>
         </div>
@@ -90,9 +90,7 @@ const filters_URL = ():void => {
     }
 };
 
-onMounted(() => {
-    filters_URL();
-});
+onMounted(filters_URL);
 
 
 </script>
@@ -102,5 +100,6 @@ onMounted(() => {
     padding-left: 15%;
     padding-right: 15%;
     padding-top: 35px;
+    padding-bottom: 15px;
 }
 </style>

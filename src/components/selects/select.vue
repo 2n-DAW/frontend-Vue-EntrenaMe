@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <h3 for="tipo-instalacion" class="text-text2">{{ label }}</h3>
-        <select class="bg-imput1 text-imput1_text p-1 rounded" v-model="selected_option">
+        <select class="bg-input1 text-input1_text p-1 rounded" v-model="selected_option">
             <option value="" disabled>Selecciona</option>
             <option v-for="(item, index) in data" :key="index" :value="item.value">
                 {{ item.label }}

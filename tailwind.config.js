@@ -18,7 +18,7 @@ module.exports = {
                 color2: '#00d0ff',
                 color3: '#0080ff',
 
-                buton1: '#FF6500',
+                button1: '#FF6500',
                 button1_hover: '#FF4500',
                 button1_text: '#ffffff',
 
@@ -28,8 +28,41 @@ module.exports = {
                 text2: '#ffffff',
                 text2_hover: '#FFd500',
 
-                imput1: '#0B192C',
-                imput1_text: '#ffffff',
+                input1: '#0B192C',
+                input1_text: '#ffffff',
+                
+                
+                
+                // paginación
+                pagination_arrow_hover: '#FF4500',
+                pagination_arrow: '#FF6500',
+                
+                
+                
+                pagination_button: '#FF650000',
+                pagination_button_hover: '#FF6500',
+                
+                
+                pagination_text: '#FF6500',
+                pagination_text_hover: '#010715',
+                
+                pagination_border: '#FF6500',
+                pagination_border_hover: '#ffffff00',
+                
+                
+                
+                pagination_button_selected: '#FF6500',
+                pagination_button_selected_hover: '#FF6500',
+                
+                
+                
+                pagination_text_selected: '#010715',
+                pagination_text_selected_hover: '#010715',
+                
+                
+                
+                pagination_border_selected: '#FF6500',
+                pagination_border_selected_hover: '#ffffff00',
 
 
             },
