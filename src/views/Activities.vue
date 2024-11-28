@@ -5,13 +5,11 @@
     
     
     <!-- <Pagination 
-        :total_items="total_items" 
+        :total_items="activities_count" 
         :current_page="current_page" 
         :items_page="3" 
         @update:currentPage="currentPage = $event" 
-    />
-    
-    -->
+    /> -->
     
     
     
@@ -24,16 +22,17 @@
 
 
 <script setup lang="ts">
-import { useStore } from 'vuex';
 import FiltersActivities from '../components/filters/FiltersActivities.vue';
 import Pagination from '../components/pagination/Pagination.vue';
 import { useRouter } from 'vue-router';
-import { computed } from 'vue';
+import { onMounted } from 'vue';
+import { Activity } from '../shared/interfaces/Activity.interface';
+import { ActivityService } from '../services/activity.service';
 
 const router = useRouter();
-const store = useStore();
 
-const total_items = computed(() => store.getters['activity/getTotalItems']);
+let activities: Activity[] = [];
+let activities_count = 0;
 
 defineEmits(['filters']);
 
@@ -48,6 +47,16 @@ const filters_Selected = async (filters: any) => {
         router.push({ name: 'activities' });
     }
 };
+
+const getActivities = async () => {
+    const resp = await ActivityService.getAllFiltered({});
+    if(resp){
+        activities = resp.activities;
+        activities_count = resp.activities_count;
+    }
+};
+
+onMounted(getActivities);
 
 
 </script>

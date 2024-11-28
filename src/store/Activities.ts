@@ -7,7 +7,7 @@ import { OptionSelect } from '../shared/interfaces/OptionSelect.interface';
 
 export interface ActivityState {
     activities: Array<Activity>;
-    activitiesFiltered: Array<Activity>;
+    // activitiesFiltered: Array<Activity>;
     filters: {
         days: Array<OptionSelect>;
         hours: Array<OptionSelect>;
@@ -16,7 +16,7 @@ export interface ActivityState {
 
 const state: ActivityState = {
     activities: [],
-    activitiesFiltered: [],
+    // activitiesFiltered: [],
     filters: {
         days: [],
         hours: [],
@@ -66,9 +66,11 @@ export const activity: Module<ActivityState, any> = {
             }
         },
         
-        async fillActivitiesFiltered({ commit }, filters) {
-            const activities = await ActivityService.getAllFiltered(filters);
-        }
+        // async fillActivitiesFiltered({ commit }, filters) {
+        //     const activities = await ActivityService.getAllFiltered(filters);
+        //     if (activities === undefined) return;
+        //     commit('setActivities', activities.activities);
+        // }
     },
 
     mutations: {
@@ -80,7 +82,7 @@ export const activity: Module<ActivityState, any> = {
         },
         setHours(state, hours: OptionSelect[]) {
             state.filters.hours = hours;
-        },
+        }
     },
     getters: {
         allActivities(state): Activity[] {

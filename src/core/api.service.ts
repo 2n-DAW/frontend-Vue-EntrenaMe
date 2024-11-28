@@ -1,20 +1,12 @@
-import JwtService from "./jwt.service";
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { API_URL } from "./config";
+import { API_URL_CLIENT } from "./config";
 
 // Crear una instancia de Axios con configuración base
 export const axiosClient: AxiosInstance = axios.create({
-    baseURL: API_URL,
+    baseURL: API_URL_CLIENT,
 });
 
 const ApiService = {
-    // Configurar el encabezado de autorización
-    setHeader() {
-        const token = JwtService.getToken();
-        if (token) {
-            axiosClient.defaults.headers["Authorization"] = `Token ${token}`;
-        }
-    },
 
     // GET request genérica con soporte de tipos
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T | undefined> {

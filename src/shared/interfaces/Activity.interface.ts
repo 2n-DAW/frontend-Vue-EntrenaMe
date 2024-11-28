@@ -18,4 +18,6 @@ export interface Activity {
 
 export interface Activities {
     activities: Activity[];
+    activities_count: number;
+    
 }
