@@ -1,6 +1,6 @@
 import ApiService from "../core/api.service";
 import { Activities } from "../shared/interfaces/Activity.interface";
-
+import qs from 'qs';
 
 export const ActivityService = {
     getAll(): Promise<Activities|undefined> {
@@ -11,7 +11,8 @@ export const ActivityService = {
     },
     
     getAllFiltered(filters: any): Promise<Activities|undefined> {
-        return ApiService.get<Activities>("activities/filtered", { params: filters });
+        const resp =  ApiService.get<Activities>("activities/instructors&sports/filtered", {params: filters});
+        return resp;
     },
 };
 

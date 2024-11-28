@@ -37,22 +37,24 @@ let activities_count = 0;
 defineEmits(['filters']);
 
 const filters_Selected = async (filters: any) => {
-    console.table(filters);
     let filters_btoa = "";
-    if(filters.hour!=="" || filters.day!=="" || filters.text!==""){
+    if(filters.slot_hour!=="" || filters.week_day!=="" || filters.week_day!==""){
         filters_btoa = btoa(JSON.stringify(filters));
         router.push({ name: 'activities', query: { filtros: filters_btoa } });
     }
     else{
         router.push({ name: 'activities' });
     }
+    console.log(filters);
+    getActivities(filters);
 };
 
-const getActivities = async () => {
-    const resp = await ActivityService.getAllFiltered({});
+const getActivities = async (filters:any) => {
+    const resp = await ActivityService.getAllFiltered(filters);
     if(resp){
         activities = resp.activities;
         activities_count = resp.activities_count;
+        console.log(activities);
     }
 };
 

@@ -59,9 +59,9 @@ const emit = defineEmits(['filters']);
 
 const emitFilters = () => {
     const filters = {
-        hour: select_hours_selected.value,
-        day: select_days_selected.value,
-        text: text_search.value,
+        slot_hour: select_hours_selected.value,
+        week_day: select_days_selected.value,
+        n_activity: text_search.value,
     };
     emit('filters', filters);
 };
@@ -77,15 +77,14 @@ const filters_URL = ():void => {
 
         
         const resp_filters = JSON.parse(atob(filters as string));
-        console.log("ddddddddddddddddddddddddddddd",resp_filters);
-        if(resp_filters.hour!==""){
-            select_hours_selected.value = resp_filters.hour;
+        if(resp_filters.slot_hour!==""){
+            select_hours_selected.value = resp_filters.slot_hour;
         }
-        if(resp_filters.day!==""){
-            select_days_selected.value = resp_filters.day;
+        if(resp_filters.week_day!==""){
+            select_days_selected.value = resp_filters.week_day;
         }
-        if(resp_filters.text!==""){
-            text_search.value = resp_filters.text;
+        if(resp_filters.n_activity!==""){
+            text_search.value = resp_filters.n_activity;
         }
     }
 };

@@ -3,10 +3,7 @@ import { Sports } from "../shared/interfaces/Sport.interface";
 
 export const SportService = {
     getAll(): Promise<Sports|undefined> {
-        console.log("getAll");
-        const resp =ApiService.get<Sports>("sports");
-        console.log("resp", resp);
-        return resp;
+        return ApiService.get<Sports>("sports");
     },
     getById(id:string) {
         return ApiService.get(`sports/${id}`);
