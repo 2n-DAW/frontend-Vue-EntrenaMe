@@ -38,7 +38,6 @@ module.exports = {
                 pagination_arrow: '#FF6500',
                 
                 
-                
                 pagination_button: '#FF650000',
                 pagination_button_hover: '#FF6500',
                 
@@ -46,23 +45,33 @@ module.exports = {
                 pagination_text: '#FF6500',
                 pagination_text_hover: '#010715',
                 
+                
                 pagination_border: '#FF6500',
                 pagination_border_hover: '#ffffff00',
-                
                 
                 
                 pagination_button_selected: '#FF6500',
                 pagination_button_selected_hover: '#FF6500',
                 
                 
-                
                 pagination_text_selected: '#010715',
                 pagination_text_selected_hover: '#010715',
                 
                 
-                
                 pagination_border_selected: '#FF6500',
                 pagination_border_selected_hover: '#ffffff00',
+                
+                //Card text 
+                card_text1: '#ffffff',
+                card_text2: '#ffffff80',
+                card_text_h1: '#ffffff',
+                card_text_h2: '#ffffff',
+                card_text_h3: '#ffffff',
+                
+                card_background: '#0B192C',
+                
+                card_border: '#FF6500',
+                
 
 
             },
