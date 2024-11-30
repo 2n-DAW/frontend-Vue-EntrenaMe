@@ -10,6 +10,7 @@
 <script lang="ts" setup>
 import { Activity } from '../../shared/interfaces/Activity.interface';
 import ActivityCard from '../cards/ActivityCard.vue';
+import { defineProps } from 'vue';
 
 
 const { activities } = defineProps({

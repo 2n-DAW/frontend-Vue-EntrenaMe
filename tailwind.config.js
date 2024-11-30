@@ -34,7 +34,7 @@ module.exports = {
                 
                 
                 // paginación
-                pagination_arrow_hover: '#FF4500',
+                pagination_arrow_hover: '#ffffff',
                 pagination_arrow: '#FF6500',
                 
                 
@@ -60,6 +60,8 @@ module.exports = {
                 
                 pagination_border_selected: '#FF6500',
                 pagination_border_selected_hover: '#ffffff00',
+                
+                
                 
                 //Card text 
                 card_text1: '#ffffff',

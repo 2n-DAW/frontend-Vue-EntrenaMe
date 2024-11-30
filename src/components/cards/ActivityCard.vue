@@ -19,7 +19,6 @@
 
             <div class= "flex flex-col justify-center gap-4">
                 
-                
                 <div class="flex items-center gap-4">
                     <img :src="`img/users/${activity.instructor.img_user}`" alt="Instructor"
                     class="w-12 h-12 rounded-full object-cover" />
@@ -43,6 +42,5 @@ const { activity } = defineProps({
     },
 });
 
-console.log(activity);
 
 </script>
