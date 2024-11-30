@@ -1,5 +1,6 @@
 <template>
     <FiltersActivities 
+        :filters_URL="filters_selected"
         @filters="filters_Selected" 
     />
     
@@ -29,9 +30,10 @@ const router = useRouter();
 
 const activities = ref<Activity[]>([]);
 const activities_count = ref(10);
-const currentFilters = ref<{ offset?: number; limit?: number }>({});
+const currentFilters = ref<{ offset?: number; limit?: number, slot_hour?: string, week_day?: string, n_activity?: string}>({});
 const current_page = ref(1);
 const current_page_output = ref(1);
+const filters_selected = ref({});
 
 const filters_Selected = async (filters: any) => {
     currentFilters.value = filters;
@@ -42,7 +44,6 @@ const filters_Selected = async (filters: any) => {
     } else {
         router.push({ name: 'activities' });
     }
-    console.log(currentFilters.value);
     await getActivities(currentFilters.value);
 };
 
@@ -55,15 +56,43 @@ const getActivities = async (filters: any = {}) => {
 };
 
 watch(current_page_output, () => {
-    current_page.value = current_page_output.value;
-    console.log("Current page:", current_page.value);
-    
+    current_page.value = current_page_output.value;    
     currentFilters.value.offset = (current_page.value - 1);
     currentFilters.value.limit = 2;
-    console.log("Current page output:", currentFilters.value);
     getActivities(currentFilters.value);
 });
 
-onMounted(() => getActivities());
+
+const filters_URL = (): void => {
+    const filters = router.currentRoute.value.query.filtros;
+    if (filters) {
+        const resp_filters = JSON.parse(atob(filters as string));
+        if (resp_filters.slot_hour !== "") {
+            currentFilters.value.slot_hour = resp_filters.slot_hour;
+        }
+        if (resp_filters.week_day !== "") {
+            currentFilters.value.week_day = resp_filters.week_day;
+        }
+        if (resp_filters.n_activity !== "") {
+            currentFilters.value.n_activity = resp_filters.n_activity;
+        }
+    }
+    filters_selected.value = currentFilters.value;
+    console.log("Filters URL:", currentFilters.value);
+    getActivities(currentFilters.value);
+};
+
+
+
+
+
+
+
+
+
+onMounted(() => {
+    filters_URL();
+});
+
 
 </script>
