@@ -25,17 +25,21 @@ import ActivitiesList from '../components/lists/ActivitiesList.vue';
 import { ActivityService } from '../services/activity.service';
 import { Activity } from '../shared/interfaces/Activity.interface';
 import Pagination from '../components/pagination/Pagination.vue';
+import { FilterActivity } from '../shared/interfaces/fiters/FilterActivity.interface';
 
 const router = useRouter();
 
 const activities = ref<Activity[]>([]);
 const activities_count = ref(10);
-const currentFilters = ref<{ offset?: number; limit?: number, slot_hour?: string, week_day?: string, n_activity?: string}>({});
+const currentFilters = ref<Partial<FilterActivity>>({});
 const current_page = ref(1);
 const current_page_output = ref(1);
 const filters_selected = ref({});
 
-const filters_Selected = async (filters: any) => {
+
+
+
+const filters_Selected = async (filters: Partial<FilterActivity>):Promise<void> => {
     currentFilters.value = filters;
     let filters_btoa = "";
     if (filters.slot_hour !== "" || filters.week_day !== "" || filters.n_activity !== "") {
@@ -47,7 +51,7 @@ const filters_Selected = async (filters: any) => {
     await getActivities(currentFilters.value);
 };
 
-const getActivities = async (filters: any = {}) => {
+const getActivities = async (filters: Partial<FilterActivity>):Promise<void> => {
     const resp = await ActivityService.getAllFiltered(filters);
     if (resp) {
         activities.value = resp.activities; 
@@ -55,8 +59,7 @@ const getActivities = async (filters: any = {}) => {
     }
 };
 
-watch(current_page_output, (new_value) => {
-    console.log("current_page_output", new_value);
+watch(current_page_output, () => {
     current_page.value = current_page_output.value;    
     currentFilters.value.offset = (current_page.value - 1);
     currentFilters.value.limit = 2;

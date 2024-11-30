@@ -17,11 +17,11 @@
 
 <script lang="ts" setup>
 
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import Select from '../selects/Select.vue';
+import Select from '../selects/select.vue';
 import SearchFilters from '../search/SearchFilters.vue';
-import { useRouter } from 'vue-router';
+import { FilterActivity } from '../../shared/interfaces/fiters/FilterActivity.interface';
 
 const store = useStore();
 
@@ -37,13 +37,13 @@ const text_search = ref('');
 
 const props = defineProps({
     filters_URL: {
-        type: Object,
+        type: Object as () => Partial<FilterActivity>,
         required: false,
     },
 });
 
 
-const highlight = () => {
+const highlight = ():void => {
     if (props.filters_URL) {
         console.log(props.filters_URL);
         if (props.filters_URL.slot_hour) select_hours_selected.value = props.filters_URL.slot_hour;
@@ -53,13 +53,13 @@ const highlight = () => {
 
 };
 
-watch(props, () => {
+watch(props, ():void => {
     highlight();
 });
 
 
 
-const deleteFilters = () => {
+const deleteFilters = ():void => {
     select_hours_selected.value = '';
     select_days_selected.value = '';
     text_search.value = '';
@@ -69,7 +69,7 @@ const deleteFilters = () => {
 
 const emit = defineEmits(['filters']);
 
-const emitFilters = () => {
+const emitFilters = ():void => {
     const filters = {
         slot_hour: select_hours_selected.value,
         week_day: select_days_selected.value,

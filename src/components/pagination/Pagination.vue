@@ -62,7 +62,6 @@
 </template>
 
 <script setup lang="ts">
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 import { defineProps, defineEmits, computed, watch } from 'vue';
 
 const { total_items, items_page, current_page } = defineProps({
@@ -90,25 +89,23 @@ const current_page_output = computed({
 });
 
 
-const prevPage = () => {
-    console.log("clicao");
+const prevPage = ():void => {
     if (current_page > 1) {
-        console.log("clicao");
         current_page_output.value = current_page - 1;
     }
 };
 
-const nextPage = () => {
+const nextPage = ():void => {
     if (current_page < total_pages) {
         current_page_output.value = current_page + 1;
     }
 }
-const goToPage = (page: number) => {
+const goToPage = (page: number):void => {
     console.log(page);
     current_page_output.value = page;
 }
 
-watch(current_page_output, () => {
+watch(current_page_output, ():void => {
     emit('update:current_page_output', current_page_output.value);
 });
 
