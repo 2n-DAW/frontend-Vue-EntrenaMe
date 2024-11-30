@@ -55,7 +55,8 @@ const getActivities = async (filters: any = {}) => {
     }
 };
 
-watch(current_page_output, () => {
+watch(current_page_output, (new_value) => {
+    console.log("current_page_output", new_value);
     current_page.value = current_page_output.value;    
     currentFilters.value.offset = (current_page.value - 1);
     currentFilters.value.limit = 2;

@@ -31,6 +31,8 @@ module.exports = {
                 input1: '#0B192C',
                 input1_text: '#ffffff',
                 
+                disabled: '#FF650030',
+                
                 
                 
                 // paginación

@@ -1,11 +1,21 @@
 <template>
     <div class="pagination mt-8">
         <ul class="flex list-none">
-            <li>
+            <li v-if="current_page > 1">
                 <span role="button" tabindex="0"
                     class="w-10 h-10 flex items-center justify-center text-pagination_arrow cursor-pointer transition-colors duration-300 ease-in-out hover:text-pagination_arrow_hover"
                     @click="prevPage" :class="{ 'cursor-not-allowed': current_page === 1 }">
-
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </span>
+            </li>
+            
+            
+            <li v-if="current_page <= 1">
+                <span role="button" tabindex="0"
+                    class="w-10 h-10 flex items-center justify-center text-disabled cursor-pointer transition-colors duration-300 ease-in-out ">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -17,16 +27,15 @@
             <li v-for="page in total_pages" :key="page">
                 <span role="button" tabindex="0" class="w-10 h-10 flex items-center justify-center rounded-full shadow-md
                 cursor-pointer transition-colors duration-300 ease-in-out text-lg" :class="{
-                'bg-pagination_button_selected text-pagination_text_selected hover:text-pagination_text_selected_hover border hover:bg-pagination_button_selected_hover border-pagination_border_selected hover:border-pagination_border_selected_hover': page === current_page,
-                'bg-pagination_button text-pagination_text border hover:text-pagination_text_hover hover:bg-pagination_button_hover border-pagination_border hover:border-pagination_border_hover': page !== current_page
-            }"
-            @click="goToPage(page)">
+                    'bg-pagination_button_selected text-pagination_text_selected hover:text-pagination_text_selected_hover border hover:bg-pagination_button_selected_hover border-pagination_border_selected hover:border-pagination_border_selected_hover': page === current_page,
+                    'bg-pagination_button text-pagination_text border hover:text-pagination_text_hover hover:bg-pagination_button_hover border-pagination_border hover:border-pagination_border_hover': page !== current_page
+                }" @click="goToPage(page)">
                     {{ page }}
                 </span>
             </li>
 
 
-            <li>
+            <li v-if="current_page < total_pages">
                 <span role="button" tabindex="0"
                     class="w-10 h-10 flex items-center justify-center text-pagination_arrow cursor-pointer transition-colors duration-300 ease-in-out hover:text-pagination_arrow_hover"
                     @click="nextPage" :class="{ 'cursor-not-allowed': current_page === total_pages }">
@@ -38,11 +47,22 @@
                 </span>
             </li>
             
+            <li v-if="current_page >= total_pages">
+                <span role="button" tabindex="0"
+                    class="w-10 h-10 flex items-center justify-center text-disabled cursor-pointer transition-colors duration-300 ease-in-out ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19l7-7-7-7" />
+                    </svg>
+                </span>
+            </li>
+
         </ul>
     </div>
 </template>
 
 <script setup lang="ts">
+import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 import { defineProps, defineEmits, computed, watch } from 'vue';
 
 const { total_items, items_page, current_page } = defineProps({
@@ -71,14 +91,16 @@ const current_page_output = computed({
 
 
 const prevPage = () => {
+    console.log("clicao");
     if (current_page > 1) {
-        current_page - 1;
+        console.log("clicao");
+        current_page_output.value = current_page - 1;
     }
 };
 
 const nextPage = () => {
     if (current_page < total_pages) {
-        current_page + 1;
+        current_page_output.value = current_page + 1;
     }
 }
 const goToPage = (page: number) => {
