@@ -30,6 +30,11 @@ store.dispatch('activity/initializeActivities');
 
 const hours = computed(() => store.getters['activity/getHours']);
 const days = computed(() => store.getters['activity/getDays']);
+const sports = computed(() => store.getters['activity/getSports']);
+
+watch(sports, (new_value) => {
+    console.log("yeeeeeeeeeee",new_value);
+});
 
 const select_hours_selected = ref('');
 const select_days_selected = ref('');

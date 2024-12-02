@@ -4,7 +4,7 @@ import qs from 'qs';
 
 export const ActivityService = {
     getAll(): Promise<Activities|undefined> {
-        return ApiService.get<Activities>("activities");
+        return ApiService.get<Activities>("activities/instructors&sports");
     },
     getById(id:string) {
         return ApiService.get(`sports/${id}`);
