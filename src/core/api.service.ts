@@ -8,7 +8,6 @@ export const axiosClient: AxiosInstance = axios.create({
 
 const ApiService = {
 
-    // GET request genérica con soporte de tipos
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T | undefined> {
         try {
             const response = await axiosClient.get<T>(url, config);
@@ -18,7 +17,7 @@ const ApiService = {
         }
     },
 
-    // POST request
+
     async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
         try {
             const response = await axiosClient.post<T>(url, data, config);
@@ -28,7 +27,6 @@ const ApiService = {
         }
     },
 
-    // PUT request (completa)
     async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
         try {
             const response = await axiosClient.put<T>(url, data, config);
@@ -38,7 +36,7 @@ const ApiService = {
         }
     },
 
-    // UPDATE (mismo concepto que PUT pero con slug)
+
     async update<T>(url: string, slug: string, data?: any, config?: AxiosRequestConfig): Promise<T | undefined> {
         try {
             const response = await axiosClient.put<T>(`${url}/${slug}`, data, config);
@@ -48,7 +46,6 @@ const ApiService = {
         }
     },
 
-    // DELETE request
     async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T | undefined> {
         try {
             const response = await axiosClient.delete<T>(url, config);
@@ -58,7 +55,7 @@ const ApiService = {
         }
     },
 
-    // Manejo de errores centralizado
+
     handleError(error: any): never {
         console.error(`[ApiService] Error:`, error);
         throw new Error(error?.response?.data?.message || error.message || "An error occurred");

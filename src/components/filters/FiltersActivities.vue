@@ -66,7 +66,9 @@ watch(props, ():void => {
 const deleteFilters = ():void => {
     select_hours_selected.value = '';
     select_days_selected.value = '';
+    select_sports_selected.value = '';
     text_search.value = '';
+
 };
 
 
@@ -78,11 +80,12 @@ const emitFilters = ():void => {
         slot_hour: select_hours_selected.value,
         week_day: select_days_selected.value,
         n_activity: text_search.value,
+        sport: select_sports_selected.value,
     };
     emit('filters', filters);
 };
 
-watch([select_days_selected, text_search, select_hours_selected], () => {
+watch([select_days_selected, text_search, select_hours_selected, select_sports_selected], () => {
     emitFilters();
 });
 

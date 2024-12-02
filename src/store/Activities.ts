@@ -69,7 +69,7 @@ export const activity: Module<ActivityState, any> = {
                 });
                 
                 const sports_label = sports_unique.map((sport) => {
-                    return { value: sport.slug_sport, label: sport.n_sport };
+                    return { value: sport.n_sport, label: sport.n_sport }; //Cambiar a slug_sport
                 });
 
                 commit('setDays', days_label);
