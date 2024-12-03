@@ -10,40 +10,18 @@
                 </h2>
 
                 <div v-if="isLogin">
-                    <Register />
+                    <Login />
                 </div>
 
                 <div v-else>
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-col">
-                            <h3 for="email-input-register" class="text-text2">Email</h3>
-                            <input type="email" id="email-input-register" class="bg-input1 text-input1_text p-2 rounded"
-                                v-model="email" placeholder="Enter your email" required />
-                        </div>
-                        <div class="flex flex-col">
-                            <h3 for="password-input-register" class="text-text2">Password</h3>
-                            <input type="password" id="password-input-register"
-                                class="bg-input1 text-input1_text p-2 rounded" v-model="password"
-                                placeholder="Enter your password" required />
-                        </div>
-                        <div class="flex flex-col">
-                            <h3 for="confirm-password-input-register" class="text-text2">Confirm Password</h3>
-                            <input type="password" id="confirm-password-input-register"
-                                class="bg-input1 text-input1_text p-2 rounded" v-model="confirmPassword"
-                                placeholder="Confirm your password" required />
-                        </div>
-                        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                            @click="handleSubmit">
-                            Register
-                        </button>
-                    </div>
+                    <Register />
                 </div>
 
 
                 <p class="text-center text-gray-600">
-                    {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
+                    {{ isLogin ? "¿Aún no tienes una cuenta?" : "¿Ya tientes una cuenta?" }}
                     <button class="text-blue-600 underline hover:text-blue-800 transition" @click="toggleForm">
-                        {{ isLogin ? 'Register' : 'Login' }}
+                        {{ isLogin ? 'Registrarse' : 'Logearse' }}
                     </button>
                 </p>
             </div>
@@ -53,9 +31,11 @@
 </template>
 
 <script setup lang="ts">
+
 import { ref } from 'vue';
 import ImgAuth from '../components/img_svg/imgAuth.vue';
 import Register from '../components/auth/Register.vue';
+import Login from '../components/auth/Login.vue';
 
 const email = ref('');
 const password = ref('');
@@ -69,14 +49,7 @@ const toggleForm = () => {
     confirmPassword.value = '';
 };
 
-const handleSubmit = () => {
-    if (!isLogin.value && password.value !== confirmPassword.value) {
-        alert("Passwords don't match!");
-        return;
-    }
-    alert(isLogin.value ? 'Logged in successfully!' : 'Registered successfully!');
-    // Implement your authentication or registration logic here.
-};
+
 </script>
 
 <style>

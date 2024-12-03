@@ -29,8 +29,26 @@ watch([email_data, username_data, password_data, password_repeat_data, select_ro
     <div class="flex flex-col gap-6 w-1/2 mx-auto">
         
         <div class ="flex gap-6">
-            <TextInputForm
-            class="w-3/5"
+            <TextInputForm 
+                class="w-3/5"
+                label="Nombre de usuario"
+                type="text" 
+                id="username_input_register" 
+                v-model:data="username_data" 
+                placeholder="Ejemplo123" 
+            />
+            
+            <SelectForm 
+                label="Rol" 
+                class="w-2/5"
+                id="select_roles_register"
+                placeholder="Selecciona un rol"
+                v-model:data="select_roles_selected"
+                :options="roles"    
+            />
+        </div>
+        
+        <TextInputForm
             label="Email" 
             type="email" 
             id="email_input_register" 
@@ -38,24 +56,6 @@ watch([email_data, username_data, password_data, password_repeat_data, select_ro
             placeholder="ejemplo123@email.com" 
         />
         
-        <SelectForm 
-            label="Rol" 
-            class="w-2/5"
-            id="select_roles_register"
-            placeholder="Selecciona un rol"
-            v-model:data="select_roles_selected"
-            :options="roles"    
-        />
-        </div>
-        
-        
-        <TextInputForm 
-            label="Nombre de usuario"
-            type="text" 
-            id="username_input_register" 
-            v-model:data="username_data" 
-            placeholder="Ejemplo123" 
-        />
         <TextInputForm 
             label="Contraseña"
             type="password" 
@@ -74,8 +74,8 @@ watch([email_data, username_data, password_data, password_repeat_data, select_ro
         
         
         
-        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" @click="handleSubmit">
-            Login
+        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+            Registrarse
         </button>
         
     </div>
