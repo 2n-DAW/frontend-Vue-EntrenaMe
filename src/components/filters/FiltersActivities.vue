@@ -1,9 +1,24 @@
 <template>
     <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
-        <Select label="Horario" :data="hours" v-model:selected="select_hours_selected" />
-        <Select label="Día" :data="days" v-model:selected="select_days_selected" />
-        <Select label="Deporte" :data="sports" v-model:selected="select_sports_selected" />
-        <SearchFilters label="Buscar" v-model:input_text_search="text_search" />
+        <Select 
+            label="Horario" 
+            :data="hours" 
+            v-model:selected="select_hours_selected" 
+        />
+        <Select 
+            label="Día" 
+            :data="days" 
+            v-model:selected="select_days_selected" 
+        />
+        <Select 
+            label="Deporte" 
+            :data="sports" 
+            v-model:selected="select_sports_selected" 
+        />
+            <SearchFilters 
+            label="Buscar" 
+            v-model:input_text_search="text_search" 
+        />
 
         <div class="flex flex-col justify-end">
             <button id="button-delete-filters"

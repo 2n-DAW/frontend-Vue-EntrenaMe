@@ -10,12 +10,18 @@ watch([email_data, password_data], (new_value) => {
     console.log(new_value);
 });
 
+const emit = defineEmits(['login']);
+const submitLogin = () => {
+    emit('login', { email: email_data.value, password: password_data.value });
+};
+
+
+
 </script>
 
 <template>
 
     <div class="flex flex-col gap-6 w-1/2 mx-auto">
-       
         <TextInputForm
             label="Email" 
             type="email" 
@@ -33,7 +39,7 @@ watch([email_data, password_data], (new_value) => {
         />
         
         
-        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" >
+        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition" @click="submitLogin">
             Logearse
         </button>
     </div>

@@ -1,3 +1,25 @@
+<script setup lang="ts">
+
+import { ref, watch } from 'vue';
+import ImgAuth from '../components/img_svg/imgAuth.vue';
+import Register from '../components/auth/Register.vue';
+import Login from '../components/auth/Login.vue';
+
+
+const isLogin = ref(true);
+
+const toggleForm = () => {
+    isLogin.value = !isLogin.value;
+};
+
+const login = (data:any) => {
+    console.log("Login", data);
+};
+
+
+</script>
+
+
 <template>
     <div class="main_div">
         <div class="img_div">
@@ -10,7 +32,9 @@
                 </h2>
 
                 <div v-if="isLogin">
-                    <Login />
+                    <Login 
+                        @login="login"
+                    />
                 </div>
 
                 <div v-else>
@@ -30,27 +54,7 @@
 
 </template>
 
-<script setup lang="ts">
 
-import { ref } from 'vue';
-import ImgAuth from '../components/img_svg/imgAuth.vue';
-import Register from '../components/auth/Register.vue';
-import Login from '../components/auth/Login.vue';
-
-const email = ref('');
-const password = ref('');
-const confirmPassword = ref('');
-const isLogin = ref(true);
-
-const toggleForm = () => {
-    isLogin.value = !isLogin.value;
-    email.value = '';
-    password.value = '';
-    confirmPassword.value = '';
-};
-
-
-</script>
 
 <style>
 .main_div {
