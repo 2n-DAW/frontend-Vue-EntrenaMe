@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import { API_URL_CLIENT } from "./config";
 
-// Crear una instancia de Axios con configuración base
 export const axiosClient: AxiosInstance = axios.create({
     baseURL: API_URL_CLIENT,
 });

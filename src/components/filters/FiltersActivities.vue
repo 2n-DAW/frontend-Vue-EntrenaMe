@@ -46,6 +46,15 @@ const props = defineProps({
 });
 
 
+const deleteFilters = ():void => {
+    select_hours_selected.value = '';
+    select_days_selected.value = '';
+    select_sports_selected.value = '';
+    text_search.value = '';
+
+};
+
+
 const highlight = ():void => {
     if (props.filters_URL) {
         console.log(props.filters_URL);
@@ -60,16 +69,6 @@ const highlight = ():void => {
 watch(props, ():void => {
     highlight();
 });
-
-
-
-const deleteFilters = ():void => {
-    select_hours_selected.value = '';
-    select_days_selected.value = '';
-    select_sports_selected.value = '';
-    text_search.value = '';
-
-};
 
 
 
