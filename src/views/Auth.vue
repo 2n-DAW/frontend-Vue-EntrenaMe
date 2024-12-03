@@ -10,23 +10,7 @@
                 </h2>
 
                 <div v-if="isLogin">
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-col">
-                            <h3 for="email-input-login" class="text-text2">Email</h3>
-                            <input type="email" id="email-input-login" class="bg-input1 text-input1_text p-2 rounded"
-                                v-model="email" placeholder="Enter your email" required />
-                        </div>
-                        <div class="flex flex-col">
-                            <h3 for="password-input-login" class="text-text2">Password</h3>
-                            <input type="password" id="password-input-login"
-                                class="bg-input1 text-input1_text p-2 rounded" v-model="password"
-                                placeholder="Enter your password" required />
-                        </div>
-                        <button class="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                            @click="handleSubmit">
-                            Login
-                        </button>
-                    </div>
+                    <Register />
                 </div>
 
                 <div v-else>
@@ -71,6 +55,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ImgAuth from '../components/img_svg/imgAuth.vue';
+import Register from '../components/auth/Register.vue';
 
 const email = ref('');
 const password = ref('');
