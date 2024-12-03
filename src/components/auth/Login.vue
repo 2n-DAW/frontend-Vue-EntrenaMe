@@ -5,10 +5,10 @@ import { emailRegex } from '../../shared/utils/Regex/emailRegex.util';
 import { passwordRegex } from '../../shared/utils/Regex/passwordRegex.util';
 
 
-const email_data = ref<String>('');
-const password_data = ref<String>('');
-const error_email = ref<String>('');
-const error_password = ref<String>('');
+const email_data = ref('');
+const password_data = ref('');
+const error_email = ref('');
+const error_password = ref('');
 
 
 const submitLogin = () => {
@@ -17,18 +17,14 @@ const submitLogin = () => {
 };
 
 const validateLogin = ():boolean=>{
-    let correct:boolean = true;
-    const email:String = email_data.value;
-    const password:String = password_data.value;
-
-    error_email.value = emailRegex(email);
-    error_password.value = passwordRegex(password);
+    error_email.value = emailRegex(email_data.value);
+    error_password.value = passwordRegex(password_data.value);
     
     if(error_email.value ||error_password.value){
-        correct = false;
+        return false;
     }
     
-    return correct;
+    return true;
 }
 
 

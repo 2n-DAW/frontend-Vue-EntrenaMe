@@ -1,4 +1,4 @@
-export const passwordRegex = (password:String):String=>{
+export const passwordRegex = (password:String):string=>{
     
     const password_regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
     

@@ -12,9 +12,6 @@ const toggleForm = () => {
     isLogin.value = !isLogin.value;
 };
 
-const login = (data:any) => {
-    console.log("Login", data);
-};
 
 
 </script>
@@ -32,9 +29,7 @@ const login = (data:any) => {
                 </h2>
 
                 <div v-if="isLogin">
-                    <Login 
-                        @login="login"
-                    />
+                    <Login />
                 </div>
 
                 <div v-else>
