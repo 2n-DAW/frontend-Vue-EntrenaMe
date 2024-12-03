@@ -3,7 +3,7 @@ import { Activity } from '../shared/interfaces/Activity.interface';
 import { ActivityService } from '../services/activity.service';
 import { sortHours } from '../shared/utils/shortHours.util';
 import { sortWeekDays } from '../shared/utils/shortWeekDays.util';
-import { OptionSelect } from '../shared/interfaces/OptionSelect.interface';
+import { OptionSelect } from '../shared/interfaces/select/OptionSelect.interface';
 import { Sport } from '../shared/interfaces/Sport.interface';
 import { uniqueSports } from '../shared/utils/uniqueSports.util';
 

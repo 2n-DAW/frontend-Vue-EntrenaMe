@@ -12,11 +12,8 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { OptionSelect } from '../../shared/interfaces/select/OptionSelect.interface';
 
-interface DataItem {
-    value: string;
-    label: string;
-}
 
 const props = defineProps({
     label: {
@@ -24,7 +21,7 @@ const props = defineProps({
         required: true,
     },
     data: {
-        type: Array as () => DataItem[],
+        type: Array as () => OptionSelect[],
         required: true,
     },
     selected: {

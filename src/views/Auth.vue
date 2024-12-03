@@ -4,7 +4,7 @@
             <ImgAuth class="img_auth" />
         </div>
         <div class="form_div">
-            <div class="w-full max-w-md flex flex-col gap-6">
+            <div class="w-full flex flex-col gap-6">
                 <h2 class="text-2xl font-bold text-gray-800 text-center">
                     {{ isLogin ? 'Login' : 'Register' }}
                 </h2>
