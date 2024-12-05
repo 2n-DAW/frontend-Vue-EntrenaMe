@@ -4,4 +4,5 @@ export interface FilterActivity {
     slot_hour: string;
     week_day: string;
     n_activity: string;
+    sport: string;
 }

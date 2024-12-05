@@ -41,8 +41,9 @@ const filters_selected = ref({});
 
 const filters_Selected = async (filters: Partial<FilterActivity>):Promise<void> => {
     currentFilters.value = filters;
+    console.log("Filters Selected:", currentFilters.value);
     let filters_btoa = "";
-    if (filters.slot_hour !== "" || filters.week_day !== "" || filters.n_activity !== "") {
+    if (filters.slot_hour !== "" || filters.week_day !== "" || filters.n_activity !== "" || filters.sport !== "") {
         filters_btoa = btoa(JSON.stringify(filters));
         router.push({ name: 'activities', query: { filtros: filters_btoa } });
     } else {
@@ -69,6 +70,7 @@ watch(current_page_output, () => {
 
 const filters_URL = (): void => {
     const filters = router.currentRoute.value.query.filtros;
+    console.log("Filters URL:", filters);
     if (filters) {
         const resp_filters = JSON.parse(atob(filters as string));
         if (resp_filters.slot_hour !== "") {
@@ -80,9 +82,12 @@ const filters_URL = (): void => {
         if (resp_filters.n_activity !== "") {
             currentFilters.value.n_activity = resp_filters.n_activity;
         }
+        if (resp_filters.sport !== "") {
+            currentFilters.value.sport = resp_filters.sport;
+        }
+        
     }
     filters_selected.value = currentFilters.value;
-    console.log("Filters URL:", currentFilters.value);
     getActivities(currentFilters.value);
 };
 
