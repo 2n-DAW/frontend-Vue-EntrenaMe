@@ -20,8 +20,8 @@
                         </router-link>
                     </li>
                     <li>
-                        <router-link to="/activities" class="hover:text-text1_hover">
-                            Actividades
+                        <router-link to="/auth" class="hover:text-text1_hover">
+                            Login/Register
                         </router-link>
                     </li>
                 </ul>

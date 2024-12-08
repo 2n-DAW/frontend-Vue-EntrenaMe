@@ -5,4 +5,5 @@ export interface User {
     username: string;
     password: string;
     type_user: string;
+    token?: string;
 }
