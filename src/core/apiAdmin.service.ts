@@ -5,7 +5,7 @@ export const axiosAdmin: AxiosInstance = axios.create({
     baseURL: API_URL_ADMIN,
 });
 
-const ApiService = {
+const ApiServiceAdmin = {
 
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
@@ -20,7 +20,9 @@ const ApiService = {
 
     async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
+            console.log('data:', data);
             const response = await axiosAdmin.post<T>(url, data, config);
+            console.log('response:', response);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -66,4 +68,4 @@ const ApiService = {
     },
 };
 
-export default ApiService;
+export default ApiServiceAdmin;

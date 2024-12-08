@@ -1,10 +1,9 @@
-import ApiServiceAdmin from "../core/api.service";
-import ApiService from "../core/api.service";
+import ApiServiceAdmin from "../core/apiAdmin.service";
 import { User } from "../shared/interfaces/User.interface";
 
 export const AuthService = {
-    login(): Promise<Partial<User>> {
-        return ApiServiceAdmin.post<User>("sports");
+    login(user:Partial<User>): Promise<User> {
+        return ApiServiceAdmin.post<User>("user/login", user);
     },
 
 };

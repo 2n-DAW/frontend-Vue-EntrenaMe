@@ -5,7 +5,7 @@ export const axiosClient: AxiosInstance = axios.create({
     baseURL: API_URL_CLIENT,
 });
 
-const ApiServiceAdmin = {
+const ApiService = {
 
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
@@ -66,4 +66,4 @@ const ApiServiceAdmin = {
     },
 };
 
-export default ApiServiceAdmin;
+export default ApiService;

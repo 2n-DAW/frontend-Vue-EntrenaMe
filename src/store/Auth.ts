@@ -16,9 +16,11 @@ export const auth: Module<AuthState, any> = {
     state,
 
     actions: {
-        async getUser({ commit }) {
+        async getUser({ commit }, user: { email: string; password: string }) {
             try {
-                const response = await AuthService.login();
+                const response = await AuthService.login(user);
+                
+                console.log('user:', response);
                 
                 if (response !== null){
                     commit('setUser', response);
