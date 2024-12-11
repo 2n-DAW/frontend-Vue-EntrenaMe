@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { OptionSelect } from '../../shared/interfaces/select/OptionSelect.interface';
-import { emailRegex } from '../../shared/utils/Regex/emailRegex.util';
-import { passwordRegex } from '../../shared/utils/Regex/passwordRegex.util';
-import { usernameRegex } from '../../shared/utils/Regex/usernameRegex.util';
+import { emailRegex, passwordRegex, nifRegex, usernameRegex } from '../../shared/utils/Regex';
 import SelectForm from '../selects/SelectForm.vue';
 import TextInputForm from '../text_input/TextInputForm.vue';
-import { ref, watch } from 'vue';
+import { ref} from 'vue';
 
 const email_data = ref('');
 const username_data = ref('');
@@ -49,6 +47,11 @@ const validateRegister = ():boolean=>{
     }else{
         error_select_roles.value = '';
     }
+    
+    if (select_roles_selected.value === 'client' || select_roles_selected.value === 'instructor') {
+        error_nif.value = nifRegex(nif_data.value);
+    }
+    
     
     
     if(error_email.value ||error_password.value || error_username.value || error_select_roles.value){
