@@ -23,6 +23,7 @@ export const auth: Module<AuthState, any> = {
                 console.log('user:', response);
                 
                 if (response !== null){
+                    localStorage.setItem('token', JSON.stringify(response.token));
                     commit('setUser', response);
                     commit('setIsLogged', true);
                 }else{

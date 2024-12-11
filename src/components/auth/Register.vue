@@ -75,7 +75,7 @@ const validateRegister = ():boolean=>{
 <template>
     <div class="flex flex-col gap-6 w-1/2 mx-auto">
         
-        <div class ="flex gap-6">
+        <div class ="flex">
             <TextInputForm 
                 class="w-3/5"
                 label="Nombre de usuario"
@@ -88,7 +88,7 @@ const validateRegister = ():boolean=>{
             
             <SelectForm 
                 label="Rol" 
-                class="w-2/5"
+                class="w-2/5 pl-4"
                 id="select_roles_register"
                 placeholder="Selecciona un rol"
                 v-model:data="select_roles_selected"
@@ -97,10 +97,10 @@ const validateRegister = ():boolean=>{
             />
         </div>
         
-        <div v-if="select_roles_selected === 'client' || select_roles_selected === 'instructor'" class ="flex gap-6">
+        <div v-if="select_roles_selected === 'client' || select_roles_selected === 'instructor'" class ="flex">
             
             <TextInputForm 
-                class="w-1/2"
+                class="w-3/5"
                 label="Nif"
                 type="text" 
                 id="nif_input_register" 
@@ -110,7 +110,7 @@ const validateRegister = ():boolean=>{
             />
             
             <TextInputForm 
-                class="w-1/2"
+                class="w-2/5 pl-4"
                 label="Telefono"
                 type="text" 
                 id="tlf_input_register" 
@@ -158,7 +158,7 @@ const validateRegister = ():boolean=>{
             id="password_input_register" 
             v-model:data="password_repeat_data" 
             placeholder="contraseña1234" 
-             :error="error_password_repeat"
+            :error="error_password_repeat"
         />
         
         
@@ -172,3 +172,5 @@ const validateRegister = ():boolean=>{
 
 
 </template>
+
+
