@@ -50,6 +50,7 @@ const validateRegister = ():boolean=>{
     
     if (select_roles_selected.value === 'client' || select_roles_selected.value === 'instructor') {
         error_nif.value = nifRegex(nif_data.value);
+        error_tlf.value = nifRegex(tlf_data.value);
     }
     
     
