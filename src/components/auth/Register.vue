@@ -1,22 +1,28 @@
 <script setup lang="ts">
 import { OptionSelect } from '../../shared/interfaces/select/OptionSelect.interface';
-import { emailRegex } from '../../shared/utils/Regex/emailRegex.util';
-import { passwordRegex } from '../../shared/utils/Regex/passwordRegex.util';
-import { usernameRegex } from '../../shared/utils/Regex/usernameRegex.util';
+import { emailRegex, passwordRegex, nifRegex, usernameRegex, addressRegex, phoneRegex } from '../../shared/utils/Regex';
 import SelectForm from '../selects/SelectForm.vue';
 import TextInputForm from '../text_input/TextInputForm.vue';
-import { ref, watch } from 'vue';
+import { ref} from 'vue';
 
 const email_data = ref('');
 const username_data = ref('');
 const password_data = ref('');
 const password_repeat_data = ref('');
 const select_roles_selected = ref('');
+const nif_data = ref('');
+const tlf_data = ref('');
+const address_data = ref('');
+
+
 const error_username = ref('');
 const error_email = ref('');
 const error_password = ref('');
 const error_select_roles = ref('');
 const error_password_repeat = ref('');
+const error_nif = ref('');
+const error_tlf = ref('');
+const error_address = ref('');
 
 
 const roles : OptionSelect[]= [
@@ -42,6 +48,21 @@ const validateRegister = ():boolean=>{
         error_select_roles.value = '';
     }
     
+    if (select_roles_selected.value === 'client' || select_roles_selected.value === 'instructor') {
+        error_nif.value = nifRegex(nif_data.value);
+        error_tlf.value = phoneRegex(tlf_data.value);
+    }
+    
+    if (select_roles_selected.value === 'instructor') {
+        error_address.value = addressRegex(address_data.value);
+    }
+    
+    
+    if(select_roles_selected.value === 'client' || select_roles_selected.value === 'instructor'){
+        if(error_nif.value || error_tlf.value){
+            return false;
+        }
+    }
     
     if(error_email.value ||error_password.value || error_username.value || error_select_roles.value){
         return false;
@@ -67,7 +88,7 @@ const validateRegister = ():boolean=>{
 <template>
     <div class="flex flex-col gap-6 w-1/2 mx-auto">
         
-        <div class ="flex gap-6">
+        <div class ="flex">
             <TextInputForm 
                 class="w-3/5"
                 label="Nombre de usuario"
@@ -80,12 +101,49 @@ const validateRegister = ():boolean=>{
             
             <SelectForm 
                 label="Rol" 
-                class="w-2/5"
+                class="w-2/5 pl-4"
                 id="select_roles_register"
                 placeholder="Selecciona un rol"
                 v-model:data="select_roles_selected"
                 :options="roles"
                 :error ="error_select_roles"
+            />
+        </div>
+        
+        <div v-if="select_roles_selected === 'client' || select_roles_selected === 'instructor'" class ="flex">
+            
+            <TextInputForm 
+                class="w-3/5"
+                label="Nif"
+                type="text" 
+                id="nif_input_register" 
+                v-model:data="nif_data" 
+                placeholder="12345678A" 
+                :error="error_nif"
+            />
+            
+            <TextInputForm 
+                class="w-2/5 pl-4"
+                label="Telefono"
+                type="text" 
+                id="tlf_input_register" 
+                v-model:data="tlf_data" 
+                placeholder="666666666" 
+                :error="error_tlf"
+            />
+            
+        </div>
+        
+        
+        <div v-if=" select_roles_selected === 'instructor'" >
+            
+            <TextInputForm 
+                label="Dirección"
+                type="text" 
+                id="address_input_register" 
+                v-model:data="address_data" 
+                placeholder="Calle false 123" 
+                :error="error_address"
             />
         </div>
         
@@ -113,7 +171,7 @@ const validateRegister = ():boolean=>{
             id="password_input_register" 
             v-model:data="password_repeat_data" 
             placeholder="contraseña1234" 
-             :error="error_password_repeat"
+            :error="error_password_repeat"
         />
         
         
@@ -127,3 +185,5 @@ const validateRegister = ():boolean=>{
 
 
 </template>
+
+

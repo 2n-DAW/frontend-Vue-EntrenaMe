@@ -1,15 +1,31 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { API_URL_CLIENT } from "./config";
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
+import { API_URL_ADMIN } from "./config";
 
-export const axiosClient: AxiosInstance = axios.create({
-    baseURL: API_URL_CLIENT,
+export const axiosAdmin: AxiosInstance = axios.create({
+    baseURL: API_URL_ADMIN,
 });
 
-const ApiService = {
+axiosAdmin.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem("token");
+        console.log("token:", "hola");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+            console.log("config headers:", config.headers.Authorization);
+        }
+        return config;
+    },
+    (error) => {
+        console.error("[Axios Request Error]:", error);
+        return Promise.reject(error);
+    }
+);
 
+
+const ApiServiceAdmin = {
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
-            const response = await axiosClient.get<T>(url, config);
+            const response = await axiosAdmin.get<T>(url, config);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -17,10 +33,11 @@ const ApiService = {
         }
     },
 
-
     async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
-            const response = await axiosClient.post<T>(url, data, config);
+            console.log("data:", data);
+            const response = await axiosAdmin.post<T>(url, data, config);
+            console.log("response:", response);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -30,7 +47,7 @@ const ApiService = {
 
     async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
-            const response = await axiosClient.put<T>(url, data, config);
+            const response = await axiosAdmin.put<T>(url, data, config);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -38,10 +55,9 @@ const ApiService = {
         }
     },
 
-
     async update<T>(url: string, slug: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
-            const response = await axiosClient.put<T>(`${url}/${slug}`, data, config);
+            const response = await axiosAdmin.put<T>(`${url}/${slug}`, data, config);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -51,7 +67,7 @@ const ApiService = {
 
     async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
-            const response = await axiosClient.delete<T>(url, config);
+            const response = await axiosAdmin.delete<T>(url, config);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -59,11 +75,10 @@ const ApiService = {
         }
     },
 
-
     handleError(error: any): never {
-        console.error(`[ApiService] Error:`, error);
+        console.error(`[ApiServiceAdmin] Error:`, error);
         throw new Error(error?.response?.data?.message || error.message || "An error occurred");
     },
 };
 
-export default ApiService;
+export default ApiServiceAdmin;

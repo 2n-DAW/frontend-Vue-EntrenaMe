@@ -2,7 +2,7 @@ import ApiService from "../core/api.service";
 import { Sports } from "../shared/interfaces/Sport.interface";
 
 export const SportService = {
-    getAll(): Promise<Sports|undefined> {
+    getAll(): Promise<Sports> {
         return ApiService.get<Sports>("sports");
     },
     getById(id:string) {
