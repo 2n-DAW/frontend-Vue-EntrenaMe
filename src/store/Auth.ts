@@ -19,11 +19,9 @@ export const auth: Module<AuthState, any> = {
         async initialize({ commit }, user: { email: string; password: string }) {
             try {
                 const response = await AuthService.login(user);
-                
-                console.log('user:', response);
-                
                 if (response !== null){
-                    localStorage.setItem('token', JSON.stringify(response.token));
+                    console.log('token:', response.token);
+                    localStorage.setItem('token', response.token as string);
                     commit('setUser', response);
                     commit('setIsLogged', true);
                 }else{
@@ -37,6 +35,24 @@ export const auth: Module<AuthState, any> = {
                 
             }
         },
+        
+        async currentUser({ commit }) {
+            try {
+                const response = await AuthService.getCurrentUser();
+                if (response !== null){
+                    commit('setUser', response);
+                    commit('setIsLogged', true);
+                }else{
+                    commit('setUser', null);
+                    commit('setIsLogged', false);
+                }
+            } catch (error) {
+                throw error;
+            }
+        }
+        
+        
+        
     },
 
     mutations: {

@@ -1,12 +1,28 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { API_URL_ADMIN } from "./config";
 
 export const axiosAdmin: AxiosInstance = axios.create({
     baseURL: API_URL_ADMIN,
 });
 
-const ApiServiceAdmin = {
+axiosAdmin.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem("token");
+        console.log("token:", "hola");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+            console.log("config headers:", config.headers.Authorization);
+        }
+        return config;
+    },
+    (error) => {
+        console.error("[Axios Request Error]:", error);
+        return Promise.reject(error);
+    }
+);
 
+
+const ApiServiceAdmin = {
     async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
             const response = await axiosAdmin.get<T>(url, config);
@@ -17,12 +33,11 @@ const ApiServiceAdmin = {
         }
     },
 
-
     async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
-            console.log('data:', data);
+            console.log("data:", data);
             const response = await axiosAdmin.post<T>(url, data, config);
-            console.log('response:', response);
+            console.log("response:", response);
             return response.data;
         } catch (error) {
             this.handleError(error);
@@ -39,7 +54,6 @@ const ApiServiceAdmin = {
             throw error;
         }
     },
-
 
     async update<T>(url: string, slug: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
@@ -61,9 +75,8 @@ const ApiServiceAdmin = {
         }
     },
 
-
     handleError(error: any): never {
-        console.error(`[ApiService] Error:`, error);
+        console.error(`[ApiServiceAdmin] Error:`, error);
         throw new Error(error?.response?.data?.message || error.message || "An error occurred");
     },
 };

@@ -6,6 +6,8 @@ import { User } from '../../shared/interfaces/User.interface';
 
 const store = useStore();
 
+store.dispatch('auth/currentUser');
+
 const isLogged = computed(() => store.getters['auth/getIsLogged']);
 const user = computed(() => store.getters['auth/getUser'] || {}); 
 
