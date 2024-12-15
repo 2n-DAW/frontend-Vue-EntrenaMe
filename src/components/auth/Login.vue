@@ -5,6 +5,10 @@ import { emailRegex } from '../../shared/utils/Regex/emailRegex.util';
 import { passwordRegex } from '../../shared/utils/Regex/passwordRegex.util';
 import { useStore } from 'vuex';
 
+import Noty from 'noty';
+import 'noty/lib/noty.css';
+import 'noty/lib/themes/mint.css';
+
 
 const email_data = ref('');
 const password_data = ref('');
@@ -14,12 +18,50 @@ const error_password = ref('');
 const store = useStore();
 
 
-const submitLogin = () => {
+const submitLogin = async () => {
+
     if (validateLogin()) {
-        store.dispatch('auth/getUser', {
-            email:  email_data.value,
-            password: password_data.value
-        });
+
+        try {
+            await store.dispatch('auth/initialize', {
+                email: email_data.value,
+                password: password_data.value
+            });
+            console.log('Login exitoso');
+        
+        } catch (error: unknown) {
+
+            console.error('Error durante el login:', error);
+            
+            let message: string;
+            if (error instanceof Error) {
+                switch (error.message) {
+                    case 'User not found':
+                        error_email.value = 'El email no está registrado';
+                        message = 'El email no está registrado';
+                        break;
+                    case 'Invalid password':
+                        error_password.value = 'La contraseña es incorrecta';
+                        message = 'La contraseña es incorrecta';
+                        break;
+                    default:
+                        message = 'Error inesperado';
+                        break;
+                }
+
+                new Noty({
+                    type: 'error',
+                    text: message,
+                    timeout: 3000,
+                    progressBar: true,
+
+
+                }).show();
+
+            }
+
+
+        }
     }
 
 };

@@ -16,7 +16,7 @@ export const auth: Module<AuthState, any> = {
     state,
 
     actions: {
-        async getUser({ commit }, user: { email: string; password: string }) {
+        async initialize({ commit }, user: { email: string; password: string }) {
             try {
                 const response = await AuthService.login(user);
                 
@@ -33,7 +33,8 @@ export const auth: Module<AuthState, any> = {
                 
 
             } catch (error) {
-                console.error('Error auth:' , error);
+                throw error;
+                
             }
         },
     },
