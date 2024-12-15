@@ -8,12 +8,14 @@ import { useStore } from 'vuex';
 import Noty from 'noty';
 import 'noty/lib/noty.css';
 import 'noty/lib/themes/mint.css';
+import { useRouter } from 'vue-router';
 
 
 const email_data = ref('');
 const password_data = ref('');
 const error_email = ref('');
 const error_password = ref('');
+const router = useRouter();
 
 const store = useStore();
 
@@ -28,6 +30,15 @@ const submitLogin = async () => {
                 password: password_data.value
             });
             console.log('Login exitoso');
+            
+            new Noty({
+                type: 'success',
+                text: 'Login exitoso',
+                timeout: 3000,
+                progressBar: true,
+            }).show();
+            
+            router.push('/home');
         
         } catch (error: unknown) {
 
@@ -54,13 +65,9 @@ const submitLogin = async () => {
                     text: message,
                     timeout: 3000,
                     progressBar: true,
-
-
                 }).show();
 
             }
-
-
         }
     }
 

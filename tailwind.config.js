@@ -17,6 +17,8 @@ module.exports = {
                 color1: '#FF6500',
                 color2: '#00d0ff',
                 color3: '#0080ff',
+                
+                color1_hover: '#FF4500',
 
                 button1: '#FF6500',
                 button1_hover: '#FF4500',
