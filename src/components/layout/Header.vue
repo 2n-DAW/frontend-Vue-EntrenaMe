@@ -47,10 +47,10 @@ const img_user = computed(() => (user.value as User)?.img_user || 'profile.png')
                     </li>
                     <li v-if="isLogged">
                         <router-link 
-                            to="/profile" 
+                            :to="`/profile/${ username }`"
                             class="flex items-center bg-color1 pr-2 hover:bg-color1_hover rounded-full overflow-hidden">
                             <img 
-                                :src="`img/users/${img_user}`" 
+                                :src="`../public/img/users/${img_user}`" 
                                 alt="user image" 
                                 class="user-image mr-1 w-7 h-7 rounded-full"
                                 style="box-shadow: 0 0 5px rgb(54, 54, 54);" />
