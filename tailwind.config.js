@@ -35,7 +35,7 @@ module.exports = {
                 
                 disabled: '#FF650030',
                 
-                
+                skeleton: '#FF9580',
                 
                 // paginación
                 pagination_arrow_hover: '#ffffff',
