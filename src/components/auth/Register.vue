@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { OptionSelect } from '../../shared/interfaces/select/OptionSelect.interface';
-import { emailRegex, passwordRegex, nifRegex, usernameRegex, addressRegex, phoneRegex } from '../../shared/utils/Regex';
+import { emailRegex, passwordRegex, nifRegex, usernameRegex, addressRegex, phoneRegex, nameRegex, surnameRegex } from '../../shared/utils/Regex';
 import SelectForm from '../selects/SelectForm.vue';
 import TextInputForm from '../text_input/TextInputForm.vue';
 import { ref} from 'vue';
@@ -13,6 +13,8 @@ const select_roles_selected = ref('');
 const nif_data = ref('');
 const tlf_data = ref('');
 const address_data = ref('');
+const name_data = ref('');
+const surname_data = ref('');
 
 
 const error_username = ref('');
@@ -23,6 +25,8 @@ const error_password_repeat = ref('');
 const error_nif = ref('');
 const error_tlf = ref('');
 const error_address = ref('');
+const error_name = ref('');
+const error_surname = ref('');
 
 
 const roles : OptionSelect[]= [
@@ -41,6 +45,8 @@ const validateRegister = ():boolean=>{
     error_email.value = emailRegex(email_data.value);
     error_password.value = passwordRegex(password_data.value);
     error_username.value = usernameRegex(username_data.value);
+    error_name.value = nameRegex(name_data.value);
+    error_surname.value = surnameRegex(surname_data.value);
     
     if(!select_roles_selected.value) {
         error_select_roles.value = 'Selecciona un tipo de usuario'
@@ -63,8 +69,17 @@ const validateRegister = ():boolean=>{
             return false;
         }
     }
+    const error = (
+        error_email.value || 
+        error_password.value || 
+        error_username.value || 
+        error_select_roles.value || 
+        error_name.value || 
+        error_surname.value || 
+        error_address.value
+    );
     
-    if(error_email.value ||error_password.value || error_username.value || error_select_roles.value){
+    if(error){ 
         return false;
     }
     
@@ -87,7 +102,27 @@ const validateRegister = ():boolean=>{
 
 <template>
     <div class="flex flex-col gap-6 w-1/2 mx-auto">
-        
+        <div class ="flex">
+        <TextInputForm 
+                class="w-2/5"
+                label="Nombre"
+                type="text" 
+                id="name_input_register" 
+                v-model:data="name_data" 
+                placeholder="Nombre" 
+                :error="error_name"
+            />
+            
+            <TextInputForm 
+                class="w-3/5 pl-4"
+                label="Apellidos"
+                type="text" 
+                id="surname_input_register" 
+                v-model:data="surname_data" 
+                placeholder="Apellidos" 
+                :error="error_surname"
+            />
+        </div>
         <div class ="flex">
             <TextInputForm 
                 class="w-3/5"

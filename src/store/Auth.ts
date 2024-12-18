@@ -20,7 +20,6 @@ export const auth: Module<AuthState, any> = {
             try {
                 const response = await AuthService.login(user);
                 if (response !== null){
-                    console.log('token:', response.token);
                     localStorage.setItem('token', response.token as string);
                     commit('setUser', response);
                     commit('setIsLogged', true);
@@ -40,6 +39,7 @@ export const auth: Module<AuthState, any> = {
             try {
                 const response = await AuthService.getCurrentUser();
                 if (response !== null){
+                    console.log('tokendddddddddddd:', response);
                     commit('setUser', response);
                     commit('setIsLogged', true);
                 }else{
@@ -50,9 +50,6 @@ export const auth: Module<AuthState, any> = {
                 throw error;
             }
         }
-        
-        
-        
     },
 
     mutations: {
