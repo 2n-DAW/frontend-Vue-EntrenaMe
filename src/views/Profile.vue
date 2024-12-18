@@ -1,23 +1,24 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { AuthService } from '../services/auth.service';
 import { ref, onMounted, computed, watch } from 'vue';
 import { User } from '../shared/interfaces/User.interface';
 import { useStore } from 'vuex';
 
 const router = useRouter();
+const route = useRoute();
 const store = useStore();
 
-const username_url = router.currentRoute.value.params.username as string;
+const username_url = ref(route.params.username as string);
 
 const user = ref<User | null>(null);
 
 const username = computed(() => user.value?.username || '');
 const img_user = computed(() => user.value?.img_user || 'profile.png');
 
-onMounted(async () => {
+const fetchUserProfile = async () => {
     try {
-        const user_profile = await AuthService.getUserByUsername(username_url);
+        const user_profile = await AuthService.getUserByUsername(username_url.value);
         if (!user_profile) {
             console.error('Usuario no encontrado');
             router.push('/home');
@@ -28,6 +29,13 @@ onMounted(async () => {
         console.error('Error al obtener el usuario:', error);
         router.push('/home');
     }
+};
+
+onMounted(fetchUserProfile);
+
+watch(() => route.params.username, (newUsername) => {
+    username_url.value = newUsername as string;
+    fetchUserProfile();
 });
 
 const user_logged = computed(() => store.getters['auth/getUser']);
@@ -51,7 +59,7 @@ watch(() => user_logged.value, (new_user) => {
                 <p class="mt-0.5 mb-3 text-color8">bio</p>
 
                 <a v-if="username === username_user_logged"
-                    class="mb-2 py-2 px-4 text-white no-underline hover:bg-color4 rounded-full bg-color3"
+                    class="mb-2 py-2 px-4 text-white no-underline hover:bg-color4 rounded-full bg-color1"
                     style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);">
                     Editar perfil
                 </a>
@@ -59,7 +67,5 @@ watch(() => user_logged.value, (new_user) => {
             </div>
         </div>
     </div>
-
-
 
 </template>
