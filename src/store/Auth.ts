@@ -39,7 +39,6 @@ export const auth: Module<AuthState, any> = {
             try {
                 const response = await AuthService.getCurrentUser();
                 if (response !== null){
-                    console.log('tokendddddddddddd:', response);
                     commit('setUser', response);
                     commit('setIsLogged', true);
                 }else{
