@@ -1,9 +1,30 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { API_URL_CLIENT } from "./config";
 
 export const axiosClient: AxiosInstance = axios.create({
     baseURL: API_URL_CLIENT,
 });
+
+
+
+axiosClient.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem("token");
+        console.log("token:", "hola");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+            console.log("config headers:", config.headers.Authorization);
+        }
+        return config;
+    },
+    (error) => {
+        console.error("[Axios Request Error]:", error);
+        return Promise.reject(error);
+    }
+);
+
+
+
 
 const ApiService = {
 

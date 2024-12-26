@@ -15,7 +15,7 @@
             :data="sports" 
             v-model:selected="select_sports_selected" 
         />
-            <SearchFilters 
+        <SearchFilters 
             label="Buscar" 
             v-model:input_text_search="text_search" 
         />

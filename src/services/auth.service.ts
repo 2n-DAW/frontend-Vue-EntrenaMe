@@ -1,14 +1,14 @@
 import ApiService from "../core/api.service";
-import ApiServiceAdmin from "../core/apiAdmin.service";
 import { User } from "../shared/interfaces/User.interface";
+
 
 export const AuthService = {
     login(user:Partial<User>): Promise<User> {
-        return ApiServiceAdmin.post<User>("user/login", user);
+        return ApiService.post<User>("users/login", user);
     },
     
     getCurrentUser(): Promise<User> {
-        return ApiServiceAdmin.get<User>("user/currentUser");
+        return ApiService.get<User>("user");
     },
     
     getUserByUsername(username: string): Promise<User> {
