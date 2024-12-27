@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { User } from '../../shared/interfaces/entities/User.interfaceinterface';
+import { User } from '../../shared/interfaces/entities/User.interface'; 
+
 
 const store = useStore();
 const loading = ref(true);
@@ -23,6 +24,16 @@ const user = computed(() => store.getters['auth/getUser'] || {});
 const username = computed(() => (user.value as User)?.username || '');
 const img_user = computed(() => (user.value as User)?.img_user || 'profile.png');
 const type_user = computed(() => (user.value as User)?.type_user || 'client');
+
+
+
+const logout = async() => {
+    try{
+        await store.dispatch('auth/logout');
+    } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+    }
+};
 
 </script>
 
@@ -74,7 +85,8 @@ const type_user = computed(() => (user.value as User)?.type_user || 'client');
                         </router-link>
                     </li>
                     <li v-if="isLogged">
-                        <router-link to="/auth" class="hover:text-text1_hover">
+                        <router-link to="/home" class="hover:text-text1_hover"
+                        :onclick="logout">
                             Logout
                         </router-link>
                     </li>

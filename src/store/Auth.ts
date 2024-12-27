@@ -48,8 +48,23 @@ export const auth: Module<AuthState, any> = {
             } catch (error) {
                 throw error;
             }
+        },
+        
+        async logout({ commit }) {
+            try {
+                await AuthService.logout();
+               
+            } catch (error) {
+                throw error;
+            }finally{
+                localStorage.removeItem('token');
+                commit('setIsLogged', false);
+                commit('setUser', null);
+                
+            }
         }
     },
+    
 
     mutations: {
         setUser(state, user: User) {

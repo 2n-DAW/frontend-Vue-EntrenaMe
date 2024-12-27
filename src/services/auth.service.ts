@@ -21,6 +21,10 @@ export const AuthService = {
     register(user:Partial<User>): Promise<User> {
         return ApiService.post<User>("users/register", user);
     },
+    
+    logout(): Promise<User> {
+        return ApiService.post<User>("users/logout");
+    }
 
 };
 
