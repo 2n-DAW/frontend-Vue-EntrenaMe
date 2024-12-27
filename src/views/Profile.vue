@@ -2,7 +2,7 @@
 import { useRouter, useRoute } from 'vue-router';
 import { AuthService } from '../services/auth.service';
 import { ref, onMounted, computed, watch } from 'vue';
-import { User } from '../shared/interfaces/User.interface';
+import { User } from '../shared/interfaces/entities/User.interfaceinterface';
 import { useStore } from 'vuex';
 
 const router = useRouter();

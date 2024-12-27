@@ -1,6 +1,6 @@
 import { Module } from 'vuex';
 import { SportService } from '../services/sport.service';
-import { Sport } from '../shared/interfaces/Sport.interface';
+import { Sport } from '../shared/interfaces/entities/Sport.interface';
 
 export interface SportState {
     sports: Array<Sport>;

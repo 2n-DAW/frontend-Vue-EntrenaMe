@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { User } from '../shared/interfaces/User.interface';
+import { User } from '../shared/interfaces/entities/User.interface';
 import { AuthService } from '../services/auth.service';
 
 export interface AuthState {

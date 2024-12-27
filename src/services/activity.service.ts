@@ -1,5 +1,5 @@
 import ApiService from "../core/api.service";
-import { Activities } from "../shared/interfaces/Activity.interface";
+import { Activities } from "../shared/interfaces/entities/Activity.interface";
 
 export const ActivityService = {
     getAll(): Promise<Activities> {

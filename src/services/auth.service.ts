@@ -1,5 +1,5 @@
 import ApiService from "../core/api.service";
-import { User } from "../shared/interfaces/User.interface";
+import { User } from "../shared/interfaces/entities/User.interface";
 
 
 export const AuthService = {
@@ -16,7 +16,11 @@ export const AuthService = {
         const resp =  ApiService.get<User>(`profiles/${username}`);
         console.log("resp:", resp);
         return resp;
-    }
+    },
+    
+    register(user:Partial<User>): Promise<User> {
+        return ApiService.post<User>("users/register", user);
+    },
 
 };
 

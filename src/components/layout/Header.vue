@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
-import { User } from '../../shared/interfaces/User.interface';
+import { User } from '../../shared/interfaces/entities/User.interfaceinterface';
 
 const store = useStore();
 const loading = ref(true);

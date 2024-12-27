@@ -1,5 +1,5 @@
 import ApiService from "../core/api.service";
-import { Sports } from "../shared/interfaces/Sport.interface";
+import { Sports } from "../shared/interfaces/entities/Sport.interface";
 
 export const SportService = {
     getAll(): Promise<Sports> {

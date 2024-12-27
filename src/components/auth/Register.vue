@@ -1,9 +1,19 @@
 <script setup lang="ts">
+import { useStore } from 'vuex';
 import { OptionSelect } from '../../shared/interfaces/select/OptionSelect.interface';
 import { emailRegex, passwordRegex, nifRegex, usernameRegex, addressRegex, phoneRegex, nameRegex, surnameRegex } from '../../shared/utils/Regex';
 import SelectForm from '../selects/SelectForm.vue';
 import TextInputForm from '../text_input/TextInputForm.vue';
 import { ref} from 'vue';
+import { useRouter } from 'vue-router';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../shared/interfaces/entities/User.interface';
+import Noty from 'noty';
+import { i } from 'vite/dist/node/types.d-aGj9QkWt';
+
+
+const store = useStore();
+const router = useRouter();
 
 const email_data = ref('');
 const username_data = ref('');
@@ -36,8 +46,98 @@ const roles : OptionSelect[]= [
 ];
 
 
-const submitRegister = ()=>{
-    console.log(validateRegister());
+const submitRegister = async()=>{
+    
+    if(validateRegister()){
+        
+        
+        try {
+            
+            const user:User = {
+                email: email_data.value,
+                username: username_data.value,
+                password: password_data.value,
+                type_user: select_roles_selected.value,
+                name: name_data.value,
+                surname: surname_data.value,
+                img_user: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+                is_active: true,
+                is_deleted: false,
+            };
+            
+            if (select_roles_selected.value === 'client') {
+                user.client = {
+                    tlf: tlf_data.value,
+                    address: address_data.value,
+                };
+            }
+            
+            if (select_roles_selected.value === 'instructor') {
+                user.instructor = {
+                    nif: nif_data.value,
+                    tlf: tlf_data.value,
+                    address: address_data.value,
+                };
+            }
+            
+            if (select_roles_selected.value === 'admin') {
+                user.admin = {};
+            }
+            
+            console.log('user:', user);
+            
+            await AuthService.register(user);
+            console.log('Registro exitoso');
+            
+            new Noty({
+                type: 'success',
+                text: 'Registro exitoso',
+                timeout: 1000,
+                progressBar: true,
+            }).show();
+            
+            router.push('/home');
+        
+        } catch (error: unknown) {
+
+            console.error('Error durante el login:', error);
+            
+            let message: string;
+            if (error instanceof Error) {
+                // switch (error.message) {
+                //     case 'El correo electrónico ya está en uso. Introduce otro':
+                //         error_email.value = 'El nombre de usuario ya está en uso';
+                //         message = 'El nombre de usuario ya está en uso';
+                //         break;
+                //     case 'El correo electrónico ya está en uso. Introduce otro':
+                //         error_password.value = 'El correo electrónico ya está en uso';
+                //         message = 'El correo electrónico ya está en uso';
+                //         break;
+                //     default:
+                //         console.log(error.message);
+                //         message = 'Error inesperado';
+                //         break;
+                // }
+                
+
+                new Noty({
+                    type: 'error',
+                    // text: message,
+                    text: error.message,
+                    timeout: 1000,
+                    progressBar: true,
+                }).show();
+
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
+    
 }
 
 const validateRegister = ():boolean=>{
@@ -163,7 +263,7 @@ const validateRegister = ():boolean=>{
                 type="text" 
                 id="tlf_input_register" 
                 v-model:data="tlf_data" 
-                placeholder="666666666" 
+                placeholder="6543210123" 
                 :error="error_tlf"
             />
             
@@ -182,14 +282,27 @@ const validateRegister = ():boolean=>{
             />
         </div>
         
-        <TextInputForm
-            label="Email" 
-            type="email" 
-            id="email_input_register" 
-            v-model:data="email_data" 
-            placeholder="ejemplo123@email.com" 
-            :error="error_email"
-        />
+        <div class ="flex">
+            <TextInputForm
+                class="w-3/5"
+                label="Email" 
+                type="email" 
+                id="email_input_register" 
+                v-model:data="email_data" 
+                placeholder="ejemplo123@email.com" 
+                :error="error_email"
+            />
+            
+            <TextInputForm 
+                class="w-2/5 pl-4"
+                label="Fecha de nacimiento"
+                type="date" 
+                id="password_input_register" 
+                v-model:data="password_data" 
+                placeholder="contraseña1234" 
+                :error="error_password" 
+            />
+        </div>
         
         <TextInputForm 
             label="Contraseña"
