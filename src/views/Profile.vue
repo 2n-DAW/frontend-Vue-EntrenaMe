@@ -2,7 +2,7 @@
 import { useRouter, useRoute } from 'vue-router';
 import { AuthService } from '../services/auth.service';
 import { ref, onMounted, computed, watch } from 'vue';
-import { User } from '../shared/interfaces/entities/User.interfaceinterface';
+import { User } from '../shared/interfaces/entities/User.interface';
 import { useStore } from 'vuex';
 
 const router = useRouter();
@@ -15,6 +15,17 @@ const user = ref<User | null>(null);
 
 const username = computed(() => user.value?.username || '');
 const img_user = computed(() => user.value?.img_user || 'profile.png');
+const name = computed(() => user.value?.name || '');
+const surname = computed(() => user.value?.surname || '');
+const bio = computed(() => user.value?.bio || 'Nada que contar');
+const client = computed(() => user.value?.client || {});
+const nif_client = computed(() => user.value?.client?.nif || '');
+const tlf_client = computed(() => user.value?.client?.tlf || '');
+
+const instructor = computed(() => user.value?.instructor || {});
+const nif_instructor = computed(() => user.value?.instructor?.nif || '');
+const tlf_instructor = computed(() => user.value?.instructor?.tlf || '');
+const address_instructor = computed(() => user.value?.instructor?.address || '');
 
 const fetchUserProfile = async () => {
     try {
@@ -56,13 +67,20 @@ watch(() => user_logged.value, (new_user) => {
                 class="w-32 h-32 rounded-full mr-6 object-cover" />
             <div class="content flex flex-col">
                 <h4 class="text-2xl font-bold text-color1">{{ username }}</h4>
-                <p class="mt-0.5 mb-3 text-color8">bio</p>
+                <h6 class="text-m font-semibold text-color8">{{ name }} {{ surname }}</h6>
+                
+                <p class="mt-0.5 mb-3 text-color8">{{ bio }}</p>
+                <!-- <p v-if="admin" class="text-color1">{{ id_admin }}</p> -->
+                <p v-if="client && nif_client !== ''" class="text-color1">{{ nif_client }}</p>
+                <p v-if="client && tlf_client" class="text-color1">Teléfono: {{ tlf_client }}</p>
 
-                <a v-if="username === username_user_logged"
+                
+                
+                <button v-if="username === username_user_logged"
                     class="mb-2 py-2 px-4 text-white no-underline hover:bg-color4 rounded-full bg-color1"
                     style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);">
                     Editar perfil
-                </a>
+                </button>
 
             </div>
         </div>

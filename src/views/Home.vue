@@ -10,8 +10,8 @@
             </div>
 
             <div class=" mx-auto w-2/4 ">
-                <h2 class="text-4xl font-bold mb-4">EmpleaMe</h2>
-                <p class="text-xl mb-8">Tu próximo empleo, a un clic de distancia.</p>
+                <h2 class="text-4xl font-bold mb-4">EntrenaMe</h2>
+                <p class="text-xl mb-8">No hay escusa, actívate.</p>
 
 
 
@@ -19,7 +19,7 @@
 
 
 
-
+<!-- 
 
                 <div class="max-w-max flex items-center space-x-4">
 
@@ -43,7 +43,7 @@
                         </button>
                     </div>
                 </div>
-
+ -->
 
 
 

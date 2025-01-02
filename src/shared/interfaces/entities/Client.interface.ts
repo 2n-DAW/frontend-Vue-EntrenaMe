@@ -4,7 +4,7 @@ export interface ClientFields {
     id_client?: number;
     id_user?: number;
     tlf: string;
-    address: string;
+    nif: string;
 }
 
 export interface Client extends User {

@@ -18,4 +18,5 @@ export interface User {
     client?: ClientFields;
     instructor?: InstructorFields;
     admin?: AdminFields;
+    bio?: string;
 }
