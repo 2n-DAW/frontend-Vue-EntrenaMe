@@ -4,6 +4,8 @@ import Activities from "../views/Activities.vue";
 import Auth from "../views/Auth.vue";
 import Profile from "../views/Profile.vue";
 import Courts from "../views/Courts.vue";
+import ProfileEdit from "../views/ProfileEdit.vue";
+import { profileEditGuard } from "../shared/guards/profile.guard";
 
 const routes = [
   { path: "", redirect: { name: "home" } },
@@ -12,6 +14,7 @@ const routes = [
   { path: "/auth", name: "auth", component: Auth },
   { path: "/profile/:username", name: "profile", component: Profile },
   { path: "/courts", name: "courts", component: Courts },
+  { path: "/profile/:username/edit", name: "edit-profile", component: ProfileEdit, beforeEnter: profileEditGuard }
 ];
 
 

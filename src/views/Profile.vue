@@ -54,8 +54,8 @@ const user_logged = computed(() => store.getters['auth/getUser']);
 const username_user_logged = ref(user_logged.value?.username || '');
 
 watch(() => user_logged.value, (new_user) => {
-        username_user_logged.value = new_user?.username || '';
-    }
+    username_user_logged.value = new_user?.username || '';
+}
 );
 
 </script>
@@ -68,17 +68,22 @@ watch(() => user_logged.value, (new_user) => {
             <div class="content flex flex-col">
                 <h4 class="text-2xl font-bold text-color1">{{ username }}</h4>
                 <h6 class="text-m font-semibold text-color8">{{ name }} {{ surname }}</h6>
-                
+
                 <p class="mt-0.5 mb-3 text-color8">{{ bio }}</p>
                 <!-- <p v-if="admin" class="text-color1">{{ id_admin }}</p> -->
-                <p v-if="client && nif_client !== ''" class="text-color1">{{ nif_client }}</p>
+                <p v-if="client && nif_client !== ''" class="text-color1">NIF: {{ nif_client }}</p>
                 <p v-if="client && tlf_client" class="text-color1">Teléfono: {{ tlf_client }}</p>
+                <p v-if="instructor && nif_instructor !== ''" class="text-color1">NIF: {{ nif_instructor }}</p>
+                <p v-if="instructor && tlf_instructor" class="text-color1">Teléfono: {{ tlf_instructor }}</p>
+                <p v-if="instructor && address_instructor" class="text-color1">Dirección: {{ address_instructor }}</p>
 
-                
-                
+
+
+
                 <button v-if="username === username_user_logged"
                     class="mb-2 py-2 px-4 text-white no-underline hover:bg-color4 rounded-full bg-color1"
-                    style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);">
+                    style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
+                    :onClick="() => router.push(`/profile/${username}/edit`)">
                     Editar perfil
                 </button>
 

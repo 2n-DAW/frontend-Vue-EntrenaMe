@@ -53,7 +53,7 @@ export const auth: Module<AuthState, any> = {
         async logout({ commit }) {
             try {
                 await AuthService.logout();
-               
+                
             } catch (error) {
                 throw error;
             }finally{

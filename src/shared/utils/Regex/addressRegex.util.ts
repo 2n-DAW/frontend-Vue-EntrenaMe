@@ -1,5 +1,5 @@
 export const addressRegex = (address: String): string => {
-    const address_regex = /^[a-zA-Z0-9\s,'-]*$/ ;
+    const address_regex = /^[A-Za-zÀ-ÿ0-9\s,.'-]{3,40}$/ ;
     if (!address) {
         return 'El address es un campo obligatorio'
     }
