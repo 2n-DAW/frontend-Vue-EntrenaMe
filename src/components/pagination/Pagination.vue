@@ -101,7 +101,6 @@ const nextPage = ():void => {
     }
 }
 const goToPage = (page: number):void => {
-    console.log(page);
     current_page_output.value = page;
 }
 

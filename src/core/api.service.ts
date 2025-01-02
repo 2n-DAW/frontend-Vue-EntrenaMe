@@ -10,10 +10,8 @@ export const axiosClient: AxiosInstance = axios.create({
 axiosClient.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         const token = localStorage.getItem("token");
-        console.log("token:", "hola");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-            console.log("config headers:", config.headers.Authorization);
         }
         return config;
     },

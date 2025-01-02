@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts" setup>
-import { Activity } from '../../shared/interfaces/entities/Activity.interfaceinterface';
+
+import { Activity } from '../../shared/interfaces/entities/Activity.interface';
 import ActivityCard from '../cards/ActivityCard.vue';
 import { defineProps } from 'vue';
 

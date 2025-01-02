@@ -83,10 +83,8 @@ const submitRegister = async()=>{
                 user.admin = {};
             }
             
-            console.log('user:', user);
             
             await AuthService.register(user);
-            console.log('Registro exitoso');
             
             new Noty({
                 type: 'success',

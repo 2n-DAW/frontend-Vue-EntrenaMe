@@ -10,7 +10,6 @@ const loading = ref(true);
 onMounted(async () => {
     try {
         const result = await store.dispatch('auth/currentUser');
-        console.log('Resultado de la acción:', result);
     } catch (error) {
         console.error('Error al obtener el usuario actual:', error);
     } finally {

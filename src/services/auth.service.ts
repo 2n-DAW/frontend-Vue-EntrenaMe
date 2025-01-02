@@ -12,10 +12,7 @@ export const AuthService = {
     },
     
     getUserByUsername(username: string): Promise<User> {
-    
-        const resp =  ApiService.get<User>(`profiles/${username}`);
-        console.log("resp:", resp);
-        return resp;
+        return  ApiService.get<User>(`profiles/${username}`);
     },
     
     register(user:Partial<User>): Promise<User> {

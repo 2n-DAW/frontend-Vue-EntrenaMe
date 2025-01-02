@@ -37,8 +37,6 @@ export const activity: Module<ActivityState, any> = {
             try {
                 const response = await ActivityService.getAll();
 
-                console.log('response', response);
-
                 if (response === undefined) return;
 
                 const { activities } = response;

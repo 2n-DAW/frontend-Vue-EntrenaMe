@@ -9,7 +9,6 @@ const router = useRouter();
 const search_content = ref('');
 const filtered_activities = ref<string[]>([]);
 
-console.log('Activities names:');
 
 store.dispatch('activity/initializeActivities');
 
@@ -39,9 +38,6 @@ const searchActivities = () => {
     }
 };
 
-watch(activitiesNames, () => {
-    console.log('Activities names updated');
-});
 </script>
 
 <template>

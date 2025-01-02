@@ -29,7 +29,6 @@ const submitLogin = async () => {
                 email: email_data.value,
                 password: password_data.value
             });
-            console.log('Login exitoso');
             
             new Noty({
                 type: 'success',
