@@ -23,9 +23,9 @@ import { useRouter } from 'vue-router';
 import FiltersActivities from '../components/filters/FiltersActivities.vue';
 import ActivitiesList from '../components/lists/ActivitiesList.vue';
 import { ActivityService } from '../services/activity.service';
-import { Activity } from '../shared/interfaces/entities/Activity.interfaceinterface';
 import Pagination from '../components/pagination/Pagination.vue';
 import { FilterActivity } from '../shared/interfaces/fiters/FilterActivity.interface';
+import { Activity } from '../shared/interfaces/entities/Activity.interface';
 
 const router = useRouter();
 

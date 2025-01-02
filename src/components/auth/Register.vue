@@ -9,7 +9,6 @@ import { useRouter } from 'vue-router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../shared/interfaces/entities/User.interface';
 import Noty from 'noty';
-import { i } from 'vite/dist/node/types.d-aGj9QkWt';
 
 
 const store = useStore();
@@ -68,7 +67,7 @@ const submitRegister = async()=>{
             if (select_roles_selected.value === 'client') {
                 user.client = {
                     tlf: tlf_data.value,
-                    address: address_data.value,
+                    nif: nif_data.value,
                 };
             }
             
