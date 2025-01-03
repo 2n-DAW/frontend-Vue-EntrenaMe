@@ -4,9 +4,11 @@ import TextInputForm from '../components/text_input/TextInputForm.vue';
 import { computed } from 'vue';
 import { ref } from 'vue';
 import { addressRegex, nameRegex, nifRegex, passwordRegex, phoneRegex, surnameRegex } from '../shared/utils/Regex';
+import { useRouter } from 'vue-router';
 
 
 const store = useStore();
+const router = useRouter();
 store.dispatch('auth/getUser');
 
 const user = computed(() => store.getters['auth/getUser']);
@@ -22,8 +24,8 @@ const error_password_repeat = ref('');
 const name = ref(user.value.name);
 const surname = ref(user.value.surname);
 const bio = ref(user.value.bio);
-const nif = ref(user.value.client?.nif);
-const tlf = ref(user.value.client?.tlf);
+const nif = ref(user.value.client?.nif || user.value.instructor?.nif);
+const tlf = ref(user.value.client?.tlf || user.value.instructor?.tlf);
 const address = ref(user.value.instructor?.address);
 const password = ref('');
 const password_repeat = ref('');
@@ -80,11 +82,26 @@ const validate = (): boolean => {
 
 
 
-const update = () => {
+const update = async () => {
     if (validate()) {
-        console.log('Usuario actualizado');
-    } else {
-        console.log('Error al actualizar el usuario');
+        try {
+            const data = {
+                name: name.value,
+                surname: surname.value,
+                bio: bio.value,
+                ...user.value.client && { client: { nif: nif.value, tlf: tlf.value } },
+                ...user.value.instructor && { instructor: { nif: nif.value, tlf: tlf.value, address: address.value } },
+                ...password.value && { password: password.value },
+
+            };
+
+            await store.dispatch('auth/updateUser', data);
+        } catch {
+            console.log('Error al actualizar el usuario');
+        } finally {
+            router.push(`/profile/${user.value.username}`)
+        }
+
     }
 
 

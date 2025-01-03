@@ -3,7 +3,7 @@ import { ClientFields } from "./Client.interface";
 import { InstructorFields } from "./Instructor.intervace";
 
 export interface User {
-    id_user?: number;
+    id_user?: string;
     img_user: string;
     email: string;
     username: string;

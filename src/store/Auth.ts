@@ -62,7 +62,15 @@ export const auth: Module<AuthState, any> = {
                 commit('setUser', null);
                 
             }
-        }
+        },
+        async updateUser({ commit }, user: Partial<User>) {
+            try {
+                const response = await AuthService.updateUser(user);
+                commit('setUser', response);
+            } catch (error) {
+                throw error;
+            }
+        },
     },
     
 

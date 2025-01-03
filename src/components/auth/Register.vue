@@ -24,6 +24,7 @@ const tlf_data = ref('');
 const address_data = ref('');
 const name_data = ref('');
 const surname_data = ref('');
+const birthday_data = ref('');
 
 
 const error_username = ref('');
@@ -36,6 +37,7 @@ const error_tlf = ref('');
 const error_address = ref('');
 const error_name = ref('');
 const error_surname = ref('');
+const error_birthday = ref('');
 
 
 const roles : OptionSelect[]= [
@@ -62,6 +64,7 @@ const submitRegister = async()=>{
                 img_user: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
                 is_active: true,
                 is_deleted: false,
+                birthday: new Date(birthday_data.value),
             };
             
             if (select_roles_selected.value === 'client') {
@@ -83,6 +86,7 @@ const submitRegister = async()=>{
                 user.admin = {};
             }
             
+            console.log(user);
             
             await AuthService.register(user);
             
@@ -144,6 +148,7 @@ const validateRegister = ():boolean=>{
     error_username.value = usernameRegex(username_data.value);
     error_name.value = nameRegex(name_data.value);
     error_surname.value = surnameRegex(surname_data.value);
+    error_birthday.value = birthday_data.value ? '' : 'La fecha de nacimiento es obligatoria';
     
     if(!select_roles_selected.value) {
         error_select_roles.value = 'Selecciona un tipo de usuario'
@@ -173,7 +178,8 @@ const validateRegister = ():boolean=>{
         error_select_roles.value || 
         error_name.value || 
         error_surname.value || 
-        error_address.value
+        error_address.value ||
+        error_birthday.value
     );
     
     if(error){ 
@@ -295,9 +301,9 @@ const validateRegister = ():boolean=>{
                 label="Fecha de nacimiento"
                 type="date" 
                 id="password_input_register" 
-                v-model:data="password_data" 
+                v-model:data="birthday_data" 
                 placeholder="contraseña1234" 
-                :error="error_password" 
+                :error="error_birthday" 
             />
         </div>
         

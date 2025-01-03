@@ -2,7 +2,7 @@ import { User } from "./User.interface";
 
 export interface InstructorFields {
     id_instructor?: number;
-    id_user?: number;
+    id_user?: string;
     nif: string;
     tlf: string;
     address: string;

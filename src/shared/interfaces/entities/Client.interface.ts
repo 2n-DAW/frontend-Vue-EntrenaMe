@@ -2,7 +2,7 @@ import { User } from "./User.interface";
 
 export interface ClientFields {
     id_client?: number;
-    id_user?: number;
+    id_user?: string;
     tlf: string;
     nif: string;
 }

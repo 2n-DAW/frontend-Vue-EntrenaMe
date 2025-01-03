@@ -21,7 +21,11 @@ export const AuthService = {
     
     logout(): Promise<User> {
         return ApiService.post<User>("users/logout");
-    }
+    },
+    
+    updateUser(user:Partial<User>): Promise<User> {
+        return ApiService.put<User>("user", user);
+    },
 
 };
 
