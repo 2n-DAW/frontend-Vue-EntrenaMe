@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Select from '../selects/select.vue';
+import { useStore } from 'vuex';
+
+const store = useStore();
+
 
 const select_hour_selected = ref('');
 const select_day_selected = ref('');
@@ -10,7 +14,8 @@ const data = [
     { value: "hola", label: "dsfsdfsdf" },
     { value: "hola", label: "dsfsdfsdf" },
     ]
-
+    
+    store.dispatch('courtHour/initializeCourtsHours');
 
 </script>
 

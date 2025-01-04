@@ -5,6 +5,17 @@ import { ref, onMounted, computed, watch } from 'vue';
 import { User } from '../shared/interfaces/entities/User.interface';
 import { useStore } from 'vuex';
 
+
+// import MyComments from '../components/MyComments.vue';
+// import Favorites from '../components/Favorites.vue';
+// import Followers from '../components/Followers.vue';
+// import Following from '../components/Following.vue';
+// import MyJobs from '../components/MyJobs.vue';
+// import CreateJob from '../components/CreateJob.vue';
+// import PendingInscriptions from '../components/PendingInscriptions.vue';
+// import AcceptedInscriptions from '../components/AcceptedInscriptions.vue';
+// import RejectedInscriptions from '../components/RejectedInscriptions.vue';
+
 const router = useRouter();
 const route = useRoute();
 const store = useStore();
@@ -56,10 +67,40 @@ const username_user_logged = ref(user_logged.value?.username || '');
 
 watch(() => user_logged.value, (new_user) => {
     username_user_logged.value = new_user?.username || '';
-}
-);
+});
 
+// Control de las pestañas
+const activeTab = ref('MyComments');
+
+// const componentsMap: Record<string, any> = {
+//     MyComments,
+//     Favorites,
+//     Followers,
+//     Following,
+//     MyJobs,
+//     CreateJob,
+//     PendingInscriptions,
+//     AcceptedInscriptions,
+//     RejectedInscriptions,
+// };
+
+// const activeComponent = computed(() => componentsMap[activeTab.value]);
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
 
     <div class=" mx-auto my-6 flex items-center justify-center bg-background3 p-6">
@@ -109,5 +150,98 @@ watch(() => user_logged.value, (new_user) => {
             </div>
         </div>
     </div>
+    
+    
+    
+<!--     
+    
+    <div class="container max-w-screen-xl flex mx-auto px-10 pt-2 pb-1.5">
+        <ul class="outline-active flex justify-center">
+            <li class="nav-item">
+                <button @click="activeTab = 'MyComments'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'MyComments'
+                }">
+                    Mis comentarios
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'Favorites'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'Favorites'
+                }">
+                    Favoritos
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'Followers'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'Followers'
+                }">
+                    Seguidores
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'Following'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'Following'
+                }">
+                    Siguiendo
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'MyJobs'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'MyJobs'
+                }">
+                    Mis ofertas
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'CreateJob'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'CreateJob'
+                }">
+                    Crear oferta
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'PendingInscriptions'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'PendingInscriptions'
+                }">
+                    Insc. pendientes
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'AcceptedInscriptions'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'AcceptedInscriptions'
+                }">
+                    Insc. aceptadas
+                </button>
+            </li>
+            <li class="nav-item">
+                <button @click="activeTab = 'RejectedInscriptions'" :class="{
+                    'py-2 px-4 bg-color3 text-white hover:bg-color4 rounded-t-2xl border-l border-r border-color13 transition-all': true,
+                    '!bg-color13 !text-color9 border-l border-t border-r !border-color14 border-b !border-b-color13 shadow-inner': activeTab === 'RejectedInscriptions'
+                }">
+                    Insc. rechazadas
+                </button>
+            </li>
+        </ul>
+
+        <div class="content_div container bg-color13 rounded-t-md border border-color14 shadow">
+            <component :is="activeComponent" />
+        </div>
+    </div>
+    
+     -->
+    
+    
+    
+    
+    
+    
 
 </template>
