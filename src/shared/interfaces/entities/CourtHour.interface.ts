@@ -7,7 +7,7 @@ export interface CourtHour {
     id_court: number;
     id_hour: number;
     id_month: number;
-    day: number;
+    day_number: number;
     year: number;
     available: boolean;
     slug_court_hour: string;
