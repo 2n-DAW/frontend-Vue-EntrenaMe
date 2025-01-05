@@ -10,8 +10,8 @@ export const BookingService = {
     getAll(): Promise<{ bookings: Booking[] }> {
         return ApiService.get("bookings/detailed");
     },
-    delete(slug: string): Promise<void> {
-        return ApiService.delete(`bookings/delete/${slug}`);
+    delete(slug: string): Promise<Booking> {
+        return ApiService.put(`bookings/delete/${slug}`);
     },
     getUserBookings(): Promise<{ bookings: Booking[] }> {
         return ApiService.get("bookings/user");

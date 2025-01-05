@@ -1,48 +1,39 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
-import { Booking } from '../../shared/interfaces/entities/booking.interface';
-
+import BookingCard from '../cards/BookingCard.vue';
 
 const store = useStore();
-const bookings = ref<Booking[]>([]);
 
-const fetchBookings = async () => {
+const bookings = computed(() => store.getters['booking/allBookings']);
+
+const initializeBookings = async () => {
     try {
         await store.dispatch('booking/initializeBookings');
-        bookings.value = store.getters['booking/allBookings'];
-        console.log('Reservas:', bookings.value);
+        console.log('Reservas inicializadas:', bookings.value);
     } catch (error) {
         console.error('Error al obtener las reservas:', error);
     }
 };
 
-fetchBookings();
-
-
-
+initializeBookings();
 
 </script>
+
 <template>
-
-
     <div class="w-full flex justify-center items-center">
         <div class="w-full md:w-1/2">
-            <h1 class="text-3xl font-bold text-center">Reservas</h1>
+            <h1 class="text-3xl font-bold text-center mb-6">Reservas</h1>
             <div class="flex flex-col gap-4">
-
                 <div v-if="bookings.length === 0" class="text-center text-text1">
                     No tienes reservas
                 </div>
                 <div v-else>
-                    <div v-for="booking in bookings" :key="booking.id_booking"
-                        class="bg-background3 p-4 rounded-lg shadow-lg">
-                        Hola
+                    <div v-for="booking in bookings" :key="booking.id_booking">
+                        <BookingCard :booking="booking" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </template>

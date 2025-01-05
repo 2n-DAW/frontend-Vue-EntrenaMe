@@ -71,6 +71,7 @@ const ApiService = {
     async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
             const response = await axiosClient.delete<T>(url, config);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             this.handleError(error);
