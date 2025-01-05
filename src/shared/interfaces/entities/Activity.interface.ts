@@ -5,6 +5,7 @@ export interface Activity {
     id_activity: number;
     n_activity: string;
     spots: number;
+    spots_available: number;
     description: string;
     img_activity: string;
     slot_hour: string;
