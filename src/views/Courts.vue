@@ -7,7 +7,6 @@ const filteredCourtHours = ref([]);
 
 const handleFilteredCourtHours = (filteredData: any) => {
     filteredCourtHours.value = filteredData;
-    console.log('Datos filtrados recibidos en el componente padre:', filteredCourtHours.value);
 };
 </script>
 

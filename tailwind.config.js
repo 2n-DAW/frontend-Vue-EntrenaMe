@@ -18,6 +18,7 @@ module.exports = {
                 color2: '#00d0ff',
                 color3: '#0080ff',
                 color4: '#aaaaaa',
+                color5: '#703500',
                 
                 color1_hover: '#FF4500',
                 color2_hover: '#0090aa',

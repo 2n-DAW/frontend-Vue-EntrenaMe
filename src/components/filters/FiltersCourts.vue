@@ -18,11 +18,8 @@ const select_month_selected = ref('');
 
 const initializeData = async () => {
     try {
-        console.log('Iniciando la carga de datos...');
         await store.dispatch('courtHour/initializeCourtsHours');
-        console.log('Datos cargados correctamente');
     } catch (error) {
-        console.error('Error al cargar los datos', error);
     } finally {
         isLoading.value = false;
     }
@@ -122,7 +119,7 @@ const recalculateFilters = () => {
         emit('updateFilteredCourtHours', []);
     }
 
-    if (select_month_selected.value === '' || select_sports_selected.value === '') {
+    if (select_month_selected.value === '' || select_sports_selected.value === '' || select_day_selected.value === '' || select_hour_selected.value === '') {
         emit('updateFilteredCourtHours', []);
     }
 
@@ -151,7 +148,7 @@ watch(select_month_selected, recalculateFilters);
         <Select label="Mes" :data="filtered_months" v-model:selected="select_month_selected" />
         <Select label="Horario" :data="filtered_hours" v-model:selected="select_hour_selected" />
         <Select label="Día" :data="filtered_days" v-model:selected="select_day_selected" />
-        <Select label="Deporte" :data="filtered_courts" v-model:selected="select_sports_selected" />
+        <Select label="Pista" :data="filtered_courts" v-model:selected="select_sports_selected" />
         <div class="flex items-end justify-center w-full mt-auto">
             <button id="button-delete-filters"
                 class="bg-button1 hover:bg-button1_hover text-button1_text p-1 rounded transition duration-200 h-8 w-full"
