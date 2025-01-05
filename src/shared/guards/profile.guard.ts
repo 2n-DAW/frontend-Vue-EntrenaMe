@@ -7,9 +7,8 @@ export async function profileEditGuard(to:any, from:any, next:any) {
     await store.dispatch("auth/currentUser");
     const userLogged = computed(() => store.getters['auth/getUser']);
     
-    console.log(userLogged.value);
 
-    if (to.params.username === userLogged.value.username && userLogged.value.type_user !== "admin") {
+    if (to.params.username === userLogged.value.username) {
         next(); 
     } else {
         next({ name: "home" });

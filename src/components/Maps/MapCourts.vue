@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { defineProps, computed } from 'vue';
 import { CourtHour } from '../../shared/interfaces/entities/CourtHour.interface';
+import { BookingService } from '../../services/booking.service';
+
+
+import Noty from 'noty';
+import 'noty/lib/noty.css';
+import 'noty/lib/themes/mint.css';
 
 const props = defineProps({
     filteredCourtHours: {
@@ -12,47 +18,99 @@ const props = defineProps({
 const isCourtSelected = computed(() => {
     return props.filteredCourtHours.length > 0;
 });
+
+const booking = async (id_count_hours: number) => {
+
+    try {
+        await BookingService.create({ id_count_hours })
+
+        new Noty({
+            type: 'success',
+            text: 'Reserva realizada',
+            timeout: 1000,
+            progressBar: true,
+        }).show();
+
+
+
+    } catch (error) {
+        new Noty({
+            type: 'error',
+            text: 'Error al reservar',
+            timeout: 1000,
+            progressBar: true,
+        }).show();
+    }
+
+};
+
+
+
 </script>
 
 <template>
     <div class="w-full flex mt-16 p20">
         <div class="w-3/5 flex flex-col items-center justify-center">
             <div class="flex justify-between w-full">
-                <div id="1" :class="['w-9/12 aspect_athletics rounded-capsule', props.filteredCourtHours[0]?.court?.id_court === 1 ? 'bg-color1' : 'bg-color5']"></div>
+                <div id="1"
+                    :class="['w-9/12 aspect_athletics rounded-capsule', props.filteredCourtHours[0]?.court?.id_court === 1 ? 'bg-color1' : 'bg-color5']">
+                </div>
                 <div class="w-3/12 flex flex-col items-center justify-center">
-                    <div id="2" :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 2 ? 'bg-color1' : 'bg-color5']"></div>
-                    <div id="3" :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 3 ? 'bg-color1' : 'bg-color5']"></div>
-                    <div id="4" :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 4 ? 'bg-color1' : 'bg-color5']"></div>
+                    <div id="2"
+                        :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 2 ? 'bg-color1' : 'bg-color5']">
+                    </div>
+                    <div id="3"
+                        :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 3 ? 'bg-color1' : 'bg-color5']">
+                    </div>
+                    <div id="4"
+                        :class="['w-2/3 aspect_volley m2', props.filteredCourtHours[0]?.court?.id_court === 4 ? 'bg-color1' : 'bg-color5']">
+                    </div>
                     <div class="w-2/3 flex justify-between">
-                        <div id="5" :class="['w-5/12 aspect_padel m2', props.filteredCourtHours[0]?.court?.id_court === 5 ? 'bg-color1' : 'bg-color5']"></div>
-                        <div id="6" :class="['w-5/12 aspect_padel m2', props.filteredCourtHours[0]?.court?.id_court === 6 ? 'bg-color1' : 'bg-color5']"></div>
+                        <div id="5"
+                            :class="['w-5/12 aspect_padel m2', props.filteredCourtHours[0]?.court?.id_court === 5 ? 'bg-color1' : 'bg-color5']">
+                        </div>
+                        <div id="6"
+                            :class="['w-5/12 aspect_padel m2', props.filteredCourtHours[0]?.court?.id_court === 6 ? 'bg-color1' : 'bg-color5']">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="flex justify-between w-full mb-4">
                 <div class="w-1/6 flex flex-col items-center justify-center m2">
-                    <div id="7" :class="['w-full aspect_tenis m2', props.filteredCourtHours[0]?.court?.id_court === 7 ? 'bg-color1' : 'bg-color5']"></div>
-                    <div id="8" :class="['w-full aspect_tenis m2', props.filteredCourtHours[0]?.court?.id_court === 8 ? 'bg-color1' : 'bg-color5']"></div>
+                    <div id="7"
+                        :class="['w-full aspect_tenis m2', props.filteredCourtHours[0]?.court?.id_court === 7 ? 'bg-color1' : 'bg-color5']">
+                    </div>
+                    <div id="8"
+                        :class="['w-full aspect_tenis m2', props.filteredCourtHours[0]?.court?.id_court === 8 ? 'bg-color1' : 'bg-color5']">
+                    </div>
                 </div>
 
                 <div class="w-1/6 flex flex-col items-center justify-center m2">
-                    <div id="9" :class="['w-full aspect_basketball m2', props.filteredCourtHours[0]?.court?.id_court === 9 ? 'bg-color1' : 'bg-color5']"></div>
+                    <div id="9"
+                        :class="['w-full aspect_basketball m2', props.filteredCourtHours[0]?.court?.id_court === 9 ? 'bg-color1' : 'bg-color5']">
+                    </div>
                 </div>
 
                 <div class="w-1/6 flex flex-col items-center justify-center m2">
-                    <div id="10" :class="['w-full aspect_basketball m2', props.filteredCourtHours[0]?.court?.id_court === 10 ? 'bg-color1' : 'bg-color5']"></div>
+                    <div id="10"
+                        :class="['w-full aspect_basketball m2', props.filteredCourtHours[0]?.court?.id_court === 10 ? 'bg-color1' : 'bg-color5']">
+                    </div>
                 </div>
 
                 <div class="w-2/5 flex flex-col items-center justify-center m2">
-                    <div id="11" :class="['w-full aspect_football m2', props.filteredCourtHours[0]?.court?.id_court === 11 ? 'bg-color1' : 'bg-color5']"></div>
+                    <div id="11"
+                        :class="['w-full aspect_football m2', props.filteredCourtHours[0]?.court?.id_court === 11 ? 'bg-color1' : 'bg-color5']">
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="w-2/5 mx-auto flex flex-col items-center justify-center">
-            <div v-if="isCourtSelected" class="max-w-sm mx-auto bg-gray-800 border border-gray-700 rounded-lg shadow-md overflow-hidden">
-                <img class="w-full h-48 object-cover" :src="`img/courts/${props.filteredCourtHours[0].court!.img_court}`" alt="Imagen de pista">
+            <div v-if="isCourtSelected"
+                class="max-w-sm mx-auto bg-gray-800 border border-gray-700 rounded-lg shadow-md overflow-hidden">
+                <img class="w-full h-48 object-cover"
+                    :src="`img/courts/${props.filteredCourtHours[0].court!.img_court}`" alt="Imagen de pista">
 
                 <div class="p-4">
                     <div class="mb-2">
@@ -67,18 +125,20 @@ const isCourtSelected = computed(() => {
 
                     <div class="mb-4">
                         <span class="block text-gray-400 text-sm font-medium">Hora</span>
-                        <p class="text-lg font-semibold text-white">{{ props.filteredCourtHours[0].hour!.slot_hour }}</p>
+                        <p class="text-lg font-semibold text-white">{{ props.filteredCourtHours[0].hour!.slot_hour }}
+                        </p>
                     </div>
-                    
+
                     <div class="mb-4">
                         <span class="block text-gray-400 text-sm font-medium">Pista</span>
                         <p class="text-lg font-semibold text-white">{{ props.filteredCourtHours[0].court!.n_court }}</p>
                     </div>
 
-                    <button
+                    <button @click="() => booking(props.filteredCourtHours[0].id_court_hour)"
                         class="w-full bg-color2 text-background1 font-semibold py-2 px-4 rounded hover:bg-color2_hover transition">
                         Reservar
                     </button>
+
                 </div>
             </div>
         </div>

@@ -33,7 +33,7 @@ const submitLogin = async () => {
             new Noty({
                 type: 'success',
                 text: 'Login exitoso',
-                timeout: 3000,
+                timeout: 1000,
                 progressBar: true,
             }).show();
             
@@ -62,7 +62,7 @@ const submitLogin = async () => {
                 new Noty({
                     type: 'error',
                     text: message,
-                    timeout: 3000,
+                    timeout: 1000,
                     progressBar: true,
                 }).show();
 
