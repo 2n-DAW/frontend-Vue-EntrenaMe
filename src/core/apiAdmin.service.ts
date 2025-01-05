@@ -8,10 +8,8 @@ export const axiosAdmin: AxiosInstance = axios.create({
 axiosAdmin.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         const token = localStorage.getItem("token");
-        console.log("token:", "hola");
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
-            console.log("config headers:", config.headers.Authorization);
         }
         return config;
     },
@@ -35,9 +33,7 @@ const ApiServiceAdmin = {
 
     async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
         try {
-            console.log("data:", data);
             const response = await axiosAdmin.post<T>(url, data, config);
-            console.log("response:", response);
             return response.data;
         } catch (error) {
             this.handleError(error);

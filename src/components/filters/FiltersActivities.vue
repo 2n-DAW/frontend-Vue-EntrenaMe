@@ -15,7 +15,7 @@
             :data="sports" 
             v-model:selected="select_sports_selected" 
         />
-            <SearchFilters 
+        <SearchFilters 
             label="Buscar" 
             v-model:input_text_search="text_search" 
         />
@@ -72,7 +72,6 @@ const deleteFilters = ():void => {
 
 const highlight = ():void => {
     if (props.filters_URL) {
-        console.log(props.filters_URL);
         if (props.filters_URL.slot_hour) select_hours_selected.value = props.filters_URL.slot_hour;
         if (props.filters_URL.week_day) select_days_selected.value = props.filters_URL.week_day;
         if (props.filters_URL.n_activity) text_search.value = props.filters_URL.n_activity;

@@ -1,15 +1,16 @@
 import { Module } from 'vuex';
-import { Activity } from '../shared/interfaces/Activity.interface';
+import { Activity } from '../shared/interfaces/entities/Activity.interface';
 import { ActivityService } from '../services/activity.service';
 import { sortHours } from '../shared/utils/shortHours.util';
 import { sortWeekDays } from '../shared/utils/shortWeekDays.util';
 import { OptionSelect } from '../shared/interfaces/select/OptionSelect.interface';
-import { Sport } from '../shared/interfaces/Sport.interface';
+import { Sport } from '../shared/interfaces/entities/Sport.interface';
 import { uniqueSports } from '../shared/utils/uniqueSports.util';
 
 export interface ActivityState {
     activities: Array<Activity>;
-    // activitiesFiltered: Array<Activity>;
+    activitiesNames: Array<string>;
+    
     filters: {
         days: Array<OptionSelect>;
         hours: Array<OptionSelect>;
@@ -19,7 +20,7 @@ export interface ActivityState {
 
 const state: ActivityState = {
     activities: [],
-    // activitiesFiltered: [],
+    activitiesNames: [],
     filters: {
         days: [],
         hours: [],
@@ -35,8 +36,6 @@ export const activity: Module<ActivityState, any> = {
         async initializeActivities({ commit }) {
             try {
                 const response = await ActivityService.getAll();
-
-                console.log('response', response);
 
                 if (response === undefined) return;
 
@@ -71,22 +70,25 @@ export const activity: Module<ActivityState, any> = {
                 const sports_label = sports_unique.map((sport) => {
                     return { value: sport.n_sport, label: sport.n_sport }; //Cambiar a slug_sport
                 });
+                
+                const activities_names = activities.map((activity) => {
+                    return activity.n_activity;
+                });
 
                 commit('setDays', days_label);
                 commit('setHours', hours_label);
                 commit('setActivities', activities);
                 commit('setSports', sports_label);
+                commit('setActivitiesNames', activities_names);
 
             } catch (error) {
                 console.error('Error loading sports:', error);
             }
         },
+        
+        
 
-        // async fillActivitiesFiltered({ commit }, filters) {
-        //     const activities = await ActivityService.getAllFiltered(filters);
-        //     if (activities === undefined) return;
-        //     commit('setActivities', activities.activities);
-        // }
+
     },
 
     mutations: {
@@ -101,7 +103,11 @@ export const activity: Module<ActivityState, any> = {
         },
         setSports(state, sports: OptionSelect[]) {
             state.filters.sports = sports;
-        }
+        },
+        setActivitiesNames(state, activitiesNames: string[]) {
+            state.activitiesNames = activitiesNames;
+        },
+        
     },
     getters: {
         allActivities(state): Activity[] {
@@ -115,6 +121,9 @@ export const activity: Module<ActivityState, any> = {
         },
         getSports(state): OptionSelect[] {
             return state.filters.sports;
+        },
+        getActivitiesNames(state): string[] {
+            return state.activitiesNames;
         }
     },
 };

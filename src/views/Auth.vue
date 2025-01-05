@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import ImgAuth from '../components/img_svg/imgAuth.vue';
 import Register from '../components/auth/Register.vue';
 import Login from '../components/auth/Login.vue';

@@ -6,7 +6,9 @@
             :id="id" 
             :placeholder="placeholder"
             :class="['bg-input1 text-input1_text p-2 rounded', { 'border border-red-500': error }]"
-            v-model="text" />
+            v-model="text" 
+            :readonly="readonly"
+            />
         <p v-if="error" class="text-red-500 text-sm mt-1">{{ error }}</p>
     </div>
 </template>
@@ -38,6 +40,10 @@ const props = defineProps({
     error: {
         type: String,
         default: '',
+    },
+    readonly: {
+        type: Boolean,
+        default: false,
     },
 });
 

@@ -23,9 +23,9 @@ import { useRouter } from 'vue-router';
 import FiltersActivities from '../components/filters/FiltersActivities.vue';
 import ActivitiesList from '../components/lists/ActivitiesList.vue';
 import { ActivityService } from '../services/activity.service';
-import { Activity } from '../shared/interfaces/Activity.interface';
 import Pagination from '../components/pagination/Pagination.vue';
 import { FilterActivity } from '../shared/interfaces/fiters/FilterActivity.interface';
+import { Activity } from '../shared/interfaces/entities/Activity.interface';
 
 const router = useRouter();
 
@@ -41,7 +41,6 @@ const filters_selected = ref({});
 
 const filters_Selected = async (filters: Partial<FilterActivity>):Promise<void> => {
     currentFilters.value = filters;
-    console.log("Filters Selected:", currentFilters.value);
     let filters_btoa = "";
     if (filters.slot_hour !== "" || filters.week_day !== "" || filters.n_activity !== "" || filters.sport !== "") {
         filters_btoa = btoa(JSON.stringify(filters));
@@ -70,7 +69,6 @@ watch(current_page_output, () => {
 
 const filters_URL = (): void => {
     const filters = router.currentRoute.value.query.filtros;
-    console.log("Filters URL:", filters);
     if (filters) {
         const resp_filters = JSON.parse(atob(filters as string));
         if (resp_filters.slot_hour !== "") {

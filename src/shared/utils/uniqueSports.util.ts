@@ -1,4 +1,4 @@
-import { Sport } from "../interfaces/Sport.interface";
+import { Sport } from "../interfaces/entities/Sport.interface";
 
 export const uniqueSports = (sports: Array<Sport>): Array<Sport> => {
 

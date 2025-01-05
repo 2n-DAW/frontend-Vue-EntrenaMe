@@ -29,12 +29,11 @@ const submitLogin = async () => {
                 email: email_data.value,
                 password: password_data.value
             });
-            console.log('Login exitoso');
             
             new Noty({
                 type: 'success',
                 text: 'Login exitoso',
-                timeout: 3000,
+                timeout: 1000,
                 progressBar: true,
             }).show();
             
@@ -63,7 +62,7 @@ const submitLogin = async () => {
                 new Noty({
                     type: 'error',
                     text: message,
-                    timeout: 3000,
+                    timeout: 1000,
                     progressBar: true,
                 }).show();
 

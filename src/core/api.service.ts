@@ -1,9 +1,28 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { API_URL_CLIENT } from "./config";
 
 export const axiosClient: AxiosInstance = axios.create({
     baseURL: API_URL_CLIENT,
 });
+
+
+
+axiosClient.interceptors.request.use(
+    (config: InternalAxiosRequestConfig) => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        console.error("[Axios Request Error]:", error);
+        return Promise.reject(error);
+    }
+);
+
+
+
 
 const ApiService = {
 
@@ -52,6 +71,7 @@ const ApiService = {
     async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
         try {
             const response = await axiosClient.delete<T>(url, config);
+            console.log(response.data);
             return response.data;
         } catch (error) {
             this.handleError(error);

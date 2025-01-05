@@ -1,5 +1,5 @@
 import { Module } from 'vuex';
-import { User } from '../shared/interfaces/User.interface';
+import { User } from '../shared/interfaces/entities/User.interface';
 import { AuthService } from '../services/auth.service';
 
 export interface AuthState {
@@ -48,8 +48,31 @@ export const auth: Module<AuthState, any> = {
             } catch (error) {
                 throw error;
             }
-        }
+        },
+        
+        async logout({ commit }) {
+            try {
+                await AuthService.logout();
+                
+            } catch (error) {
+                throw error;
+            }finally{
+                localStorage.removeItem('token');
+                commit('setIsLogged', false);
+                commit('setUser', null);
+                
+            }
+        },
+        async updateUser({ commit }, user: Partial<User>) {
+            try {
+                const response = await AuthService.updateUser(user);
+                commit('setUser', response);
+            } catch (error) {
+                throw error;
+            }
+        },
     },
+    
 
     mutations: {
         setUser(state, user: User) {

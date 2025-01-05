@@ -8,7 +8,6 @@
 </template>
 
 <script lang="ts">
-console.log('--------------------');
 import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 
@@ -21,14 +20,11 @@ export default defineComponent({
 
         const testConnection = async () => {
             try {
-                console.log('yeeeeeee');
                 const res = await axios.get('http://localhost:8000/api/sports');
                 response.value = `Respuesta del servidor: ${res.data}`;
-                console.log(res.data);
                 error.value = null;
             } catch (err) {
                 response.value = null;
-                console.log(err);
                 error.value = `Error: ${err}`;
             }
         };
