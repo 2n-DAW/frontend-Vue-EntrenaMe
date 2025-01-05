@@ -9,8 +9,9 @@ const loading = ref(true);
 
 onMounted(async () => {
     try {
-        const result = await store.dispatch('auth/currentUser');
+        await store.dispatch('auth/currentUser');
     } catch (error) {
+        localStorage.removeItem('token');
         console.error('Error al obtener el usuario actual:', error);
     } finally {
         loading.value = false;

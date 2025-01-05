@@ -10,3 +10,7 @@ export interface Booking {
 export interface BookingCreate {
     id_count_hours: number;
 }
+
+export interface Bookings{
+    bookings: Booking[];
+}

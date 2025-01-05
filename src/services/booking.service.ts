@@ -6,7 +6,17 @@ export const BookingService = {
     create(court_hour: BookingCreate): Promise<Booking> {
         console.log(court_hour);
         return ApiService.post("bookings/create", court_hour);
-    }
+    },
+    getAll(): Promise<{ bookings: Booking[] }> {
+        return ApiService.get("bookings/detailed");
+    },
+    delete(slug: string): Promise<void> {
+        return ApiService.delete(`bookings/delete/${slug}`);
+    },
+    getUserBookings(): Promise<{ bookings: Booking[] }> {
+        return ApiService.get("bookings/user");
+    },
+    
 };
 
 
