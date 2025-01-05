@@ -23,7 +23,7 @@ const deleteBooking = () => {
         <div class="flex flex-col items-center mb-4 w-1/5">
             <img :src="`../public/img/users/${booking.user!.img_user}`" alt="Imagen de usuario"
                 class="w-20 h-20 rounded-full border border-gray-600 mb-2" />
-            <p class="text-lg font-semibold text-white">{{ booking.user!.username }}</p>
+            <p class="text-lg font-semibold text-color1">{{ booking.user!.username }}</p>
         </div>
 
         <div class=" w-3/5">

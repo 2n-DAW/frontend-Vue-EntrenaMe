@@ -28,8 +28,8 @@ initializeBookings();
                 <div v-if="bookings.length === 0" class="text-center text-text1">
                     No tienes reservas
                 </div>
-                <div v-else>
-                    <div v-for="booking in bookings" :key="booking.id_booking">
+                <div v-else >
+                    <div v-for="booking in bookings" :key="booking.id_booking" class = "mb-4">
                         <BookingCard :booking="booking" />
                     </div>
                 </div>
