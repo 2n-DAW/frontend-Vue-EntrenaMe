@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
 import { AuthService } from '../services/auth.service';
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed, watch, Comment } from 'vue';
 import { User } from '../shared/interfaces/entities/User.interface';
 import { useStore } from 'vuex';
 import BookingList from '../components/lists/BookingList.vue';
+import CommentsListProfile from '../components/lists/CommentsListProfile.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -123,18 +124,39 @@ watch(() => user_logged.value, (new_user) => {
 
 
         </div>
-        <div class="flex flex-col gap-2 ml-6">
+        <div class="flex gap-2 ml-6">
             <button v-if="username === username_user_logged"
                 class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
                 style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
                 :onClick="() => router.push(`/profile/${username}/edit`)">
-                Editar perfil
+                Mis Comentarios
+            </button>
+            
+            <button v-if="username === username_user_logged"
+                class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
+                style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
+                :onClick="() => router.push(`/profile/${username}/edit`)">
+                Mis Reservas
+            </button>
+            <button v-if="username === username_user_logged"
+                class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
+                style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
+                :onClick="() => router.push(`/profile/${username}/edit`)">
+                Siguiendo
+            </button>
+            <button v-if="username === username_user_logged"
+                class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
+                style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
+                :onClick="() => router.push(`/profile/${username}/edit`)">
+                Seguidos
             </button>
         </div>
     </div>
     
     <div>
-        <BookingList />
+        <!-- <BookingList /> -->
+        <CommentsListProfile />
+        
     </div>
 
 

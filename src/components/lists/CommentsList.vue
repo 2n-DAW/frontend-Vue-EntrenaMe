@@ -22,7 +22,7 @@ const initializeComments = async () => {
 initializeComments();
 
 console.log('ID de la actividad:', props.id_activity);
-const comments = computed(() => store.getters['comment/allActivityComments'](props.id_activity) || []);
+const comments = computed(() => store.getters['comment/allUserComments'](props.id_activity) || []);
 
 watch(comments, (newVal) => {
     console.log('Nuevos comentarios:', newVal);
