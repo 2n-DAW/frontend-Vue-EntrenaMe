@@ -6,7 +6,7 @@ import { sortHoursOptions } from '../../shared/utils/shortHours.util';
 import { sortMonthsOptions } from '../../shared/utils/shortMonths.util';
 import { CourtHour } from '../../shared/interfaces/entities/CourtHour.interface';
 
-const emit = defineEmits(['updateFilteredCourtHours']);
+const emit = defineEmits(['updateFilteredCourtHours', 'updateSelectedValues']);
 
 const store = useStore();
 
@@ -122,15 +122,26 @@ const recalculateFilters = () => {
 
     emit('updateFilteredCourtHours', filtered);
 
-    if (select_month_selected.value === '' && select_hour_selected.value === '' && select_day_selected.value === '' && select_sports_selected.value === '') {
+    if (!select_month_selected.value && !select_hour_selected.value && !select_day_selected.value && !select_sports_selected.value) {
         emit('updateFilteredCourtHours', []);
     }
-
-    if (select_month_selected.value === '' || select_sports_selected.value === '' || select_day_selected.value === '' || select_hour_selected.value === '') {
+    
+    if (!select_month_selected.value || !select_hour_selected.value || !select_day_selected.value || !select_sports_selected.value) {
         emit('updateFilteredCourtHours', []);
     }
+    
+    
 };
 
+const emitSelectedValues = () => {
+    const selectedValues = {
+        month: select_month_selected.value,
+        hour: select_hour_selected.value,
+        day: select_day_selected.value,
+        sport: select_sports_selected.value,
+    };
+    emit('updateSelectedValues', selectedValues);
+};
 
 const clearFilters = () => {
     select_month_selected.value = '';
@@ -138,14 +149,27 @@ const clearFilters = () => {
     select_day_selected.value = '';
     select_sports_selected.value = '';
     emit('updateFilteredCourtHours', []);
+    emitSelectedValues();
 };
 
-watch(select_hour_selected, recalculateFilters);
-watch(select_day_selected, recalculateFilters);
-watch(select_sports_selected, recalculateFilters);
-watch(select_month_selected, recalculateFilters);
-
+watch(select_hour_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_day_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_sports_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_month_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
 </script>
+
 
 <template>
     <div v-if="isLoading" class="flex justify-center items-center min-h-screen">
