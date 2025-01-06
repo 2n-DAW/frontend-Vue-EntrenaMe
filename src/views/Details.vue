@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { ActivityService } from '../services/activity.service';
 import { Activity } from '../shared/interfaces/entities/Activity.interface';
+import store from '../store';
+import { computed } from 'vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -21,13 +23,16 @@ const fetchActivity = async () => {
     }
 };
 
-onMounted(() => {
-    fetchActivity();
-});
+const isLogged = computed(() => store.getters['auth/getIsLogged']);
 
-const joinActivity = () => {
 
-};
+    onMounted(() => {
+        fetchActivity();
+    });
+
+    const joinActivity = () => {
+
+    };
 
 </script>
 
@@ -40,7 +45,7 @@ const joinActivity = () => {
     </div>
     <div v-else-if="activity"
         class="w-3/5 mt-16 mx-auto bg-background3 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
-        
+
         <div class="w-full h-64 bg-background3 flex items-center justify-center ">
             <img :src="`../public/img/activities/${activity.img_activity}`" alt="Imagen de la actividad"
                 class="w-full h-full object-contain rounded-lg" />
@@ -94,7 +99,7 @@ const joinActivity = () => {
 
             </div>
 
-            <div class="flex justify-end">
+            <div v-if="isLogged" class="flex justify-end">
                 <button @click="joinActivity"
                     class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition">
                     Apuntarse
