@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { ActivityService } from '../services/activity.service';
 import { Activity } from '../shared/interfaces/entities/Activity.interface';
 import store from '../store';
-import { computed } from 'vue';
+import CommentsList from '../components/lists/CommentsList.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -16,6 +16,7 @@ const fetchActivity = async () => {
     try {
         isLoading.value = true;
         activity.value = await ActivityService.getBySlug(slug);
+        console.log('Actividad:', activity.value);
     } catch (error) {
         errorMessage.value = 'No se pudo cargar la actividad. Por favor, inténtalo de nuevo más tarde.';
     } finally {
@@ -25,15 +26,15 @@ const fetchActivity = async () => {
 
 const isLogged = computed(() => store.getters['auth/getIsLogged']);
 
+const isActivityReady = computed(() => !!activity.value?.id_activity);
 
-    onMounted(() => {
-        fetchActivity();
-    });
+onMounted(() => {
+    fetchActivity();
+});
 
-    const joinActivity = () => {
-
-    };
-
+const joinActivity = () => {
+    console.log('Unirse a la actividad:', activity.value?.id_activity);
+};
 </script>
 
 <template>
@@ -46,34 +47,28 @@ const isLogged = computed(() => store.getters['auth/getIsLogged']);
     <div v-else-if="activity"
         class="w-3/5 mt-16 mx-auto bg-background3 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
 
-        <div class="w-full h-64 bg-background3 flex items-center justify-center ">
-            <img :src="`../public/img/activities/${activity.img_activity}`" alt="Imagen de la actividad"
+        <div class="w-full h-64 bg-background3 flex items-center justify-center">
+            <img :src="`/img/activities/${activity.img_activity}`" alt="Imagen de la actividad"
                 class="w-full h-full object-contain rounded-lg" />
         </div>
 
         <div class="px-16 py-8">
-
             <div class="mb-16 text-center">
                 <h1 class="text-3xl font-bold text-white">{{ activity.n_activity }}</h1>
-                <p class="text-xl text-gray-400">Deporte: {{ activity.sport!.n_sport }}</p>
+                <p class="text-xl text-gray-400">Deporte: {{ activity.sport?.n_sport }}</p>
                 <p class="text-gray-400">{{ activity.description }}</p>
             </div>
 
-
             <div class="flex gap-4 mb-8">
-
                 <div class="flex flex-col items-center justify-center mb-4 w-1/3 text-center">
-                    <router-link :to="`/profile/${activity.instructor!.username}`" class="flex flex-col items-center">
-                        <img :src="`../public/img/users/${activity.instructor!.img_user}`" alt="Imagen del instructor"
+                    <router-link v-if="activity.instructor" :to="`/profile/${activity.instructor.username}`" class="flex flex-col items-center">
+                        <img :src="`/img/users/${activity.instructor.img_user}`" alt="Imagen del instructor"
                             class="w-16 h-16 rounded-full border border-gray-600 hover:scale-105 transition-transform" />
                         <p class="text-lg font-semibold text-color1 mt-2 hover:underline">
-                            {{ activity.instructor!.username }}
+                            {{ activity.instructor.username }}
                         </p>
                     </router-link>
                 </div>
-
-
-
                 <div class="w-1/3">
                     <div>
                         <span class="block text-sm text-gray-400">Día</span>
@@ -83,7 +78,6 @@ const isLogged = computed(() => store.getters['auth/getIsLogged']);
                         <span class="block text-sm text-gray-400">Horario</span>
                         <p class="text-lg font-semibold text-white">{{ activity.slot_hour }}</p>
                     </div>
-
                 </div>
                 <div class="w-1/3">
                     <div>
@@ -95,13 +89,11 @@ const isLogged = computed(() => store.getters['auth/getIsLogged']);
                         <p class="text-lg font-semibold text-white">{{ activity.spots_available }}</p>
                     </div>
                 </div>
-
-
             </div>
 
             <div v-if="isLogged" class="flex justify-end">
                 <button @click="joinActivity"
-                    class="bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 transition">
+                    class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
                     Apuntarse
                 </button>
             </div>
@@ -109,5 +101,9 @@ const isLogged = computed(() => store.getters['auth/getIsLogged']);
     </div>
     <div v-else class="text-center py-10 text-gray-400">
         No se encontró la actividad.
+    </div>
+
+    <div v-if="isActivityReady">
+        <CommentsList :id_activity="activity!.id_activity" />
     </div>
 </template>
