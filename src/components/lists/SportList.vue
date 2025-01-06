@@ -34,7 +34,7 @@ const next = () => {
 
 <template>
     <section class="sport-carousel p-4">
-        <h2 class="text-2xl font-bold text-deep-orange-600 mb-4">Deportes</h2>
+        <h2 class="flex justify-center text-2xl font-bold text-deep-orange-600 mb-4">Deportes</h2>
         <div class="carousel-container flex items-center justify-center relative">
             <button @click="prev"
                 class="flex justify-center items-center hover:text-color1">

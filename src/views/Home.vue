@@ -18,9 +18,11 @@
     </section>
 
     <SportList />
+    <ActivitiesListHome />
 </template>
 
 <script setup lang="ts">
+import ActivitiesListHome from '../components/lists/ActivitiesListHome.vue';
 import SportList from '../components/lists/SportList.vue';
 import SearchHome from '../components/search/SearchHome.vue';
 </script>
