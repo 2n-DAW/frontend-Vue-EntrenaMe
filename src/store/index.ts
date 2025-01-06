@@ -5,6 +5,7 @@ import { activity } from "./Activities";
 import { auth } from "./Auth";
 import { courtHour } from "./CourtsHours";
 import { booking } from "./Bookings";
+import { comment } from "./Comments";
 
 
 
@@ -14,6 +15,7 @@ export default createStore({
     activity,
     auth,
     courtHour,
-    booking
+    booking,
+    comment
   }
 });

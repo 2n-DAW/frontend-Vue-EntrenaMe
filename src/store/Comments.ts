@@ -45,8 +45,8 @@ export const comment: Module<CommentStore, any> = {
             return state.comments.filter((comment:CommentActivity)=> comment.user!.username === username);
         },
 
-        allActivityComments: (state: CommentStore) => (id_activity: number): CommentActivity | undefined => {
-            return state.comments.find((comment:CommentActivity)=> comment.id_activity === id_activity);
+        allActivityComments: (state: CommentStore) => (id_activity: number): CommentActivity[] | [] => {
+            return state.comments.filter((comment:CommentActivity)=> comment.id_activity === id_activity);
         },
     },
 };
