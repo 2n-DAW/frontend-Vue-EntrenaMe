@@ -7,6 +7,7 @@ import { watch } from 'vue';
 
 const store = useStore();
 const props = defineProps<{ id_activity: number }>();
+const isLogged = computed(() => store.getters['auth/getIsLogged']);
 
 
 const initializeComments = async () => {
@@ -17,11 +18,8 @@ const initializeComments = async () => {
         console.error('Error al obtener los comentarios:', error);
     }
 };
-initializeComments();
 
-const onCommentDeleted = (deletedComment: any) => {
-    store.dispatch('comments/deleteComment', deletedComment.id);
-};
+initializeComments();
 
 console.log('ID de la actividad:', props.id_activity);
 const comments = computed(() => store.getters['comment/allActivityComments'](props.id_activity) || []);
@@ -29,6 +27,8 @@ const comments = computed(() => store.getters['comment/allActivityComments'](pro
 watch(comments, (newVal) => {
     console.log('Nuevos comentarios:', newVal);
 });
+
+
 
 
 </script>
@@ -42,7 +42,8 @@ watch(comments, (newVal) => {
                 <div v-if="comments.length === 0" class="text-center text-text1">
                     <p>Aún no hay ningún comentario, se el primero en comentar</p>
                 </div>
-                <CommentCardCreate />
+                
+                <CommentCardCreate v-if="isLogged"/>
 
 
                 <div v-for="comment in comments" :key="comment.id_comment" class="mb-4">

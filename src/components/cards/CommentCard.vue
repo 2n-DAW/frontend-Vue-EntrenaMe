@@ -3,15 +3,14 @@ import { ref } from 'vue';
 import { CommentActivity } from '../../shared/interfaces/entities/CommentActivity.interface';
 import { watch } from 'vue';
 import { formatDate } from '../../shared/utils/date/formatDate.util';
+import { useStore } from 'vuex';
 
 
 const props = defineProps<{ comment: CommentActivity }>();
+const store = useStore();
+const user_logged = store.getters['auth/getUser'];
 
-console.log('Comentario:', props.comment);
 
-const defaultImage = '/img/default-user-image.png';
-
-const currentUser = ref(JSON.parse(localStorage.getItem('user') || '{}'));
 
 const deleteComment = async (commentId: number) => {
     console.log('Eliminar comentario:', commentId);
@@ -32,7 +31,7 @@ const deleteComment = async (commentId: number) => {
             <div class="card-footer flex items-center space-x-4 mt-4">
                 <div class="flex items-center space-x-2 w-1/3 justify-center">
                     <router-link :to="`/profile/${props.comment.user!.username}`" class="comment-user">
-                        <img :src="`../public/img/users/${props.comment.user!.img_user || defaultImage}`"
+                        <img :src="`../public/img/users/${props.comment.user!.img_user}`"
                             alt="user image" class="comment-user-img w-8 h-8 rounded-full" />
                     </router-link>
                     <router-link :to="`/profile/${props.comment.user!.username}`"
@@ -46,7 +45,7 @@ const deleteComment = async (commentId: number) => {
                     {{ formatDate(props.comment.date) }}
                 </span>
 
-                <span v-if="props.comment.user!.username" class="mod-options cursor-pointer flex items-center text-sm text-rojo_pastel
+                <span v-if="props.comment.user!.username === user_logged.username" class="mod-options cursor-pointer flex items-center text-sm text-rojo_pastel
             pl-1 hover:scale-105 duration-200 ease-in-out w-1/3 justify-center">
                     <button @click="deleteComment(props.comment.id_comment)"
                         class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition ease-in-out">

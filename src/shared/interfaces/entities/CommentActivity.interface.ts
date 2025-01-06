@@ -15,3 +15,8 @@ export interface CommentActivity {
 export interface CommentsActivities {
     comments: CommentActivity[];
 }
+
+export interface CommentActivityCreate {
+    body: string;
+}
+    

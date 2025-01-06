@@ -29,6 +29,18 @@ export const comment: Module<CommentStore, any> = {
                 console.error('Error loading comments:', error);
             }
         },
+        
+        async addComment({ commit }, payload: { comment: CommentActivity, slug_activity: string }) {
+            try {
+                await CommentService.create(payload.comment, payload.slug_activity);
+                const response = await CommentService.getAll();
+                if (response){
+                    commit('setComments', response.comments);
+                }
+            } catch (error) {
+                console.error('Error adding comment:', error);
+            }
+        },
     },
 
     mutations: {
