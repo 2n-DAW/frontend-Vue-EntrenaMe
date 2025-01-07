@@ -6,6 +6,7 @@ import { User } from '../shared/interfaces/entities/User.interface';
 import { useStore } from 'vuex';
 import BookingList from '../components/lists/BookingList.vue';
 import CommentsListProfile from '../components/lists/CommentsListProfile.vue';
+import { ProfileService } from '../services/profile.service';
 
 const router = useRouter();
 const route = useRoute();
@@ -29,6 +30,11 @@ const instructor = computed(() => user.value?.instructor || {});
 const nif_instructor = computed(() => user.value?.instructor?.nif || '');
 const tlf_instructor = computed(() => user.value?.instructor?.tlf || '');
 const address_instructor = computed(() => user.value?.instructor?.address || '');
+const followings = computed(() => store.getters['auth/getFollowings']);
+
+watch(() => followings.value, (newFollowings) => {
+    console.log('followings:', newFollowings);
+});
 
 const fetchUserProfile = async () => {
     try {
@@ -44,6 +50,32 @@ const fetchUserProfile = async () => {
         router.push('/home');
     }
 };
+
+const followUser = async (username: string) => {
+    try {
+        await store.dispatch('auth/follow', username);
+    } catch (error) {
+        console.error('Error al seguir al usuario:', error);
+    }
+};
+
+const unfollowUser = async (username: string) => {
+    try {
+        await store.dispatch('auth/unFollow', username);
+    } catch (error) {
+        console.error('Error al dejar de seguir al usuario:', error);
+    }
+};
+
+
+const isFollowing = computed(() => {
+    return followings.value.some((following: User) => following.username === username.value);
+});
+
+
+
+
+
 
 onMounted(fetchUserProfile);
 
@@ -80,18 +112,27 @@ watch(() => user_logged.value, (new_user) => {
 
     <div class=" mx-auto my-6 bg-background3 p-6 flex flex-col gap-6 rounded-lg shadow-lg justify-center items-center">
         <div class="flex items-center">
-            
-            <div class="flex flex-col gap-2 ml-6 items-center justify-center">
+
+            <div class="flex flex-col gap-2 items-center justify-center mr">
                 <img :src="`../public/img/users/${img_user}`" alt="user image"
-                    class="w-32 h-32 rounded-full mr-6 object-cover" />
+                    class="w-32 h-32 rounded-full object-cover" />
+
                 <button v-if="username === username_user_logged"
                     class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
                     style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
                     :onClick="() => router.push(`/profile/${username}/edit`)">
                     Editar perfil
                 </button>
+
+                <button v-else class="mb-2 py-2 px-4 text-white no-underline hover:bg-color2_hover rounded-full"
+                    :class="isFollowing ? 'bg-transparent border border-color2' : 'bg-color2'"
+                    style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
+                    :onClick="isFollowing ? () => unfollowUser(username) : () => followUser(username)">
+                    {{ isFollowing ? 'Dejar de seguir' : 'Seguir' }}
+                </button>
             </div>
-            
+
+
             <div class="content flex flex-col justify-center">
 
                 <div class="content flex flex-col justify-center items-center text-center">
@@ -131,7 +172,7 @@ watch(() => user_logged.value, (new_user) => {
                 :onClick="() => router.push(`/profile/${username}/edit`)">
                 Mis Comentarios
             </button>
-            
+
             <button v-if="username === username_user_logged"
                 class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
                 style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
@@ -150,13 +191,15 @@ watch(() => user_logged.value, (new_user) => {
                 :onClick="() => router.push(`/profile/${username}/edit`)">
                 Seguidos
             </button>
+
+
         </div>
     </div>
-    
+
     <div>
         <!-- <BookingList /> -->
         <CommentsListProfile />
-        
+
     </div>
 
 
