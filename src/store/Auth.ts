@@ -42,6 +42,11 @@ export const auth: Module<AuthState, any> = {
                 
 
             } catch (error) {
+                commit('setUser', null);
+                commit('setIsLogged', false);
+                commit('setFollowings', []);
+                commit('setFollowers', []);
+                
                 throw error;
                 
             }
@@ -65,7 +70,10 @@ export const auth: Module<AuthState, any> = {
                     commit('setFollowers', []);
                 }
             } catch (error) {
-                throw error;
+                commit('setUser', null);
+                commit('setIsLogged', false);
+                commit('setFollowings', []);
+                commit('setFollowers', []);
             }
         },
         

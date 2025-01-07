@@ -7,12 +7,13 @@ import Courts from "../views/Courts.vue";
 import ProfileEdit from "../views/ProfileEdit.vue";
 import { profileEditGuard } from "../shared/guards/profile.guard";
 import Details from "../views/Details.vue";
+import { loggedGuard } from "../shared/guards/logged.guard";
 
 const routes = [
   { path: "", redirect: { name: "home" } },
   { path: "/home", name: "home", component: Home },
   { path: "/activities", name: "activities", component: Activities },
-  { path: "/auth", name: "auth", component: Auth },
+  { path: "/auth", name: "auth", component: Auth, beforeEnter: loggedGuard },
   { path: "/profile/:username", name: "profile", component: Profile },
   { path: "/courts", name: "courts", component: Courts },
   { path: "/profile/:username/edit", name: "edit-profile", component: ProfileEdit, beforeEnter: profileEditGuard },
