@@ -7,6 +7,7 @@ import { useStore } from 'vuex';
 import BookingList from '../components/lists/BookingList.vue';
 import CommentsListProfile from '../components/lists/CommentsListProfile.vue';
 import { ProfileService } from '../services/profile.service';
+import FollowingList from '../components/lists/FollowingList.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -53,7 +54,7 @@ const fetchUserProfile = async () => {
 
 const followUser = async (username: string) => {
     try {
-        await store.dispatch('auth/follow', username);
+        await store.dispatch('auth/follow', { username: username, loggedUser: user_logged.value.username });
     } catch (error) {
         console.error('Error al seguir al usuario:', error);
     }
@@ -61,7 +62,7 @@ const followUser = async (username: string) => {
 
 const unfollowUser = async (username: string) => {
     try {
-        await store.dispatch('auth/unFollow', username);
+        await store.dispatch('auth/unFollow', { username: username, loggedUser: user_logged.value.username });
     } catch (error) {
         console.error('Error al dejar de seguir al usuario:', error);
     }
@@ -198,7 +199,8 @@ watch(() => user_logged.value, (new_user) => {
 
     <div>
         <!-- <BookingList /> -->
-        <CommentsListProfile />
+        <!-- <CommentsListProfile /> -->
+        <FollowingList />
 
     </div>
 

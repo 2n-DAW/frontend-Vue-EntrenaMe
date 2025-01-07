@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { CommentActivity } from '../../shared/interfaces/entities/CommentActivity.interface';
-import { watch } from 'vue';
 import { formatDate } from '../../shared/utils/date/formatDate.util';
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 
 const props = defineProps<{ comment: CommentActivity }>();
 const store = useStore();
-const user_logged = store.getters['auth/getUser'];
+const user_logged = computed(() => store.getters['auth/getUser'] || '') ;
 
 
 

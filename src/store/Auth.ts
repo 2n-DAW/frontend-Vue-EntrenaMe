@@ -1,9 +1,7 @@
 import { Module } from 'vuex';
 import { User } from '../shared/interfaces/entities/User.interface';
 import { AuthService } from '../services/auth.service';
-import Profile from '../views/Profile.vue';
 import { ProfileService } from '../services/profile.service';
-import { c } from 'vite/dist/node/types.d-aGj9QkWt';
 
 export interface AuthState {
     user: User | null;
@@ -26,6 +24,7 @@ export const auth: Module<AuthState, any> = {
         async initialize({ commit }, user: { email: string; password: string }) {
             try {
                 const response = await AuthService.login(user);
+                localStorage.setItem('token', response.token as string);
                 const response_followings = await ProfileService.getFollowings(response.username);
                 const response_followers = await ProfileService.getFollowers(response.username);
                 if (response !== null){
@@ -93,30 +92,27 @@ export const auth: Module<AuthState, any> = {
             }
         },
         
-        async follow({ commit, state }, username: string) {
+        async follow({ commit }, { username, loggedUser }: { username: string; loggedUser: string }) {
             try {
-                const response = await ProfileService.follow(username);
-                if (response) {
-                    const updated_followers = [...state.followers, username];
-                    commit('setFollowings', updated_followers);
-                }
+                await ProfileService.follow(username);
+                const response_followings = await ProfileService.getFollowings(loggedUser);
+                commit('setFollowings', response_followings.profiles);
+                
             } catch (error) {
                 throw error;
             }
         },
-        async unFollow({ commit, state }, username: string) {
+        
+        async unFollow({ commit }, { username, loggedUser }: { username: string; loggedUser: string }) {
             try {
-                const response = await ProfileService.unFollow(username);
-                if (response) {
-                    const updated_followers = state.followers.filter(
-                        (follower) => follower.username !== username
-                    );
-                    commit('setFollowings', updated_followers);
-                }
+                await ProfileService.unFollow(username);
+                const response_followings = await ProfileService.getFollowings(loggedUser);
+                commit('setFollowings', response_followings.profiles);
             } catch (error) {
                 throw error;
             }
         },
+        
         
         
     },
