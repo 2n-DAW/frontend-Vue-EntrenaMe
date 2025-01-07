@@ -4,8 +4,9 @@ import Select from '../selects/select.vue';
 import { useStore } from 'vuex';
 import { sortHoursOptions } from '../../shared/utils/shortHours.util';
 import { sortMonthsOptions } from '../../shared/utils/shortMonths.util';
+import { CourtHour } from '../../shared/interfaces/entities/CourtHour.interface';
 
-const emit = defineEmits(['updateFilteredCourtHours']);
+const emit = defineEmits(['updateFilteredCourtHours', 'updateSelectedValues']);
 
 const store = useStore();
 
@@ -52,17 +53,23 @@ const recalculateFilters = () => {
 
     let filtered = allCourtHours;
 
+    const currentDate = new Date();
+    filtered = filtered.filter((court_hour: CourtHour) => {
+        const courtDate = new Date(court_hour.year, court_hour.id_month, court_hour.day_number);
+        return courtDate >= currentDate && court_hour.available;
+    });
+
     if (select_month_selected.value) {
-        filtered = filtered.filter((court_hour: any) => court_hour.month?.n_month === select_month_selected.value);
+        filtered = filtered.filter((court_hour: CourtHour) => court_hour.month?.n_month === select_month_selected.value);
     }
     if (select_hour_selected.value) {
-        filtered = filtered.filter((court_hour: any) => court_hour.hour?.slot_hour === select_hour_selected.value);
+        filtered = filtered.filter((court_hour: CourtHour) => court_hour.hour?.slot_hour === select_hour_selected.value);
     }
     if (select_day_selected.value) {
-        filtered = filtered.filter((court_hour: any) => court_hour.day_number === parseInt(select_day_selected.value));
+        filtered = filtered.filter((court_hour: CourtHour) => court_hour.day_number === parseInt(select_day_selected.value));
     }
     if (select_sports_selected.value) {
-        filtered = filtered.filter((court_hour: any) => court_hour.court?.n_court === select_sports_selected.value);
+        filtered = filtered.filter((court_hour: CourtHour) => court_hour.court?.n_court === select_sports_selected.value);
     }
 
     const removeDuplicates = (items: any[], key: string) => {
@@ -77,7 +84,7 @@ const recalculateFilters = () => {
 
     filtered_days.value = sortDays(
         removeDuplicates(
-            filtered.map((court_hour: any) => ({
+            filtered.map((court_hour: CourtHour) => ({
                 value: String(court_hour.day_number),
                 label: String(court_hour.day_number),
             })),
@@ -87,7 +94,7 @@ const recalculateFilters = () => {
 
     filtered_hours.value = sortHoursOptions(
         removeDuplicates(
-            filtered.map((court_hour: any) => ({
+            filtered.map((court_hour: CourtHour) => ({
                 value: court_hour.hour?.slot_hour,
                 label: court_hour.hour?.slot_hour,
             })),
@@ -96,7 +103,7 @@ const recalculateFilters = () => {
     );
 
     filtered_courts.value = removeDuplicates(
-        filtered.map((court_hour: any) => ({
+        filtered.map((court_hour: CourtHour) => ({
             value: court_hour.court?.n_court,
             label: court_hour.court?.n_court,
         })),
@@ -105,7 +112,7 @@ const recalculateFilters = () => {
 
     filtered_months.value = sortMonthsOptions(
         removeDuplicates(
-            filtered.map((court_hour: any) => ({
+            filtered.map((court_hour: CourtHour) => ({
                 value: court_hour.month?.n_month,
                 label: court_hour.month?.n_month,
             })),
@@ -115,14 +122,25 @@ const recalculateFilters = () => {
 
     emit('updateFilteredCourtHours', filtered);
 
-    if (select_month_selected.value === '' && select_hour_selected.value === '' && select_day_selected.value === '' && select_sports_selected.value === '') {
+    if (!select_month_selected.value && !select_hour_selected.value && !select_day_selected.value && !select_sports_selected.value) {
         emit('updateFilteredCourtHours', []);
     }
-
-    if (select_month_selected.value === '' || select_sports_selected.value === '' || select_day_selected.value === '' || select_hour_selected.value === '') {
+    
+    if (!select_month_selected.value || !select_hour_selected.value || !select_day_selected.value || !select_sports_selected.value) {
         emit('updateFilteredCourtHours', []);
     }
+    
+    
+};
 
+const emitSelectedValues = () => {
+    const selectedValues = {
+        month: select_month_selected.value,
+        hour: select_hour_selected.value,
+        day: select_day_selected.value,
+        sport: select_sports_selected.value,
+    };
+    emit('updateSelectedValues', selectedValues);
 };
 
 const clearFilters = () => {
@@ -131,14 +149,27 @@ const clearFilters = () => {
     select_day_selected.value = '';
     select_sports_selected.value = '';
     emit('updateFilteredCourtHours', []);
+    emitSelectedValues();
 };
 
-watch(select_hour_selected, recalculateFilters);
-watch(select_day_selected, recalculateFilters);
-watch(select_sports_selected, recalculateFilters);
-watch(select_month_selected, recalculateFilters);
-
+watch(select_hour_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_day_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_sports_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
+watch(select_month_selected, () => {
+    recalculateFilters();
+    emitSelectedValues();
+});
 </script>
+
 
 <template>
     <div v-if="isLoading" class="flex justify-center items-center min-h-screen">
