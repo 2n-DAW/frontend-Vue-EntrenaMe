@@ -2,38 +2,67 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { ActivityService } from '../services/activity.service';
+import { useStore } from 'vuex';
 import { Activity } from '../shared/interfaces/entities/Activity.interface';
-import store from '../store';
+import { Inscription } from '../shared/interfaces/entities/Inscription.interface';
 import CommentsList from '../components/lists/CommentsList.vue';
 
 const route = useRoute();
 const slug = route.params.slug as string;
+const store = useStore();
+
 const activity = ref<Activity | null>(null);
 const isLoading = ref(true);
-const errorMessage = ref<string | null>(null);
+const error_activity = ref<string | null>(null);
+const is_registered = ref(true);
+
+const inscriptions = computed(() => store.getters['inscription/allUserInscriptions']);
+const isLogged = computed(() => store.getters['auth/getIsLogged']);
 
 const fetchActivity = async () => {
     try {
         isLoading.value = true;
         activity.value = await ActivityService.getBySlug(slug);
-        console.log('Actividad:', activity.value);
     } catch (error) {
-        errorMessage.value = 'No se pudo cargar la actividad. Por favor, inténtalo de nuevo más tarde.';
+        error_activity.value = 'No se pudo cargar la actividad. Por favor, inténtalo de nuevo más tarde.';
     } finally {
         isLoading.value = false;
     }
 };
 
-const isLogged = computed(() => store.getters['auth/getIsLogged']);
+const fetchInscriptions = async () => {
+    try {
+        await store.dispatch('inscription/initializeInscriptionsUser');
+    } catch (error) {
+        console.error('Error inscripciones:', error);
+    }
+};
 
-const isActivityReady = computed(() => !!activity.value?.id_activity);
+const checkIfRegistered = () => {
+    if (activity.value?.id_activity && inscriptions.value.length > 0) {
+        is_registered.value = inscriptions.value.some(
+            (inscription: Inscription) => inscription.id_activity === activity.value!.id_activity
+        );
+    }
+};
 
-onMounted(() => {
-    fetchActivity();
+onMounted(async () => {
+    await fetchActivity();
+    await fetchInscriptions();
+    checkIfRegistered();
 });
 
-const joinActivity = () => {
-    console.log('Unirse a la actividad:', activity.value?.id_activity);
+const suscribeActivity = async () => {
+    try {
+        if (activity.value?.id_activity) {
+            await store.dispatch('inscription/addInscription', activity.value.id_activity);
+            activity.value = await ActivityService.getBySlug(slug);
+            await fetchInscriptions();
+            checkIfRegistered();
+        }
+    } catch (error) {
+        console.error('Error al unirse a la actividad:', error);
+    }
 };
 </script>
 
@@ -41,24 +70,21 @@ const joinActivity = () => {
     <div v-if="isLoading" class="text-center py-10 text-gray-400">
         Cargando actividad...
     </div>
-    <div v-else-if="errorMessage" class="text-center py-10 text-red-500">
-        {{ errorMessage }}
+    <div v-else-if="error_activity" class="text-center py-10 text-red-500">
+        {{ error_activity }}
     </div>
     <div v-else-if="activity"
         class="w-3/5 mt-16 mx-auto bg-background3 border border-gray-700 rounded-lg shadow-lg overflow-hidden">
-
         <div class="w-full h-64 bg-background3 flex items-center justify-center">
             <img :src="`/img/activities/${activity.img_activity}`" alt="Imagen de la actividad"
                 class="w-full h-full object-contain rounded-lg" />
         </div>
-
         <div class="px-16 py-8">
             <div class="mb-16 text-center">
                 <h1 class="text-3xl font-bold text-white">{{ activity.n_activity }}</h1>
                 <p class="text-xl text-gray-400">Deporte: {{ activity.sport?.n_sport }}</p>
                 <p class="text-gray-400">{{ activity.description }}</p>
             </div>
-
             <div class="flex gap-4 mb-8">
                 <div class="flex flex-col items-center justify-center mb-4 w-1/3 text-center">
                     <router-link v-if="activity.instructor" :to="`/profile/${activity.instructor.username}`" class="flex flex-col items-center">
@@ -90,20 +116,19 @@ const joinActivity = () => {
                     </div>
                 </div>
             </div>
-
-            <div v-if="isLogged" class="flex justify-end">
-                <button @click="joinActivity"
+            <div v-if="isLogged && !is_registered" class="flex justify-end">
+                <button @click="suscribeActivity"
                     class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
                     Apuntarse
                 </button>
             </div>
+            
         </div>
     </div>
     <div v-else class="text-center py-10 text-gray-400">
         No se encontró la actividad.
     </div>
-
-    <div v-if="isActivityReady">
-        <CommentsList :id_activity="activity!.id_activity" />
+    <div v-if="activity?.id_activity">
+        <CommentsList :id_activity="activity.id_activity" />
     </div>
 </template>

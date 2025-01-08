@@ -11,8 +11,9 @@ export const InscriptionService = {
     delete(slug_inscription: string): Promise<Inscription> {
         return ApiService.delete<Inscription>(`inscriptions/delete/${slug_inscription}`);
     },
-    create(inscription: Inscription): Promise<Inscription> {
-        return ApiService.post<Inscription>("inscriptions/create", inscription);
+    create(id_activity: number): Promise<Inscription> {
+        console.log(id_activity);
+        return ApiService.post<Inscription>("inscriptions/create", { id_activity });
     },
 };
 

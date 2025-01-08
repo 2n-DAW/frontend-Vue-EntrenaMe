@@ -4,12 +4,12 @@ import { InscriptionService } from "../services/inscription.service";
 
 export interface InscriptionState {
     inscriptions: Inscription[];
-    inscription_User: Inscription[];
+    inscription_user: Inscription[];
 }
 
 const state: InscriptionState = {
     inscriptions: [],
-    inscription_User: [],
+    inscription_user: [],
 };
 
 export const inscription: Module<InscriptionState, any> = {
@@ -33,7 +33,7 @@ export const inscription: Module<InscriptionState, any> = {
         async initializeInscriptionsUser({ commit }) {
             try {
                 const response = await InscriptionService.getAllUser();
-                
+                console.log("------------------------",response.inscriptions);
                 if (response){
                     commit('setInscriptionsUser', response.inscriptions);
                 }
@@ -58,9 +58,9 @@ export const inscription: Module<InscriptionState, any> = {
                 console.error('Error deleting inscription:', error);
             }
         },
-        async addInscription({ commit }, inscription: Inscription) {
+        async addInscription({ commit }, id_activity: number) {
             try {
-                await InscriptionService.create(inscription);
+                await InscriptionService.create(id_activity);
                 const response = await InscriptionService.getAllUser();
                 const response_all = await InscriptionService.getAll();
                 if (response){
@@ -80,7 +80,7 @@ export const inscription: Module<InscriptionState, any> = {
             state.inscriptions = inscriptions;
         },
         setInscriptionsUser(state, inscriptions: Inscription[]) {
-            state.inscription_User = inscriptions;
+            state.inscription_user = inscriptions;
         },
     },
     getters: {
@@ -88,7 +88,7 @@ export const inscription: Module<InscriptionState, any> = {
             return state.inscriptions;
         },
         allUserInscriptions(state:InscriptionState): Inscription[] {
-            return state.inscription_User;
+            return state.inscription_user;
         },
     },
 };
