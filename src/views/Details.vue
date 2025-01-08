@@ -14,7 +14,7 @@ const store = useStore();
 const activity = ref<Activity | null>(null);
 const isLoading = ref(true);
 const error_activity = ref<string | null>(null);
-const is_registered = ref(true);
+const is_registered = ref(false);
 
 const inscriptions = computed(() => store.getters['inscription/allUserInscriptions']);
 const isLogged = computed(() => store.getters['auth/getIsLogged']);
@@ -143,13 +143,13 @@ const unsuscribeActivity = async () => {
             </div>
             <div v-if="isLogged && !is_registered" class="flex justify-end">
                 <button @click="suscribeActivity"
-                    class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+                    class="bg-color1 text-white font-semibold py-2 px-4 rounded-lg hover:bg-color1_hover transition">
                     Apuntarse
                 </button>
             </div>
             <div v-if="isLogged && is_registered" class="flex justify-end">
                 <button @click="unsuscribeActivity"
-                    class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+                    class="border border-color1 bg-background3 text-white font-semibold py-2 px-4 rounded-lg hover:bg-color1_hover transition">
                     Borrarse
                 </button>
             </div>

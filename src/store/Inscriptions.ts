@@ -33,7 +33,6 @@ export const inscription: Module<InscriptionState, any> = {
         async initializeInscriptionsUser({ commit }) {
             try {
                 const response = await InscriptionService.getAllUser();
-                console.log("------------------------",response.inscriptions);
                 if (response){
                     commit('setInscriptionsUser', response.inscriptions);
                 }
