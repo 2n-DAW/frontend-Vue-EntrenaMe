@@ -1,6 +1,6 @@
 <template>
     <router-link :to="`/activities/${activity.slug_activity}`" class="block">
-        <div class=" bg-card_background rounded-lg shadow-md overflow-hidden border flex border-card_border justify-center cursor-pointer transition-transform transform hover:scale-105">
+        <div class=" bg-card_background rounded-lg shadow-md overflow-hidden border flex border-card_border justify-center cursor-pointer ">
             <div class="w-2/5">
                 <img :src="`img/activities/${activity.img_activity}`" alt="Imagen de la actividad"
                     class="w-full h-full object-cover rounded-l-lg" />

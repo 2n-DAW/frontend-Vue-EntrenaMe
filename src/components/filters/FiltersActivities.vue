@@ -1,5 +1,5 @@
 <template>
-    <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-background3">
+    <div class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 bg-background3">
         <Select 
             label="Horario" 
             :data="hours" 
