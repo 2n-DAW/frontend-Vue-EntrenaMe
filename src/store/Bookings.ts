@@ -1,12 +1,8 @@
 import { Module } from "vuex";
 import { Booking } from "../shared/interfaces/entities/booking.interface";
 import { BookingService } from "../services/booking.service";
+import { BookingsState } from "../shared/interfaces/storeInterfaces/BookingsStore.interface";
 
-
-export interface BookingsState {
-    bookings: Booking[];
-    selectedBooking: Booking | null;
-}
 const state: BookingsState = {
     bookings: [],
     selectedBooking: null,

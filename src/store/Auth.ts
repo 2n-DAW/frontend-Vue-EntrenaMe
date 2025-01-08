@@ -2,13 +2,8 @@ import { Module } from 'vuex';
 import { User } from '../shared/interfaces/entities/User.interface';
 import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
+import { AuthState } from '../shared/interfaces/storeInterfaces/AuthStore.interface';
 
-export interface AuthState {
-    user: User | null;
-    followings: User[];
-    followers: User[];
-    isLogged: boolean;
-}
 const state: AuthState = {
     user: null,
     followings: [],

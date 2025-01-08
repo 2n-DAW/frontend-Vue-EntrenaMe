@@ -6,17 +6,7 @@ import { sortWeekDays } from '../shared/utils/shortWeekDays.util';
 import { OptionSelect } from '../shared/interfaces/select/OptionSelect.interface';
 import { Sport } from '../shared/interfaces/entities/Sport.interface';
 import { uniqueSports } from '../shared/utils/uniqueSports.util';
-
-export interface ActivityState {
-    activities: Array<Activity>;
-    activitiesNames: Array<string>;
-    
-    filters: {
-        days: Array<OptionSelect>;
-        hours: Array<OptionSelect>;
-        sports: Array<OptionSelect>;
-    }
-}
+import { ActivityState } from '../shared/interfaces/storeInterfaces/ActivityStore.interface';
 
 const state: ActivityState = {
     activities: [],

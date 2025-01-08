@@ -1,20 +1,11 @@
 import { Module } from 'vuex';
-import { SportService } from '../services/sport.service';
 import { CourtHour } from '../shared/interfaces/entities/CourtHour.interface';
 import { CourtHourService } from '../services/courtHour.service';
 import { OptionSelect } from '../shared/interfaces/select/OptionSelect.interface';
-import { s } from 'vite/dist/node/types.d-aGj9QkWt';
 import { sortMonths } from '../shared/utils/shortMonths.util';
 import { sortHours } from '../shared/utils/shortHours.util';
+import { CourtsHoursState } from '../shared/interfaces/storeInterfaces/CourtHourStore.interface';
 
-export interface CourtsHoursState {
-    courts_hours: Array<CourtHour>;
-    hours: Array<OptionSelect>;
-    months: Array<OptionSelect>;
-    courts: Array<OptionSelect>;
-    days: Array<OptionSelect>;
-    selected_courts_hours: CourtHour | null;
-}
 const state: CourtsHoursState = {
     courts_hours: [],
     hours: [],

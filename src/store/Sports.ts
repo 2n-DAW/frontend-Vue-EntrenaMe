@@ -1,11 +1,9 @@
 import { Module } from 'vuex';
 import { SportService } from '../services/sport.service';
 import { Sport } from '../shared/interfaces/entities/Sport.interface';
+import { SportState } from '../shared/interfaces/storeInterfaces/SportStore.interface';
 
-export interface SportState {
-    sports: Array<Sport>;
-    selectedSport: Sport | null;
-}
+
 const state: SportState = {
     sports: [],
     selectedSport: null,

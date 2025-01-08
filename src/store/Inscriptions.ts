@@ -1,11 +1,7 @@
 import { Module } from "vuex";
 import { Inscription } from "../shared/interfaces/entities/Inscription.interface";
 import { InscriptionService } from "../services/inscription.service";
-
-export interface InscriptionState {
-    inscriptions: Inscription[];
-    inscription_user: Inscription[];
-}
+import { InscriptionState } from "../shared/interfaces/storeInterfaces/InscriptionStore.interface";
 
 const state: InscriptionState = {
     inscriptions: [],

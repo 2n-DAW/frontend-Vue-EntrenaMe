@@ -1,11 +1,7 @@
 import { Module } from "vuex";
 import { CommentActivity } from "../shared/interfaces/entities/CommentActivity.interface";
 import { CommentService } from "../services/comment.service";
-
-
-interface CommentStore {
-    comments: CommentActivity[];
-}
+import { CommentStore } from "../shared/interfaces/storeInterfaces/CommentStore.interface";
 
 const state: CommentStore = {
     comments: [],
