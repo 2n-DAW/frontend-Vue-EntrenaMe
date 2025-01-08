@@ -64,6 +64,31 @@ const suscribeActivity = async () => {
         console.error('Error al unirse a la actividad:', error);
     }
 };
+
+const unsuscribeActivity = async () => {
+    try {
+            const inscription = inscriptions.value.find(
+                (inscription: Inscription) => inscription.id_activity === activity.value!.id_activity
+            );
+
+            if (inscription?.slug_inscription) {
+                await store.dispatch('inscription/deleteInscription', inscription.slug_inscription);
+                activity.value = await ActivityService.getBySlug(slug);
+                await fetchInscriptions();
+                checkIfRegistered();
+            } else {
+                console.warn('No se encontró la inscripción correspondiente a esta actividad.');
+            }
+    } catch (error) {
+        console.error('Error actividad:', error);
+    }
+};
+
+
+
+
+
+
 </script>
 
 <template>
@@ -122,7 +147,12 @@ const suscribeActivity = async () => {
                     Apuntarse
                 </button>
             </div>
-            
+            <div v-if="isLogged && is_registered" class="flex justify-end">
+                <button @click="unsuscribeActivity"
+                    class="bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition">
+                    Borrarse
+                </button>
+            </div>
         </div>
     </div>
     <div v-else class="text-center py-10 text-gray-400">

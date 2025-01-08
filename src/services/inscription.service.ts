@@ -9,7 +9,7 @@ export const InscriptionService = {
         return ApiService.get<Inscriptions>(`inscriptions/user`);
     },
     delete(slug_inscription: string): Promise<Inscription> {
-        return ApiService.delete<Inscription>(`inscriptions/delete/${slug_inscription}`);
+        return ApiService.put<Inscription>(`inscriptions/delete/${slug_inscription}`);
     },
     create(id_activity: number): Promise<Inscription> {
         console.log(id_activity);
