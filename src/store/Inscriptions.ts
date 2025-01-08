@@ -47,6 +47,7 @@ export const inscription: Module<InscriptionState, any> = {
                 await InscriptionService.delete(slug_inscription);
                 const response = await InscriptionService.getAllUser();
                 const response_all = await InscriptionService.getAll(); 
+                console.log(response_all);
                 if (response){
                     commit('setInscriptionsUser', response.inscriptions);
                 }

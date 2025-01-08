@@ -15,6 +15,7 @@ const props = defineProps({
 const inscription = ref<Inscription>(props.inscription);
 
 const deleteInscription = () => {
+    console.log('Borrando inscripción:', inscription.value.slug_inscription);
     store.dispatch('inscription/deleteInscription', inscription.value.slug_inscription);
 };
 </script>
