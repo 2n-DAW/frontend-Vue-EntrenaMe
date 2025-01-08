@@ -99,6 +99,7 @@ const emitFilters = ():void => {
 };
 
 watch([select_days_selected, text_search, select_hours_selected, select_sports_selected], () => {
+    console.log(select_sports_selected.value);
     emitFilters();
 });
 
