@@ -7,6 +7,7 @@ import { useStore } from 'vuex';
 import BookingList from '../components/lists/BookingList.vue';
 import CommentsListProfile from '../components/lists/CommentsListProfile.vue';
 import UserList from '../components/lists/UserList.vue';
+import InscriptionsList from '../components/lists/InscriptionsList.vue';
 
 const router = useRouter();
 const route = useRoute();
@@ -14,7 +15,7 @@ const store = useStore();
 
 const username_url = ref(route.params.username as string);
 const user = ref<User | null>(null);
-const activeTab = ref<'comments' | 'bookings' | 'followers' | 'followings'>('comments'); // Estado para controlar qué lista se muestra
+const activeTab = ref<'comments' | 'bookings' | 'followers' | 'followings' | 'inscriptions'>('comments'); // Estado para controlar qué lista se muestra
 
 const username = computed(() => user.value?.username || '');
 const img_user = computed(() => user.value?.img_user || 'profile.png');
@@ -136,6 +137,11 @@ watch(() => user_logged.value, (new_user) => {
                 class="py-2 px-4 rounded-full text-white">
                 Comentarios
             </button>
+            <button @click="activeTab = 'inscriptions'" v-if="username === username_user_logged"
+                :class="activeTab === 'inscriptions' ? 'bg-color1' : 'bg-transparent border border-color1'"
+                class="py-2 px-4 rounded-full text-white">
+                Inscripciones
+            </button>
             <button @click="activeTab = 'bookings'" v-if="username === username_user_logged"
                 :class="activeTab === 'bookings' ? 'bg-color1' : 'bg-transparent border border-color1'"
                 class="py-2 px-4 rounded-full text-white">
@@ -156,8 +162,10 @@ watch(() => user_logged.value, (new_user) => {
 
     <div>
         <CommentsListProfile v-if="activeTab === 'comments'" />
+        <InscriptionsList v-if ="activeTab === 'inscriptions' && username === username_user_logged" />
         <BookingList v-if="activeTab === 'bookings' && username === username_user_logged " />
         <UserList type="followers" v-if="activeTab === 'followers' && username === username_user_logged" />
         <UserList type="followings" v-if="activeTab === 'followings' && username === username_user_logged" />
+        
     </div>
 </template>

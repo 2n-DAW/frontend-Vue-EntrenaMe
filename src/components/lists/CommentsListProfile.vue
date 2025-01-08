@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useStore } from 'vuex';
-import { useRoute } from 'vue-router'; // Importa useRoute
+import { useRoute } from 'vue-router';
 import CommentCard from '../cards/CommentCard.vue';
 
 const store = useStore();

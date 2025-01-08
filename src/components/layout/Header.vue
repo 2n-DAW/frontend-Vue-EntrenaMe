@@ -75,6 +75,13 @@ const logout = async() => {
                             Login/Register
                         </router-link>
                     </li>
+                    
+                    <li v-if="isLogged && type_user === 'instructor'">
+                        <router-link to="/inscriptions" class="hover:text-text1_hover">
+                            Inscripciones
+                        </router-link>
+                    </li>
+                        
                     <li v-if="isLogged">
                         <router-link :to="`/profile/${username}`"
                             class="flex items-center bg-color1 pr-2 hover:bg-color1_hover rounded-full overflow-hidden">
