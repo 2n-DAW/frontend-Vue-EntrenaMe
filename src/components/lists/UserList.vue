@@ -26,7 +26,7 @@ const users = computed(() =>
                     </p>
                 </div>
                 <div v-else>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4">
                         <div v-for="user in users" :key="user.id_user">
                             <UserCard :user="user" :isFollowing="props.type === 'followings'" />
                         </div>
