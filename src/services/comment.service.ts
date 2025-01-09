@@ -9,7 +9,7 @@ export const CommentService = {
         return ApiService.post(`activities/${slug}/comments`, comment);
     },
     delete(slug: string) {
-        return ApiService.delete(`comments/${slug}`);
+        return ApiService.delete(`activities/comments/${slug}`);
     },
 };
 

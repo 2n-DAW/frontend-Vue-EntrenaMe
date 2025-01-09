@@ -37,6 +37,15 @@ export const comment: Module<CommentStore, any> = {
                 console.error('Error adding comment:', error);
             }
         },
+        async deleteComment({ commit }, slug: string) {
+            try {
+                await CommentService.delete(slug);
+                const comments_filtered = state.comments.filter((comment:CommentActivity)=> comment.slug_comment !== slug);
+                commit('setComments', comments_filtered);
+            } catch (error) {
+                console.error('Error deleting comment:', error);
+            }
+        }
     },
 
     mutations: {

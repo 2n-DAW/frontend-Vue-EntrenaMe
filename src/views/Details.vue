@@ -6,6 +6,7 @@ import { useStore } from 'vuex';
 import { Activity } from '../shared/interfaces/entities/Activity.interface';
 import { Inscription } from '../shared/interfaces/entities/Inscription.interface';
 import CommentsList from '../components/lists/CommentsList.vue';
+import { is } from 'quasar';
 
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -44,6 +45,7 @@ const checkIfRegistered = () => {
             (inscription: Inscription) => inscription.id_activity === activity.value!.id_activity
         );
     }
+    console.log('is_registered:', is_registered.value);
 };
 
 onMounted(async () => {
@@ -75,13 +77,12 @@ const unsuscribeActivity = async () => {
                 await store.dispatch('inscription/deleteInscription', inscription.slug_inscription);
                 activity.value = await ActivityService.getBySlug(slug);
                 await fetchInscriptions();
-                checkIfRegistered();
-            } else {
-                console.warn('No se encontró la inscripción correspondiente a esta actividad.');
+                is_registered.value = false;
             }
     } catch (error) {
         console.error('Error actividad:', error);
     }
+    
 };
 
 

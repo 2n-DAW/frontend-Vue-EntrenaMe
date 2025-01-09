@@ -11,8 +11,13 @@ const user_logged = computed(() => store.getters['auth/getUser'] || '') ;
 
 
 
-const deleteComment = async (commentId: number) => {
-    console.log('Eliminar comentario:', commentId);
+const deleteComment = async (slug: string) => {
+    try {
+        await store.dispatch('comment/deleteComment', slug);
+    } catch (error) {
+        console.log(error);
+    }
+
 };
 
 
@@ -28,7 +33,7 @@ const deleteComment = async (commentId: number) => {
                 </p>
             </div>
             <div class="card-footer flex items-center space-x-4 mt-4">
-                <div class="flex items-center space-x-2 w-1/3 justify-center">
+                <div class="flex items-center space-x-2 w-1/4 justify-center">
                     <router-link :to="`/profile/${props.comment.user!.username}`" class="comment-user">
                         <img :src="`../public/img/users/${props.comment.user!.img_user}`"
                             alt="user image" class="comment-user-img w-8 h-8 rounded-full" />
@@ -40,13 +45,26 @@ const deleteComment = async (commentId: number) => {
 
                 </div>
 
-                <span class="date-posted block text-gray-500 text-sm w-1/3 flex justify-center">
+                
+                
+                
+                <span class="date-posted block text-gray-500 text-sm w-1/4 flex justify-center">
                     {{ formatDate(props.comment.date) }}
                 </span>
+                
+                <div class="flex items-center w-1/4 justify-center">
+                    <router-link :to="`/activities/${props.comment.activity!.slug_activity}`"
+                        class="comment-user text-color2 font-bold hover:underline">
+                        {{ props.comment.activity!.n_activity }}
+                    </router-link>
+                </div>
+                
+                
+                
 
                 <span v-if="props.comment.user!.username === user_logged.username" class="mod-options cursor-pointer flex items-center text-sm text-rojo_pastel
-            pl-1 hover:scale-105 duration-200 ease-in-out w-1/3 justify-center">
-                    <button @click="deleteComment(props.comment.id_comment)"
+            pl-1 hover:scale-105 duration-200 ease-in-out w-1/4 justify-center">
+                    <button @click="deleteComment(props.comment.slug_comment)"
                         class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition ease-in-out">
                         Eliminar
                     </button>
