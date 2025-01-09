@@ -1,0 +1,42 @@
+# Ignorar directorios de dependencias de Node.js
+node_modules/
+
+# Ignorar directorios generados durante la construcción
+dist/
+build/
+
+# Ignorar archivos de configuración específicos del IDE
+.idea/
+.vscode/
+*.iml
+
+# Archivos de log generados por el sistema
+npm-debug.log
+yarn-error.log
+*.log
+
+# Archivos de configuración de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de caché y temporales
+*.bak
+*.tmp
+*.swp
+.DS_Store
+
+# Ignorar archivos de pruebas o de desarrollo
+coverage/
+*.test.js
+*.spec.js
+
+# Ignorar archivos de paquetes específicos (como los de compresión)
+*.tar
+*.zip
+
+# Archivos de control de versiones
+.git/
+.gitignore
+.svn/
+.hg/
