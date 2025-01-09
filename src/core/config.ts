@@ -1,2 +1,2 @@
-export const API_URL_ADMIN = "http://localhost:8000/api/";
-export const API_URL_CLIENT = "http://localhost:8080/";
+export const API_URL_ADMIN = import.meta.env.VITE_API_URL_ADMIN;
+export const API_URL_CLIENT = import.meta.env.VITE_API_URL_CLIENT;
