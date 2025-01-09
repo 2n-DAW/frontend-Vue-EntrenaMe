@@ -6,14 +6,13 @@ import { useStore } from 'vuex';
 import { Activity } from '../shared/interfaces/entities/Activity.interface';
 import { Inscription } from '../shared/interfaces/entities/Inscription.interface';
 import CommentsList from '../components/lists/CommentsList.vue';
-import { is } from 'quasar';
 
 const route = useRoute();
 const slug = route.params.slug as string;
 const store = useStore();
 
 const activity = ref<Activity | null>(null);
-const isLoading = ref(true);
+const is_loading = ref(true);
 const error_activity = ref<string | null>(null);
 const is_registered = ref(false);
 
@@ -22,12 +21,12 @@ const isLogged = computed(() => store.getters['auth/getIsLogged']);
 
 const fetchActivity = async () => {
     try {
-        isLoading.value = true;
+        is_loading.value = true;
         activity.value = await ActivityService.getBySlug(slug);
     } catch (error) {
         error_activity.value = 'No se pudo cargar la actividad. Por favor, inténtalo de nuevo más tarde.';
     } finally {
-        isLoading.value = false;
+        is_loading.value = false;
     }
 };
 
@@ -93,7 +92,7 @@ const unsuscribeActivity = async () => {
 </script>
 
 <template>
-    <div v-if="isLoading" class="text-center py-10 text-gray-400">
+    <div v-if="is_loading" class="text-center py-10 text-gray-400">
         Cargando actividad...
     </div>
     <div v-else-if="error_activity" class="text-center py-10 text-red-500">

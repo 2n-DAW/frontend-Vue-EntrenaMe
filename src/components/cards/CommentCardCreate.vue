@@ -11,7 +11,6 @@ const comment_info = ref<CommentActivityCreate>({} as CommentActivityCreate);
 
 const createComment = () => {
     if (comment_info.value.body.trim() === '') {
-        alert('El comentario no puede estar vacío.');
         return;
     }
     store.dispatch('comment/addComment', { comment: comment_info.value, slug_activity });

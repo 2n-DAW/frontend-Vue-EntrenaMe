@@ -1,27 +1,13 @@
 <script setup lang="ts">
+import { defineProps } from 'vue';
 import { CommentActivity } from '../../shared/interfaces/entities/CommentActivity.interface';
-import { formatDate } from '../../shared/utils/date/formatDate.util';
-import { useStore } from 'vuex';
-import { computed } from 'vue';
-
+import useComment from '../../composables/useComment';
 
 const props = defineProps<{ comment: CommentActivity }>();
-const store = useStore();
-const user_logged = computed(() => store.getters['auth/getUser'] || '') ;
 
-
-
-const deleteComment = async (slug: string) => {
-    try {
-        await store.dispatch('comment/deleteComment', slug);
-    } catch (error) {
-        console.log(error);
-    }
-
-};
-
-
+const { user_logged, deleteComment, formatedDate } = useComment(props.comment);
 </script>
+
 
 
 <template>
@@ -49,7 +35,7 @@ const deleteComment = async (slug: string) => {
                 
                 
                 <span class="date-posted block text-gray-500 text-sm w-1/4 flex justify-center">
-                    {{ formatDate(props.comment.date) }}
+                    {{ formatedDate }}
                 </span>
                 
                 <div class="flex items-center w-1/4 justify-center">

@@ -5,7 +5,7 @@ import { computed, ref, watch, defineEmits } from 'vue';
 import { Activity } from '../../shared/interfaces/entities/Activity.interface';
 
 const store = useStore();
-const isLoading = ref(true);
+const is_loading = ref(true);
 
 const emit = defineEmits(['inscriptions']);
 
@@ -37,7 +37,7 @@ const fetchActivities = async () => {
     } catch (error) {
         console.error('Error fetching activities:', error);
     } finally {
-        isLoading.value = false;
+        is_loading.value = false;
     }
 };
 
@@ -47,7 +47,7 @@ const fetchInscriptions = async () => {
     } catch (error) {
         console.error('Error fetching inscriptions:', error);
     } finally {
-        isLoading.value = false;
+        is_loading.value = false;
     }
 };
 
@@ -60,7 +60,7 @@ const clearFilters = () => {
 </script>
 
 <template>
-    <div v-if="isLoading" class="flex justify-center items-center min-h-screen">
+    <div v-if="is_loading" class="flex justify-center items-center min-h-screen">
         <p>Cargando datos...</p>
     </div>
     <div v-else class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 bg-background3">

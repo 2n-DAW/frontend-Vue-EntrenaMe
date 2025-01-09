@@ -10,7 +10,7 @@ const emit = defineEmits(['updateFilteredCourtHours', 'updateSelectedValues']);
 
 const store = useStore();
 
-const isLoading = ref(true);
+const is_loading = ref(true);
 
 const select_hour_selected = ref('');
 const select_day_selected = ref('');
@@ -22,7 +22,7 @@ const initializeData = async () => {
         await store.dispatch('courtHour/initializeCourtsHours');
     } catch (error) {
     } finally {
-        isLoading.value = false;
+        is_loading.value = false;
     }
 };
 
@@ -172,7 +172,7 @@ watch(select_month_selected, () => {
 
 
 <template>
-    <div v-if="isLoading" class="flex justify-center items-center min-h-screen">
+    <div v-if="is_loading" class="flex justify-center items-center min-h-screen">
         <p>Cargando datos...</p>
     </div>
     <div v-else class="filters grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 bg-background3">
