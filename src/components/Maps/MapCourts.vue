@@ -8,6 +8,13 @@ import Noty from 'noty';
 import 'noty/lib/noty.css';
 import 'noty/lib/themes/mint.css';
 import { watch } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
+const store = useStore();
+const router = useRouter();
+
+const is_logged = computed(() => store.getters['auth/getIsLogged']);
 
 const props = defineProps({
     filteredCourtHours: {
@@ -53,6 +60,10 @@ const booking = async (id_count_hours: number) => {
         }).show();
     }
 
+};
+
+const redirect = () => {
+    router.push('/auth');
 };
 
 
@@ -145,7 +156,11 @@ const booking = async (id_count_hours: number) => {
                         <p class="text-lg font-semibold text-white">{{ props.filteredCourtHours[0].court!.n_court }}</p>
                     </div>
 
-                    <button @click="() => booking(props.filteredCourtHours[0].id_court_hour)"
+                    <button v-if="is_logged" @click="() => booking(props.filteredCourtHours[0].id_court_hour)"
+                        class="w-full bg-color2 text-background1 font-semibold py-2 px-4 rounded hover:bg-color2_hover transition">
+                        Reservar
+                    </button>
+                    <button v-else @click="() => redirect()"
                         class="w-full bg-color2 text-background1 font-semibold py-2 px-4 rounded hover:bg-color2_hover transition">
                         Reservar
                     </button>

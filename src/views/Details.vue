@@ -7,6 +7,11 @@ import { Activity } from '../shared/interfaces/entities/Activity.interface';
 import { Inscription } from '../shared/interfaces/entities/Inscription.interface';
 import CommentsList from '../components/lists/CommentsList.vue';
 
+import Noty from 'noty';
+import 'noty/lib/noty.css';
+import 'noty/lib/themes/mint.css';
+
+
 const route = useRoute();
 const slug = route.params.slug as string;
 const store = useStore();
@@ -60,6 +65,15 @@ const suscribeActivity = async () => {
             activity.value = await ActivityService.getBySlug(slug);
             await fetchInscriptions();
             checkIfRegistered();
+
+            new Noty({
+                type: 'success',
+                text: 'Inscrito',
+                timeout: 1000,
+                progressBar: true,
+            }).show();
+
+
         }
     } catch (error) {
         console.error('Error al unirse a la actividad:', error);
@@ -68,20 +82,30 @@ const suscribeActivity = async () => {
 
 const unsuscribeActivity = async () => {
     try {
-            const inscription = inscriptions.value.find(
-                (inscription: Inscription) => inscription.id_activity === activity.value!.id_activity
-            );
+        const inscription = inscriptions.value.find(
+            (inscription: Inscription) => inscription.id_activity === activity.value!.id_activity
+        );
 
-            if (inscription?.slug_inscription) {
-                await store.dispatch('inscription/deleteInscription', inscription.slug_inscription);
-                activity.value = await ActivityService.getBySlug(slug);
-                await fetchInscriptions();
-                is_registered.value = false;
-            }
+        if (inscription?.slug_inscription) {
+            await store.dispatch('inscription/deleteInscription', inscription.slug_inscription);
+            activity.value = await ActivityService.getBySlug(slug);
+            await fetchInscriptions();
+            is_registered.value = false;
+            
+            
+            new Noty({
+                type: 'success',
+                text: 'Borrado',
+                timeout: 1000,
+                progressBar: true,
+            }).show();
+            
+        }
+
     } catch (error) {
         console.error('Error actividad:', error);
     }
-    
+
 };
 
 
@@ -112,7 +136,8 @@ const unsuscribeActivity = async () => {
             </div>
             <div class="flex gap-4 mb-8">
                 <div class="flex flex-col items-center justify-center mb-4 w-1/3 text-center">
-                    <router-link v-if="activity.instructor" :to="`/profile/${activity.instructor.username}`" class="flex flex-col items-center">
+                    <router-link v-if="activity.instructor" :to="`/profile/${activity.instructor.username}`"
+                        class="flex flex-col items-center">
                         <img :src="`/img/users/${activity.instructor.img_user}`" alt="Imagen del instructor"
                             class="w-16 h-16 rounded-full border border-gray-600 hover:scale-105 transition-transform" />
                         <p class="text-lg font-semibold text-color1 mt-2 hover:underline">
