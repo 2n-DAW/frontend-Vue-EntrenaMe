@@ -89,9 +89,12 @@ const update = async () => {
                 name: name.value,
                 surname: surname.value,
                 bio: bio.value,
-                ...user.value.client && { client: { nif: nif.value, tlf: tlf.value } },
-                ...user.value.instructor && { instructor: { nif: nif.value, tlf: tlf.value, address: address.value } },
-                ...password.value && { password: password.value },
+                // ...user.value.client && { client: { nif: nif.value, tlf: tlf.value } },
+                // ...user.value.instructor && { instructor: { nif: nif.value, tlf: tlf.value, address: address.value } },
+                // ...password.value && { password: password.value },
+                nif: nif.value,
+                tlf: tlf.value,
+                address: address.value,
 
             };
 
