@@ -13,6 +13,8 @@ const router = useRouter();
 const route = useRoute();
 const store = useStore();
 
+const is_logged = computed(() => store.getters['auth/getIsLogged']);
+
 const username_url = ref(route.params.username as string);
 const user = ref<User | null>(null);
 const activeTab = ref<'comments' | 'bookings' | 'followers' | 'followings' | 'inscriptions'>('comments'); // Estado para controlar qué lista se muestra
@@ -88,13 +90,13 @@ watch(() => user_logged.value, (new_user) => {
             <div class="flex flex-col gap-2 items-center justify-center">
                 <img :src="`../public/img/users/${img_user}`" alt="user image"
                     class="w-32 h-32 rounded-full object-cover" />
-                <button v-if="username === username_user_logged"
+                <button v-if="username === username_user_logged && is_logged"
                     class="mb-2 py-2 px-4 text-white no-underline hover:bg-color1_hover rounded-full bg-color1"
                     style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
                     @click="router.push(`/profile/${username}/edit`)">
                     Editar perfil
                 </button>
-                <button v-else class="mb-2 py-2 px-4 text-white no-underline hover:bg-color2_hover rounded-full"
+                <button  v-if="username !== username_user_logged && is_logged" class="mb-2 py-2 px-4 text-white no-underline hover:bg-color2_hover rounded-full"
                     :class="isFollowing ? 'bg-transparent border border-color2' : 'bg-color2'"
                     style="box-shadow: inset 0 0 10px rgba(67, 67, 67, 0.15);"
                     @click="isFollowing ? unfollowUser(username) : followUser(username)">
